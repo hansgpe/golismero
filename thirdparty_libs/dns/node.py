@@ -15,7 +15,7 @@
 
 """DNS nodes.  A node is a set of rdatasets."""
 
-import StringIO
+import io
 
 import dns.rdataset
 import dns.rdatatype
@@ -47,7 +47,7 @@ class Node(object):
         @rtype: string
         """
 
-        s = StringIO.StringIO()
+        s = io.StringIO()
         for rds in self.rdatasets:
             if len(rds) > 0:
                 print >> s, rds.to_text(name, **kw)
@@ -169,7 +169,7 @@ class Node(object):
         """
 
         if not isinstance(replacement, dns.rdataset.Rdataset):
-            raise ValueError, 'replacement is not an rdataset'
+            raise ValueError('replacement is not an rdataset')
         self.delete_rdataset(replacement.rdclass, replacement.rdtype,
                              replacement.covers)
         self.rdatasets.append(replacement)

@@ -49,7 +49,8 @@ from .progress import Progress
 from .shared import SharedMap
 from ..messaging.codes import MessageCode
 
-import imp
+
+import importlib
 import inspect
 import os.path
 import re
@@ -159,7 +160,8 @@ def get_stage_display_name(stage):
     return _STAGE_DISPLAY_NAMES[ stage.strip().lower() ]
 
 get_stage_display_name.__doc__ %= "".join(
-    "\n         - %s" % x for x in _STAGE_DISPLAY_NAMES.iterkeys())
+    "\n         - %s" % x for x in _STAGE_DISPLAY_NAMES.keys())
+
 
 
 #------------------------------------------------------------------------------
@@ -190,7 +192,8 @@ def get_plugin_type_display_name(plugin_type):
     return _PLUGIN_TYPE_NAMES[ plugin_type.strip().lower() ]
 
 get_plugin_type_display_name.__doc__ %= "".join(
-    "\n         - %s" % x for x in _PLUGIN_TYPE_NAMES.iterkeys())
+    "\n         - %s" % x for x in _PLUGIN_TYPE_NAMES.keys())
+
 
 
 #------------------------------------------------------------------------------
@@ -233,7 +236,8 @@ def get_plugin_type_description(plugin_type):
     return _PLUGIN_TYPE_DESCRIPTIONS[ plugin_type.strip().lower() ]
 
 get_plugin_type_description.__doc__ %= "".join(
-    "\n         - %s" % x for x in _PLUGIN_TYPE_DESCRIPTIONS.iterkeys())
+    "\n         - %s" % x for x in _PLUGIN_TYPE_DESCRIPTIONS.keys())
+
 
 
 #------------------------------------------------------------------------------

@@ -72,27 +72,27 @@ except ImportError:
         return d
 
 try:
-    # The fastest JSON parser available for Python.
+    # The fastest JSON parser available for Python (cjson).
     from cjson import decode as json_decode
     from cjson import encode as json_encode
 except ImportError:
     try:
-        # Faster than the built-in module, usually found.
+        # Faster than the built-in module, usually found (simplejson).
         from simplejson import loads as json_decode
         from simplejson import dumps as json_encode
     except ImportError:
-        # Built-in module since Python 2.6, very very slow!
-        from json import loads as json_decode
-        from json import dumps as json_encode
+        # Built-in module since Python 2.6, slower than simplejson (json).
+        import json
+        json_decode = json.loads
+        json_encode = json.dumps
 
 # Other imports.
 from netaddr import IPNetwork
-from ConfigParser import RawConfigParser
+import configparser  # Adaptado para Python 3
 from keyword import iskeyword
 from os import path
-
 import os
-import random  #noqa
+import random  # noqa
 import sys
 
 # Remove the docstrings. This prevents errors when generating the API docs.

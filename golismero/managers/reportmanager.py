@@ -136,7 +136,7 @@ class ReportManager (object):
                 continue
             try:
                 notifier.start_report(self.__plugins[plugin_id], output_file)
-            except Exception, e:
+            except Exception as e:
                 Logger.log_error(
                     "Failed to generate report for file %r: %s" %
                     (output_file, str(e)))
@@ -183,7 +183,7 @@ class ReportManager (object):
         try:
             notifier.start_report(
                 self.__plugins[plugin_id], self.__audit_name, output_file)
-        except Exception, e:
+        except Exception as e:
             Logger.log_error("Failed to run screen report: %s" % str(e))
             Logger.log_error_more_verbose(format_exc())
         return 1

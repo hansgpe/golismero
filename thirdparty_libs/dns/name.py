@@ -21,7 +21,7 @@
 @type empty: dns.name.Name object
 """
 
-import cStringIO
+import io
 import struct
 import sys
 
@@ -168,7 +168,7 @@ class Name(object):
         @rtype: int
         """
 
-        h = 0L
+        h = 0
         for label in self.labels:
             for c in label:
                 h += ( h << 3 ) + ord(c.lower())

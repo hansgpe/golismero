@@ -110,7 +110,7 @@ class Zone(object):
         return not self.__eq__(other)
 
     def _validate_name(self, name):
-        if isinstance(name, (str, unicode)):
+        if isinstance(name, (str, str)):
             name = dns.name.from_text(name, None)
         elif not isinstance(name, dns.name.Name):
             raise KeyError("name parameter must be convertable to a DNS name")
@@ -240,9 +240,9 @@ class Zone(object):
         """
 
         name = self._validate_name(name)
-        if isinstance(rdtype, (str, unicode)):
+        if isinstance(rdtype, (str, str)):
             rdtype = dns.rdatatype.from_text(rdtype)
-        if isinstance(covers, (str, unicode)):
+        if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
         node = self.find_node(name, create)
         return node.find_rdataset(self.rdclass, rdtype, covers, create)
@@ -303,9 +303,9 @@ class Zone(object):
         """
 
         name = self._validate_name(name)
-        if isinstance(rdtype, (str, unicode)):
+        if isinstance(rdtype, (str, str)):
             rdtype = dns.rdatatype.from_text(rdtype)
-        if isinstance(covers, (str, unicode)):
+        if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
         node = self.get_node(name)
         if not node is None:
@@ -366,9 +366,9 @@ class Zone(object):
         """
 
         name = self._validate_name(name)
-        if isinstance(rdtype, (str, unicode)):
+        if isinstance(rdtype, (str, str)):
             rdtype = dns.rdatatype.from_text(rdtype)
-        if isinstance(covers, (str, unicode)):
+        if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
         rdataset = self.nodes[name].find_rdataset(self.rdclass, rdtype, covers)
         rrset = dns.rrset.RRset(name, self.rdclass, rdtype, covers)
@@ -422,9 +422,9 @@ class Zone(object):
         @type covers: int or string
         """
 
-        if isinstance(rdtype, (str, unicode)):
+        if isinstance(rdtype, (str, str)):
             rdtype = dns.rdatatype.from_text(rdtype)
-        if isinstance(covers, (str, unicode)):
+        if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
         for (name, node) in self.iteritems():
             for rds in node:
@@ -445,9 +445,9 @@ class Zone(object):
         @type covers: int or string
         """
 
-        if isinstance(rdtype, (str, unicode)):
+        if isinstance(rdtype, (str, str)):
             rdtype = dns.rdatatype.from_text(rdtype)
-        if isinstance(covers, (str, unicode)):
+        if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
         for (name, node) in self.iteritems():
             for rds in node:
@@ -475,7 +475,7 @@ class Zone(object):
         """
 
         if sys.hexversion >= 0x02030000:
-            # allow Unicode filenames
+            # allow str filenames
             str_type = basestring
         else:
             str_type = str
@@ -552,7 +552,7 @@ class _MasterReader(object):
 
     def __init__(self, tok, origin, rdclass, relativize, zone_factory=Zone,
                  allow_include=False, check_origin=True):
-        if isinstance(origin, (str, unicode)):
+        if isinstance(origin, (str, str)):
             origin = dns.name.from_text(origin)
         self.tok = tok
         self.current_origin = origin
@@ -871,7 +871,7 @@ class _MasterReader(object):
                     continue
                 self.tok.unget(token)
                 self._rr_line()
-        except dns.exception.SyntaxError, detail:
+        except dns.exception.SyntaxError as detail:
             (filename, line_number) = self.tok.where()
             if detail is None:
                 detail = "syntax error"
@@ -956,7 +956,7 @@ def from_file(f, origin = None, rdclass = dns.rdataclass.IN,
     """
 
     if sys.hexversion >= 0x02030000:
-        # allow Unicode filenames; turn on universal newline support
+        # allow str filenames; turn on universal newline support
         str_type = basestring
         opts = 'rU'
     else:

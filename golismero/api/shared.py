@@ -743,10 +743,11 @@ class SharedHeap (AbstractSharedContainer):
 _valid_objects = (None, Ellipsis)
 
 # Built-in immutable hashable scalar types.
-_valid_scalars = (bool, int, long, float, str, unicode, complex)
+_valid_scalars = (bool, int, float, str, complex)  # 'long' and 'unicode' are removed in Python 3
 
 # Built-in immutable hashable container types.
 _valid_containers = (tuple, frozenset)
 
 # Shared container types. (Internally they're immutable proxy objects).
 _shared_containers = (SharedMap, SharedHeap)
+

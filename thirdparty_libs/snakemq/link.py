@@ -418,12 +418,12 @@ class Link(object):
 
         time_start = time.time()
         while (self._do_loop and
-                (count is not 0) and
-                not ((runtime is not None) and
+                (count != 0) and
+                not ((runtime != None) and
                       (time.time() - time_start > runtime))):
             is_event = len(self.poll(poll_timeout))
             self.on_loop_pass()
-            if is_event and (count is not None):
+            if is_event and (count != None):
                 count -= 1
             self.deal_connects()
 

@@ -107,22 +107,22 @@ DEFAULT_DIALECT = mac_eui48
 #-----------------------------------------------------------------------------
 #: Regular expressions to match all supported MAC address formats.
 RE_MAC_FORMATS = (
-    #   2 bytes x 6 (UNIX, Windows, EUI-48)
-    '^' + ':'.join(['([0-9A-F]{1,2})'] * 6) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,2})'] * 6) + '$',
+    # 2 bytes x 6 (UNIX, Windows, EUI-48)
+    r'^' + r':'.join([r'([0-9A-F]{1,2})'] * 6) + r'$',
+    r'^' + r'-'.join([r'([0-9A-F]{1,2})'] * 6) + r'$',
 
-    #   4 bytes x 3 (Cisco)
-    '^' + ':'.join(['([0-9A-F]{1,4})'] * 3) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,4})'] * 3) + '$',
-    '^' + '\.'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+    # 4 bytes x 3 (Cisco)
+    r'^' + r':'.join([r'([0-9A-F]{1,4})'] * 3) + r'$',
+    r'^' + r'-'.join([r'([0-9A-F]{1,4})'] * 3) + r'$',
+    r'^' + r'\.'.join([r'([0-9A-F]{1,4})'] * 3) + r'$',
 
-    #   6 bytes x 2 (PostgreSQL)
-    '^' + '-'.join(['([0-9A-F]{5,6})'] * 2) + '$',
-    '^' + ':'.join(['([0-9A-F]{5,6})'] * 2) + '$',
+    # 6 bytes x 2 (PostgreSQL)
+    r'^' + r'-'.join([r'([0-9A-F]{5,6})'] * 2) + r'$',
+    r'^' + r':'.join([r'([0-9A-F]{5,6})'] * 2) + r'$',
 
-    #   12 bytes (bare, no delimiters)
-    '^(' + ''.join(['[0-9A-F]'] * 12) + ')$',
-    '^(' + ''.join(['[0-9A-F]'] * 11) + ')$',
+    # 12 bytes (bare, no delimiters)
+    r'^(' + ''.join([r'[0-9A-F]'] * 12) + r')$',
+    r'^(' + ''.join([r'[0-9A-F]'] * 11) + r')$',
 )
 #   For efficiency, each string regexp converted in place to its compiled
 #   counterpart.

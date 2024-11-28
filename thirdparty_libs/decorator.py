@@ -57,7 +57,8 @@ else:
     def get_init(cls):
         return cls.__init__.im_func
 
-DEF = re.compile('\s*def\s*([_\w][_\w\d]*)\s*\(')
+DEF = re.compile(r'\s*def\s*([_\w][_\w\d]*)\s*\(')
+
 
 # basic functionality
 class FunctionMaker(object):
@@ -152,11 +153,11 @@ class FunctionMaker(object):
             src += '\n' # this is needed in old versions of Python
         try:
             code = compile(src, '<string>', 'single')
-            # print >> sys.stderr, 'Compiling %s' % src
-            exec code in evaldict
+            # print(f"Compiling {src}", file=sys.stderr)  # Opcional: imprimir al stderr
+            exec(code, evaldict)  # Exec con paréntesis
         except:
-            print >> sys.stderr, 'Error in generated code:'
-            print >> sys.stderr, src
+            print('Error in generated code:', file=sys.stderr)
+            print(src, file=sys.stderr)
             raise
         func = evaldict[name]
         if addsource:
@@ -192,7 +193,7 @@ def decorator(caller, func=None):
     decorator(caller, func) decorates a function using a caller.
     """
     if func is not None: # returns a decorated function
-        evaldict = func.func_globals.copy()
+        evaldict = globals().copy()
         evaldict['_call_'] = caller
         evaldict['_func_'] = func
         return FunctionMaker.create(
@@ -216,14 +217,16 @@ def decorator(caller, func=None):
             callerfunc = caller.__call__.im_func
             doc = caller.__call__.__doc__
             fun = getfullargspec(callerfunc).args[1] # second arg
-        evaldict = callerfunc.func_globals.copy()
+        evaldict = callerfunc.__globals__.copy()  # Reemplazado func_globals por __globals__
         evaldict['_call_'] = caller
         evaldict['decorator'] = decorator
+
         return FunctionMaker.create(
-            '%s(%s)' % (name, fun), 
+            '%s(%s)' % (name, fun),
             'return decorator(_call_, %s)' % fun,
             evaldict, undecorated=caller, __wrapped__=caller,
             doc=doc, module=caller.__module__)
+
 
 ######################### contextmanager ########################
 

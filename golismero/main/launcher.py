@@ -31,11 +31,12 @@ __all__ = ["run"]
 from .console import Console
 from .orchestrator import Orchestrator
 from ..api.net.web_utils import detect_auth_method, check_auth
-from ..common import OrchestratorConfig, AuditConfig, get_default_config_file,\
+from ..common import OrchestratorConfig, AuditConfig, get_default_config_file, \
     get_default_user_config_file
 
 import datetime
 import traceback
+
 
 
 #------------------------------------------------------------------------------
@@ -84,7 +85,7 @@ def run(options, *audits):
         Console.display(
             "GoLismero cancelled by the user at %s UTC" % datetime.datetime.utcnow())
         return 1
-    except SystemExit, e:
+    except SystemExit as e:
         Console.display("GoLismero stopped at %s UTC" % datetime.datetime.utcnow())
         return e.code
 
@@ -129,7 +130,7 @@ def _run(options, *audits):
                                 " the username and password.")
                             Console.display_error_more_verbose(tb)
                             return 1
-            except Exception, e:
+            except Exception as e:
                 tb = traceback.format_exc()
                 Console.display_error(
                     "[!] Proxy settings failed, reason: %s" % str(e))
@@ -145,7 +146,7 @@ def _run(options, *audits):
                     orchestrator.uiManager.check_params(*audits)
                 except SystemExit:
                     return 1
-                except Exception, e:
+                except Exception as e:
                     Console.display_error("[!] Configuration error: %s" % str(e))
                     Console.display_error_more_verbose(traceback.format_exc())
 
@@ -159,7 +160,7 @@ def _run(options, *audits):
                     orchestrator.run(*audits)
                 except SystemExit:
                     return 1
-                except Exception,e:
+                except Exception as e:
                     Console.display_error(e)
 
                     if orchestrator.config.ui_mode != "daemon":
@@ -172,7 +173,7 @@ def _run(options, *audits):
         return 1
 
     # On error, show a fatal error message.
-    except Exception, e:
+    except Exception as e:
         Console.display_error("[!] Fatal error! %s" % str(e))
         Console.display_error_more_verbose(traceback.format_exc())
         return 1

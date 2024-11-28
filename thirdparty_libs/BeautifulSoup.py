@@ -83,14 +83,16 @@ __version__ = "3.2.1"
 __copyright__ = "Copyright (c) 2004-2012 Leonard Richardson"
 __license__ = "New-style BSD"
 
-from sgmllib import SGMLParser, SGMLParseError
+from html.parser import HTMLParser
+import xml.sax
+
 import codecs
-import markupbase
+# import markupbase
 import types
 import re
-import sgmllib
+# import sgmllib
 try:
-  from htmlentitydefs import name2codepoint
+  from html.entities import name2codepoint
 except ImportError:
   name2codepoint = {}
 try:
@@ -99,8 +101,11 @@ except NameError:
     from sets import Set as set
 
 #These hacks make Beautiful Soup able to parse XML with namespaces
-sgmllib.tagfind = re.compile('[a-zA-Z][-_.:a-zA-Z0-9]*')
-markupbase._declname_match = re.compile(r'[a-zA-Z][-_.:a-zA-Z0-9]*\s*').match
+# Reemplazo de sgmllib.tagfind
+tagfind = re.compile('[a-zA-Z][-_.:a-zA-Z0-9]*')
+
+# Reemplazo de _declname_match
+_declname_match = re.compile(r'[a-zA-Z][-_.:a-zA-Z0-9]*\s*').match
 
 DEFAULT_OUTPUT_ENCODING = "utf-8"
 
@@ -446,7 +451,7 @@ class PageElement(object):
         return "&" + self.XML_SPECIAL_CHARS_TO_ENTITIES[x.group(0)[0]] + ";"
 
 
-class NavigableString(unicode, PageElement):
+class NavigableString(str, PageElement):
 
     def __new__(cls, value):
         """Create a new NavigableString.
@@ -456,9 +461,9 @@ class NavigableString(unicode, PageElement):
         passed in to the superclass's __new__ or the superclass won't know
         how to handle non-ASCII characters.
         """
-        if isinstance(value, unicode):
-            return unicode.__new__(cls, value)
-        return unicode.__new__(cls, value, DEFAULT_OUTPUT_ENCODING)
+        if isinstance(value, str):
+            return str.__new__(cls, value)
+        return str.__new__(cls, value, DEFAULT_OUTPUT_ENCODING)
 
     def __getnewargs__(self):
         return (NavigableString.__str__(self),)
@@ -470,7 +475,7 @@ class NavigableString(unicode, PageElement):
         if attr == 'string':
             return self
         else:
-            raise AttributeError, "'%s' object has no attribute '%s'" % (self.__class__.__name__, attr)
+            raise AttributeError("'{}' object has no attribute '{}'" .format(self.__class__.__name__, attr))
 
     def __unicode__(self):
         return str(self).decode(DEFAULT_OUTPUT_ENCODING)
@@ -555,10 +560,11 @@ class Tag(PageElement):
         self.escapeUnrecognizedEntities = parser.escapeUnrecognizedEntities
 
         # Convert any HTML, XML, or numeric entities in the attribute values.
-        convert = lambda(k, val): (k,
-                                   re.sub("&(#\d+|#x[0-9a-fA-F]+|\w+);",
-                                          self._convertEntities,
-                                          val))
+        convert = lambda k, val: (k,
+                          re.sub("&(#\d+|#x[0-9a-fA-F]+|\w+);",
+                                 self._convertEntities,
+                                 val))
+
         self.attrs = map(convert, self.attrs)
 
     def getString(self):
@@ -664,7 +670,8 @@ class Tag(PageElement):
             return self.find(tag[:-3])
         elif tag.find('__') != 0:
             return self.find(tag)
-        raise AttributeError, "'%s' object has no attribute '%s'" % (self.__class__, tag)
+        raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, tag))
+
 
     def __eq__(self, other):
         """Returns true iff this tag has the same name, the same attributes,
@@ -970,8 +977,8 @@ class SoupStrainer:
             if self._matches(markup, self.text):
                 found = markup
         else:
-            raise Exception, "I don't know how to match against a %s" \
-                  % markup.__class__
+            raise Exception("I don't know how to match against a {}".format(markup.__class__))
+
         return found
 
     def _matches(self, markup, matchAgainst):
@@ -1036,7 +1043,7 @@ def buildTagMap(default, *args):
 
 # Now, the parser classes.
 
-class BeautifulStoneSoup(Tag, SGMLParser):
+class BeautifulStoneSoup(Tag, HTMLParser):
 
     """This class contains the basic parser and search code. It defines
     a parser that knows nothing about tag behavior except for the
@@ -1824,7 +1831,7 @@ class UnicodeDammit:
                                                       "iso-8859-1",
                                                       "iso-8859-2"):
             markup = re.compile("([\x80-\x9f])").sub \
-                     (lambda(x): self._subMSChar(x.group(1)),
+                     (lambda x: self._subMSChar(x.group(1)),
                       markup)
 
         try:
@@ -1832,7 +1839,7 @@ class UnicodeDammit:
             u = self._toUnicode(markup, proposed)
             self.markup = u
             self.originalEncoding = proposed
-        except Exception, e:
+        except Exception as e:
             # print "That didn't work!"
             # print e
             return None
@@ -2014,4 +2021,4 @@ class UnicodeDammit:
 if __name__ == '__main__':
     import sys
     soup = BeautifulSoup(sys.stdin)
-    print soup.prettify()
+    print (soup.prettify())

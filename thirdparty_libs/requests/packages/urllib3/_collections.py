@@ -4,7 +4,7 @@
 # This module is part of urllib3 and is released under
 # the MIT License: http://www.opensource.org/licenses/mit-license.php
 
-from collections import MutableMapping
+from collections.abc import MutableMapping
 from threading import RLock
 
 try: # Python 2.7+

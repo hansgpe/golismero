@@ -1866,7 +1866,7 @@ class Relationship(object):
                     data_subtype_l = clazz.classes[0].data_subtype
                     data_type_r    = clazz.classes[1].data_type
                     data_subtype_r = clazz.classes[1].data_subtype
-                except AttributeError, e:
+                except AttributeError as e:
                     return False
                 except IndexError:
                     return False

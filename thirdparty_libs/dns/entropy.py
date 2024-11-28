@@ -18,7 +18,7 @@ import time
 try:
     import threading as _threading
 except ImportError:
-    import dummy_threading as _threading
+    import threading as _threading
 
 class EntropyPool(object):
     def __init__(self, seed=None):
@@ -101,18 +101,26 @@ class EntropyPool(object):
 
     def random_between(self, first, last):
         size = last - first + 1
-        if size > 4294967296L:
+        if size > 4294967296:
             raise ValueError('too big')
-        if size > 65536:
+        
+        # Determina cuál función de aleatoriedad usar según el tamaño
+        if size > 4294967295:
             rand = self.random_32
-            max = 4294967295L
-        elif size > 256:
+            max = 4294967295
+        elif size > 65536:
             rand = self.random_16
             max = 65535
-        else:
+        elif size > 256:
             rand = self.random_8
             max = 255
-	return (first + size * rand() // (max + 1))
+        else:
+            rand = self.random_8  # Default option if the size is <= 256
+            max = 255
+        
+        # Genera un número aleatorio dentro del rango
+        return first + size * rand() // (max + 1)
+
 
 pool = EntropyPool()
 

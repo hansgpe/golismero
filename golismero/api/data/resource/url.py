@@ -36,7 +36,8 @@ from ...config import Config
 from ...net.web_utils import parse_url
 from ...text.text_utils import to_utf8
 
-from urllib import quote
+from urllib.parse import quote
+
 
 
 #------------------------------------------------------------------------------

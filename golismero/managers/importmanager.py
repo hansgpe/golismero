@@ -144,7 +144,7 @@ class ImportManager (object):
                     plugin_instance.import_results(input_file)
                 finally:
                     Config._context = old_context
-            except Exception, e:
+            except Exception as e:
                 Logger.log_error(
                     "Failed to import results from file %r: %s" %
                     (input_file, str(e)))

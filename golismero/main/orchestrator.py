@@ -47,7 +47,7 @@ from ..messaging.message import Message
 from ..messaging.manager import MessageManager
 
 from os import getpid
-from thread import get_ident
+from _thread import get_ident
 from traceback import format_exc, print_exc
 from signal import signal, SIGINT, SIG_DFL
 

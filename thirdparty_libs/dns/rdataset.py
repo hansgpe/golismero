@@ -16,7 +16,7 @@
 """DNS rdatasets (an rdataset is a set of rdatas of a given type and class)"""
 
 import random
-import StringIO
+import io
 import struct
 
 import dns.exception
@@ -192,7 +192,7 @@ class Rdataset(dns.set.Set):
         else:
             ntext = ''
             pad = ''
-        s = StringIO.StringIO()
+        s = io.StringIO()
         if not override_rdclass is None:
             rdclass = override_rdclass
         else:
@@ -281,9 +281,9 @@ def from_text_list(rdclass, rdtype, ttl, text_rdatas):
     @rtype: dns.rdataset.Rdataset object
     """
 
-    if isinstance(rdclass, (str, unicode)):
+    if isinstance(rdclass, (str, str)):
         rdclass = dns.rdataclass.from_text(rdclass)
-    if isinstance(rdtype, (str, unicode)):
+    if isinstance(rdtype, (str, str)):
         rdtype = dns.rdatatype.from_text(rdtype)
     r = Rdataset(rdclass, rdtype)
     r.update_ttl(ttl)

@@ -39,7 +39,7 @@ from ..managers.rpcmanager import implementor
 
 from os import path, makedirs
 
-import md5
+from hashlib import md5
 import sqlite3
 import threading
 import time
@@ -985,7 +985,7 @@ class AuditSQLiteDB (BaseAuditDB):
                 if directory and not path.exists(directory):
                     try:
                         makedirs(directory)
-                    except Exception, e:
+                    except Exception as e:
                         warnings.warn(
                             "Error creating directory %r: %s" %
                             (directory, str(e)),
@@ -1095,7 +1095,7 @@ class AuditSQLiteDB (BaseAuditDB):
                     # Re-raise the exception.
                     raise
 
-            except sqlite3.Error, e:
+            except sqlite3.Error as e:
 
                 # Raise SQL errors as IO errors.
                 raise IOError(str(e))

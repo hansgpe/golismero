@@ -166,7 +166,7 @@ class AuditManager (object):
             return audit
 
         # On error, abort.
-        except Exception, e:
+        except Exception as e:
             tb = format_exc()
             try:
                 self.remove_audit(audit.name)
@@ -295,7 +295,7 @@ class AuditManager (object):
             elif message.message_code == MessageCode.MSG_CONTROL_START_AUDIT:
                 try:
                     self.new_audit(message.message_info)
-                except AuditException, e:
+                except AuditException as e:
                     tb = format_exc()
                     message = Message(
                         message_type = MessageType.MSG_TYPE_STATUS,
@@ -515,8 +515,8 @@ class Audit (object):
 
         # XXX DEBUG
         if self.orchestrator.messageManager.DEBUG:
-            print "EXPECTING ACK %d => %s" % (
-                self.__expecting_ack - count, self.__expecting_ack)
+            print ("EXPECTING ACK %d => %s" % (
+                self.__expecting_ack - count, self.__expecting_ack))
 
 
     #--------------------------------------------------------------------------
@@ -531,8 +531,8 @@ class Audit (object):
 
         # XXX DEBUG
         if self.orchestrator.messageManager.DEBUG:
-            print "EXPECTING ACK %d => %s" % (
-                self.__expecting_ack + count, self.__expecting_ack)
+            print ("EXPECTING ACK %d => %s" % (
+                self.__expecting_ack + count, self.__expecting_ack))
 
 
     #--------------------------------------------------------------------------

@@ -242,7 +242,7 @@ def colorize_traceback(traceback):
                        (filename, line_num, function)
             lines[i + 1] = colorize(lines[i + 1], "yellow")
         return "\n".join(lines)
-    except Exception, e:
+    except Exception as e:
         warn(str(e), RuntimeWarning)
         return traceback
 
@@ -367,8 +367,8 @@ class Console (object):
             ##    message = message.decode("utf-8").encode("latin-1")
             sys.stdout.write("%s\n" % (message,))
             sys.stdout.flush()
-        except Exception,e:
-            print "[!] Error while writing to output console: %s" % str(e)
+        except Exception as e:
+            print ("[!] Error while writing to output console: %s" % str(e))
 
 
     #--------------------------------------------------------------------------
@@ -426,8 +426,8 @@ class Console (object):
             if message:
                 sys.stderr.write("%s\n" % message)
                 sys.stderr.flush()
-        except Exception,e:
-            print "[!] Error while writing to error console: %s" % str(e)
+        except Exception as e:
+            print ("[!] Error while writing to error console: %s" % str(e))
 
 
     #--------------------------------------------------------------------------

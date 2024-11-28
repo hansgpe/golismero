@@ -9,7 +9,7 @@ Data structures that power Requests.
 """
 
 import os
-import collections
+from collections.abc import MutableMapping
 from itertools import islice
 
 
@@ -34,7 +34,7 @@ class IteratorProxy(object):
         return "".join(islice(self.i, None, n))
 
 
-class CaseInsensitiveDict(collections.MutableMapping):
+class CaseInsensitiveDict(MutableMapping):
     """
     A case-insensitive ``dict``-like object.
 

@@ -40,7 +40,7 @@ from ..managers.processmanager import PluginContext
 from ..messaging.codes import MessageCode
 
 from collections import defaultdict
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 from keyword import iskeyword
 from os import path, walk
 
@@ -654,7 +654,8 @@ class PluginManager (object):
     # Minimum and maximum stage numbers.
     min_stage = min(*STAGES.values())
     max_stage = max(*STAGES.values())
-    assert sorted(STAGES.itervalues()) == range(min_stage, max_stage + 1)
+    assert sorted(STAGES.values()) == list(range(min_stage, max_stage + 1))
+
 
 
     #--------------------------------------------------------------------------
@@ -802,7 +803,7 @@ class PluginManager (object):
                         success.append(plugin_id)
 
                     # On error add the plugin ID to the list of failures.
-                    except Exception, e:
+                    except Exception as e:
                         warnings.warn("Failure while loading plugins: %s" % e)
                         failure.append(plugin_id)
 
@@ -1533,7 +1534,7 @@ class AuditPluginManager (PluginManager):
                 Config._context = new_ctx
                 try:
                     plugin.check_params()
-                except Exception, e:
+                except Exception as e:
                     del self._PluginManager__plugins[plugin_id]
                     err_tb  = traceback.format_exc()
                     err_msg = "Plugin disabled, reason: %s" % str(e)

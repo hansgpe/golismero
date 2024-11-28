@@ -1,3 +1,5 @@
 docutils
 pymongo
 simplejson
+sgmllib3k
+beautifulsoup4

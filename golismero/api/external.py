@@ -237,7 +237,7 @@ def run_external_tool(command, args = None, env = None, cwd = None,
             )
 
         # On error raise ExternalToolError.
-        except OSError, e:
+        except OSError as e:
             msg = str(e)
             if isinstance(e, WindowsError):
                 if "%1" in msg:
