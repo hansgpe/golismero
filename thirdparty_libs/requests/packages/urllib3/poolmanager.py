@@ -33,7 +33,7 @@ SSL_KEYWORDS = ('key_file', 'cert_file', 'cert_reqs', 'ca_certs',
 
 
 class PoolManager(RequestMethods):
-    """
+    docstring= r"""
     Allows for arbitrary requests while transparently keeping track of
     necessary connection pools for you.
 

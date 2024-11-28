@@ -45,7 +45,7 @@ def request(method, url, **kwargs):
 
 
 def get(url, **kwargs):
-    """Sends a GET request. Returns :class:`Response` object.
+    docstring= r"""Sends a GET request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -56,7 +56,7 @@ def get(url, **kwargs):
 
 
 def options(url, **kwargs):
-    """Sends a OPTIONS request. Returns :class:`Response` object.
+    doctstring = r"""Sends a OPTIONS request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -67,7 +67,7 @@ def options(url, **kwargs):
 
 
 def head(url, **kwargs):
-    """Sends a HEAD request. Returns :class:`Response` object.
+    doctstring= r"""Sends a HEAD request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -78,7 +78,7 @@ def head(url, **kwargs):
 
 
 def post(url, data=None, **kwargs):
-    """Sends a POST request. Returns :class:`Response` object.
+    docstring= r"""Sends a POST request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -89,7 +89,7 @@ def post(url, data=None, **kwargs):
 
 
 def put(url, data=None, **kwargs):
-    """Sends a PUT request. Returns :class:`Response` object.
+    doctstring= r"""Sends a PUT request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -100,7 +100,7 @@ def put(url, data=None, **kwargs):
 
 
 def patch(url, data=None, **kwargs):
-    """Sends a PATCH request. Returns :class:`Response` object.
+    docstring = r"""Sends a PATCH request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -111,7 +111,7 @@ def patch(url, data=None, **kwargs):
 
 
 def delete(url, **kwargs):
-    """Sends a DELETE request. Returns :class:`Response` object.
+    doctstring= r"""Sends a DELETE request. Returns :class:`Response` object.
 
     :param url: URL for the new :class:`Request` object.
     :param \*\*kwargs: Optional arguments that ``request`` takes.

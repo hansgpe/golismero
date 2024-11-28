@@ -305,11 +305,12 @@ def main():
         try:
             TLD_EXTRACTOR.update(True)
         except Exception as exc:
-            sys.stderr.write(exc + "\n")
-            exit(2)
-    elif len(args.input) is 0:
+            sys.stderr.write(str(exc) + "\n")  # Convertir la excepción a cadena
+            sys.exit(2)  # Usar sys.exit() para un código de salida más claro
+    elif len(args.input) == 0:
         parser.print_usage()
-        exit(1)
+        sys.exit(1)  # Usar sys.exit() para un código de salida más claro
+
 
     for i in args.input:
         print(' '.join(extract(i)))

@@ -18,6 +18,8 @@ import socket
 import json
 import shutil
 import re
+import argparse
+
 __license__="""
 GoLismero 2.0 - The web knife.
 

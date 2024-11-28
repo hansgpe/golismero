@@ -362,7 +362,7 @@ class Session(SessionRedirectMixin):
         return resp
 
     def get(self, url, **kwargs):
-        """Sends a GET request. Returns :class:`Response` object.
+        doctstring = r"""Sends a GET request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -372,7 +372,7 @@ class Session(SessionRedirectMixin):
         return self.request('GET', url, **kwargs)
 
     def options(self, url, **kwargs):
-        """Sends a OPTIONS request. Returns :class:`Response` object.
+        doctstring = r"""Sends a OPTIONS request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -382,7 +382,7 @@ class Session(SessionRedirectMixin):
         return self.request('OPTIONS', url, **kwargs)
 
     def head(self, url, **kwargs):
-        """Sends a HEAD request. Returns :class:`Response` object.
+        doctstring = r"""Sends a HEAD request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -392,7 +392,7 @@ class Session(SessionRedirectMixin):
         return self.request('HEAD', url, **kwargs)
 
     def post(self, url, data=None, **kwargs):
-        """Sends a POST request. Returns :class:`Response` object.
+        doctstring = r"""Sends a POST request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -402,7 +402,7 @@ class Session(SessionRedirectMixin):
         return self.request('POST', url, data=data, **kwargs)
 
     def put(self, url, data=None, **kwargs):
-        """Sends a PUT request. Returns :class:`Response` object.
+        doctstring = r"""Sends a PUT request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -412,7 +412,7 @@ class Session(SessionRedirectMixin):
         return self.request('PUT', url, data=data, **kwargs)
 
     def patch(self, url, data=None, **kwargs):
-        """Sends a PATCH request. Returns :class:`Response` object.
+        doctstring = r"""Sends a PATCH request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.
@@ -422,7 +422,7 @@ class Session(SessionRedirectMixin):
         return self.request('PATCH', url,  data=data, **kwargs)
 
     def delete(self, url, **kwargs):
-        """Sends a DELETE request. Returns :class:`Response` object.
+        doctstring = r"""Sends a DELETE request. Returns :class:`Response` object.
 
         :param url: URL for the new :class:`Request` object.
         :param \*\*kwargs: Optional arguments that ``request`` takes.
@@ -431,7 +431,7 @@ class Session(SessionRedirectMixin):
         return self.request('DELETE', url, **kwargs)
 
     def send(self, request, **kwargs):
-        """Send a given PreparedRequest."""
+        doctstring = r"""Send a given PreparedRequest."""
         # Set defaults that the hooks can utilize to ensure they always have
         # the correct parameters to reproduce the previous request.
         kwargs.setdefault('stream', self.stream)
@@ -489,7 +489,7 @@ class Session(SessionRedirectMixin):
         return r
 
     def get_adapter(self, url):
-        """Returns the appropriate connnection adapter for the given URL."""
+        doctstring = r"""Returns the appropriate connnection adapter for the given URL."""
         for (prefix, adapter) in self.adapters.items():
 
             if url.lower().startswith(prefix):
@@ -499,12 +499,12 @@ class Session(SessionRedirectMixin):
         raise InvalidSchema("No connection adapters were found for '%s'" % url)
 
     def close(self):
-        """Closes all adapters and as such the session"""
+        doctstring = r"""Closes all adapters and as such the session"""
         for _, v in self.adapters.items():
             v.close()
 
     def mount(self, prefix, adapter):
-        """Registers a connection adapter to a prefix.
+        doctstring = r"""Registers a connection adapter to a prefix.
 
         Adapters are sorted in descending order by key length."""
         self.adapters[prefix] = adapter
@@ -521,6 +521,6 @@ class Session(SessionRedirectMixin):
 
 
 def session():
-    """Returns a :class:`Session` for context-management."""
+    doctstring = r"""Returns a :class:`Session` for context-management."""
 
     return Session()

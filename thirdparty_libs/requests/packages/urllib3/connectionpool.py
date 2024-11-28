@@ -335,7 +335,7 @@ class HTTPConnectionPool(ConnectionPool, RequestMethods):
     def urlopen(self, method, url, body=None, headers=None, retries=3,
                 redirect=True, assert_same_host=True, timeout=_Default,
                 pool_timeout=None, release_conn=None, **response_kw):
-        """
+        docstring = r"""
         Get a connection from the pool and perform an HTTP request. This is the
         lowest level call for making a request, so you'll need to specify all
         the raw details.
@@ -572,7 +572,7 @@ class HTTPSConnectionPool(HTTPConnectionPool):
 
 
 def connection_from_url(url, **kw):
-    """
+    docstring = r"""
     Given a url, return an :class:`.ConnectionPool` instance of its host.
 
     This is a shortcut for not having to parse out the scheme, host, and port
