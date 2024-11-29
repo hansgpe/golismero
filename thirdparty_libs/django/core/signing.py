@@ -142,7 +142,7 @@ def loads(s, key=None, salt='django.core.signing', serializer=JSONSerializer, ma
 
     The serializer is expected to accept a bytestring.
     """
-    # TimestampSigner.unsign always returns unicode but base64 and zlib
+    # TimestampSigner.unsign always returns str but base64 and zlib
     # compression operate on bytes.
     base64d = force_bytes(TimestampSigner(key, salt=salt).unsign(s, max_age=max_age))
     decompress = False

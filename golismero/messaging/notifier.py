@@ -97,7 +97,7 @@ class AbstractNotifier (object):
         :param plugins: Map of plugin IDs to plugin instances.
         :type plugins: dict(str -> Plugin)
         """
-        for name, plugin in plugins.iteritems():
+        for name, plugin in plugins.items():
             self.add_plugin(name, plugin)
 
 

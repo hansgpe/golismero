@@ -237,7 +237,7 @@ def guess_encoding(data):
         if not enc:
             continue
         try:
-            decoded = unicode(data, enc)
+            decoded = str(data, enc)
             successful_encoding = enc
 
         except (UnicodeError, LookupError):
@@ -291,7 +291,7 @@ def transitive_closure(graph, reflexive=False):
     else:
         base_set = lambda k: set()
     # The graph U_i in the article:
-    agenda_graph = dict((k, v.copy()) for (k,v) in graph.iteritems())
+    agenda_graph = dict((k, v.copy()) for (k,v) in graph.items())
     # The graph M_i in the article:
     closure_graph = dict((k, base_set(k)) for k in graph)
     for i in graph:
@@ -316,7 +316,7 @@ def invert_graph(graph):
     :rtype: dict(set)
     """
     inverted = {}
-    for key, values in graph.iteritems():
+    for key, values in graph.items():
         for value in values:
             inverted.setdefault(value, set()).add(key)
     return inverted

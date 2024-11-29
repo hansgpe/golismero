@@ -31,8 +31,8 @@ register = Library()
 
 def stringfilter(func):
     """
-    Decorator for filters which should only receive unicode objects. The object
-    passed as the first positional argument will be converted to a unicode
+    Decorator for filters which should only receive str objects. The object
+    passed as the first positional argument will be converted to a str
     object.
     """
     def _dec(*args, **kwargs):
@@ -459,7 +459,7 @@ def safe(value):
 def safeseq(value):
     """
     A "safe" filter for sequences. Marks each element in the sequence,
-    individually, as safe, after converting them to unicode. Returns a list
+    individually, as safe, after converting them to str. Returns a list
     with the results.
     """
     return [mark_safe(force_text(obj)) for obj in value]

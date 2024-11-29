@@ -997,7 +997,7 @@ class AuditSQLiteDB (BaseAuditDB):
 
             # Create the database file.
             self.__db = sqlite3.connect(filename)
-            self.__db.text_factory = lambda x: unicode(x, "utf-8", "ignore")
+            self.__db.text_factory = lambda x: str(x, "utf-8", "ignore")
 
         # Update the database filename.
         if self.__filename != ":memory:":
@@ -1344,7 +1344,7 @@ class AuditSQLiteDB (BaseAuditDB):
             str(k): int(v) for k, v in self.__cursor.fetchall()
         }
         self.__data_subtype_reverse_cache = {
-            v: k for k, v in self.__data_subtype_cache.iteritems()
+            v: k for k, v in self.__data_subtype_cache.items()
         }
 
 

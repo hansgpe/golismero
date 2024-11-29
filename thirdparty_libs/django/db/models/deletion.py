@@ -247,7 +247,7 @@ class Collector(object):
         )
 
     def instances_with_model(self):
-        for model, instances in six.iteritems(self.data):
+        for model, instances in six.items(self.data):
             for obj in instances:
                 yield model, obj
 
@@ -293,9 +293,9 @@ class Collector(object):
             qs._raw_delete(using=self.using)
 
         # update fields
-        for model, instances_for_fieldvalues in six.iteritems(self.field_updates):
+        for model, instances_for_fieldvalues in six.items(self.field_updates):
             query = sql.UpdateQuery(model)
-            for (field, value), instances in six.iteritems(instances_for_fieldvalues):
+            for (field, value), instances in six.items(instances_for_fieldvalues):
                 query.update_batch([obj.pk for obj in instances],
                                    {field.name: value}, self.using)
 
@@ -304,13 +304,13 @@ class Collector(object):
             instances.reverse()
 
         # delete batches
-        for model, batches in six.iteritems(self.batches):
+        for model, batches in six.items(self.batches):
             query = sql.DeleteQuery(model)
-            for field, instances in six.iteritems(batches):
+            for field, instances in six.items(batches):
                 query.delete_batch([obj.pk for obj in instances], self.using, field)
 
         # delete instances
-        for model, instances in six.iteritems(self.data):
+        for model, instances in six.items(self.data):
             query = sql.DeleteQuery(model)
             pk_list = [obj.pk for obj in instances]
             query.delete_batch(pk_list, self.using)
@@ -323,10 +323,10 @@ class Collector(object):
                 )
 
         # update collected instances
-        for model, instances_for_fieldvalues in six.iteritems(self.field_updates):
-            for (field, value), instances in six.iteritems(instances_for_fieldvalues):
+        for model, instances_for_fieldvalues in six.items(self.field_updates):
+            for (field, value), instances in six.items(instances_for_fieldvalues):
                 for obj in instances:
                     setattr(obj, field.attname, value)
-        for model, instances in six.iteritems(self.data):
+        for model, instances in six.items(self.data):
             for instance in instances:
                 setattr(instance, model._meta.pk.attname, None)

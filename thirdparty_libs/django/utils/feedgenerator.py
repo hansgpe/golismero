@@ -91,7 +91,7 @@ class SyndicationFeed(object):
         if categories:
             categories = [force_text(c) for c in categories]
         if ttl is not None:
-            # Force ints to unicode
+            # Force ints to str
             ttl = force_text(ttl)
         self.feed = {
             'title': to_unicode(title),
@@ -124,7 +124,7 @@ class SyndicationFeed(object):
         if categories:
             categories = [to_unicode(c) for c in categories]
         if ttl is not None:
-            # Force ints to unicode
+            # Force ints to str
             ttl = force_text(ttl)
         item = {
             'title': to_unicode(title),

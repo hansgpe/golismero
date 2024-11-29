@@ -545,13 +545,13 @@ def load_wordlists(wordlists):
 
     # Get wordlist to load
     for l_w in wordlists:
-        for wordlist_family, l_wordlists in Config.plugin_extra_config.iteritems():
+        for wordlist_family, l_wordlists in Config.plugin_extra_config.items():
             if wordlist_family.lower() in l_w.lower():
                 m_tmp_wordlist[l_w] = l_wordlists
 
     # Load the wordlist
     m_return = {}
-    for k, w_paths in m_tmp_wordlist.iteritems():
+    for k, w_paths in m_tmp_wordlist.items():
         m_return[k] = [WordListLoader.get_wordlist_as_list(w) for w in w_paths]
 
     return m_return
@@ -604,8 +604,8 @@ def HTTP_response_headers_analyzer(response_header_1, response_header_2):
         "Last-Modified",
     ]
 
-    m_res1 = ''.join([ "%s:%s" % (k,v) for k,v in response_header_1.iteritems() if k not in m_invalid_headers ])
-    m_res2 = ''.join([ "%s:%s" % (k,v) for k,v in response_header_2.iteritems() if k not in m_invalid_headers ])
+    m_res1 = ''.join([ "%s:%s" % (k,v) for k,v in response_header_1.items() if k not in m_invalid_headers ])
+    m_res2 = ''.join([ "%s:%s" % (k,v) for k,v in response_header_2.items() if k not in m_invalid_headers ])
 
     return get_diff_ratio(m_res1, m_res2)
 

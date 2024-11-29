@@ -34,7 +34,7 @@ def iter_fields(fields):
     Supports list of (k, v) tuples and dicts.
     """
     if isinstance(fields, dict):
-        return ((k, v) for k, v in six.iteritems(fields))
+        return ((k, v) for k, v in six.items(fields))
 
     return ((k, v) for k, v in fields)
 
@@ -52,7 +52,7 @@ def encode_multipart_formdata(fields, boundary=None):
         filename. If the value is a tuple of three elements, then the third
         element is treated as an explicit MIME type of the form-data section.
 
-        Field names and filenames must be unicode.
+        Field names and filenames must be str.
 
     :param boundary:
         If not specified, then a random boundary will be generated using

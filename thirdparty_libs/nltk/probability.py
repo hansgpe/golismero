@@ -312,7 +312,7 @@ class FreqDist(dict):
             pylab.title(kwargs["title"])
             del kwargs["title"]
         pylab.plot(freqs, **kwargs)
-        pylab.xticks(range(len(samples)), [unicode(s) for s in samples], rotation=90)
+        pylab.xticks(range(len(samples)), [str(s) for s in samples], rotation=90)
         pylab.xlabel("Samples")
         pylab.ylabel(ylabel)
         pylab.show()
@@ -428,7 +428,7 @@ class FreqDist(dict):
         :type samples: list
         """
         try:
-            sample_iter = samples.iteritems()
+            sample_iter = samples.items()
         except:
             sample_iter = imap(lambda x: (x,1), samples)
         for sample, count in sample_iter:
@@ -1792,7 +1792,7 @@ class ConditionalFreqDist(defaultdict):
 
         pylab.legend(loc=legend_loc)
         pylab.grid(True, color="silver")
-        pylab.xticks(range(len(samples)), [unicode(s) for s in samples], rotation=90)
+        pylab.xticks(range(len(samples)), [str(s) for s in samples], rotation=90)
         if title:
             pylab.title(title)
         pylab.xlabel("Samples")

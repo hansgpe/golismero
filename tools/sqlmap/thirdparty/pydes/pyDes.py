@@ -226,14 +226,14 @@ class _baseDes(object):
         return data
 
     def _guardAgainstUnicode(self, data):
-        # Only accept byte strings or ascii unicode values, otherwise
+        # Only accept byte strings or ascii str values, otherwise
         # there is no way to correctly decode the data into bytes.
         if _pythonMajorVersion < 3:
-            if isinstance(data, unicode):
+            if isinstance(data, str):
                 data = data.encode('utf8')
         else:
             if isinstance(data, str):
-                # Only accept ascii unicode values.
+                # Only accept ascii str values.
                 try:
                     return data.encode('ascii')
                 except UnicodeEncodeError:

@@ -47,15 +47,15 @@ class GPOS(dns.rdata.Rdata):
         super(GPOS, self).__init__(rdclass, rdtype)
         if isinstance(latitude, float) or \
            isinstance(latitude, int) or \
-           isinstance(latitude, long):
+           isinstance(latitude, int):
             latitude = str(latitude)
         if isinstance(longitude, float) or \
            isinstance(longitude, int) or \
-           isinstance(longitude, long):
+           isinstance(longitude, int):
             longitude = str(longitude)
         if isinstance(altitude, float) or \
            isinstance(altitude, int) or \
-           isinstance(altitude, long):
+           isinstance(altitude, int):
             altitude = str(altitude)
         _validate_float_string(latitude)
         _validate_float_string(longitude)

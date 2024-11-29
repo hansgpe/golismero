@@ -18,7 +18,7 @@ class EscapeBytes(bytes, EscapeData):
 
 class EscapeText(six.text_type, EscapeData):
     """
-    A unicode string object that should be HTML-escaped when output.
+    A str string object that should be HTML-escaped when output.
     """
     pass
 
@@ -40,7 +40,7 @@ class SafeBytes(bytes, SafeData):
     def __add__(self, rhs):
         """
         Concatenating a safe byte string with another safe byte string or safe
-        unicode string is safe. Otherwise, the result is no longer safe.
+        str string is safe. Otherwise, the result is no longer safe.
         """
         t = super(SafeBytes, self).__add__(rhs)
         if isinstance(rhs, SafeText):
@@ -51,7 +51,7 @@ class SafeBytes(bytes, SafeData):
 
     def _proxy_method(self, *args, **kwargs):
         """
-        Wrap a call to a normal unicode method up so that we return safe
+        Wrap a call to a normal str method up so that we return safe
         results. The method that is being wrapped is passed in the 'method'
         argument.
         """
@@ -66,13 +66,13 @@ class SafeBytes(bytes, SafeData):
 
 class SafeText(six.text_type, SafeData):
     """
-    A unicode (Python 2) / str (Python 3) subclass that has been specifically
+    A str (Python 2) / str (Python 3) subclass that has been specifically
     marked as "safe" for HTML output purposes.
     """
     def __add__(self, rhs):
         """
-        Concatenating a safe unicode string with another safe byte string or
-        safe unicode string is safe. Otherwise, the result is no longer safe.
+        Concatenating a safe str string with another safe byte string or
+        safe str string is safe. Otherwise, the result is no longer safe.
         """
         t = super(SafeText, self).__add__(rhs)
         if isinstance(rhs, SafeData):
@@ -81,7 +81,7 @@ class SafeText(six.text_type, SafeData):
 
     def _proxy_method(self, *args, **kwargs):
         """
-        Wrap a call to a normal unicode method up so that we return safe
+        Wrap a call to a normal str method up so that we return safe
         results. The method that is being wrapped is passed in the 'method'
         argument.
         """
@@ -104,7 +104,7 @@ else:
 def mark_safe(s):
     """
     Explicitly mark a string as safe for (HTML) output purposes. The returned
-    object can be used everywhere a string or unicode object is appropriate.
+    object can be used everywhere a string or str object is appropriate.
 
     Can be called multiple times on a single string.
     """

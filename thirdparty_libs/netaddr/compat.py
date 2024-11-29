@@ -53,14 +53,14 @@ elif  _sys.version_info[0:2] > [2, 3]:
     #   Python 2.4 or higher.
     _sys_maxint = _sys.maxint
 
-    _int_type = (int, long)
+    _int_type = (int, int)
 
-    _str_type = (str, unicode)
+    _str_type = (str, str)
 
     # NB - not using basestring here for maximum 2.x compatibility.
-    _is_str = lambda x: isinstance(x, (str, unicode))
+    _is_str = lambda x: isinstance(x, (str, str))
 
-    _is_int = lambda x: isinstance(x, (int, long))
+    _is_int = lambda x: isinstance(x, (int, int))
 
     _callable = lambda x: callable(x)
 

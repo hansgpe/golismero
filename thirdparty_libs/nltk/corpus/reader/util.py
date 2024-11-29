@@ -91,7 +91,7 @@ class StreamBackedCorpusView(AbstractLazySequence):
         lifetime of the ``CorpusView``, then the ``CorpusView``'s behavior
         is undefined.
 
-    :warning: If a unicode encoding is specified when constructing a
+    :warning: If a str encoding is specified when constructing a
         ``CorpusView``, then the block reader may only call
         ``stream.seek()`` with offsets that have been returned by
         ``stream.tell()``; in particular, calling ``stream.seek()`` with
@@ -137,9 +137,9 @@ class StreamBackedCorpusView(AbstractLazySequence):
             start reading.  This can be used to skip over preface
             sections.
 
-        :param encoding: The unicode encoding that should be used to
+        :param encoding: The str encoding that should be used to
             read the file's contents.  If no encoding is specified,
-            then the file's contents will be read as a non-unicode
+            then the file's contents will be read as a non-str
             string (i.e., a str).
 
         :param source: If specified, then use an ``SourcedStringStream``
@@ -423,7 +423,7 @@ def concat(docs):
     types = set([d.__class__ for d in docs])
 
     # If they're all strings, use string concatenation.
-    if types.issubset([str, unicode, basestring]):
+    if types.issubset([str, str, basestring]):
         return reduce((lambda a,b:a+b), docs, '')
 
     # If they're all corpus views, then use ConcatenatedCorpusView.

@@ -614,7 +614,7 @@ class Audit (object):
             # Determine which stages are enabled for this run.
             self.__stages_enabled = sorted(
                 stage_num
-                for stage, stage_num in STAGES.iteritems()
+                for stage, stage_num in STAGES.items()
                 if self.pluginManager.get_plugins(stage)
             )
 

@@ -406,22 +406,22 @@ class PageElement(object):
     def toEncoding(self, s, encoding=None):
         """Encodes an object to a string in some encoding, or to Unicode.
         ."""
-        if isinstance(s, unicode):
+        if isinstance(s, str):
             if encoding:
                 s = s.encode(encoding)
         elif isinstance(s, str):
             if encoding:
                 s = s.encode(encoding)
             else:
-                s = unicode(s)
+                s = str(s)
         else:
             if encoding:
                 s  = self.toEncoding(str(s), encoding)
             else:
-                s = unicode(s)
+                s = str(s)
         return s
 
-class NavigableString(unicode, PageElement):
+class NavigableString(str, PageElement):
 
     def __new__(cls, value):
         """Create a new NavigableString.
@@ -431,9 +431,9 @@ class NavigableString(unicode, PageElement):
         passed in to the superclass's __new__ or the superclass won't know
         how to handle non-ASCII characters.
         """
-        if isinstance(value, unicode):
-            return unicode.__new__(cls, value)
-        return unicode.__new__(cls, value, DEFAULT_OUTPUT_ENCODING)
+        if isinstance(value, str):
+            return str.__new__(cls, value)
+        return str.__new__(cls, value, DEFAULT_OUTPUT_ENCODING)
 
     def __getnewargs__(self):
         return (NavigableString.__str__(self),)
@@ -984,7 +984,7 @@ class SoupStrainer:
             if isinstance(markup, Tag):
                 markup = markup.name
             if markup and not isinstance(markup, basestring):
-                markup = unicode(markup)
+                markup = str(markup)
             #Now we know that chunk is either a string, or None.
             if hasattr(matchAgainst, 'match'):
                 # It's a regexp object.
@@ -994,8 +994,8 @@ class SoupStrainer:
             elif hasattr(matchAgainst, 'items'):
                 result = markup.has_key(matchAgainst)
             elif matchAgainst and isinstance(markup, basestring):
-                if isinstance(markup, unicode):
-                    matchAgainst = unicode(matchAgainst)
+                if isinstance(markup, str):
+                    matchAgainst = str(matchAgainst)
                 else:
                     matchAgainst = str(matchAgainst)
 
@@ -1159,14 +1159,14 @@ class BeautifulStoneSoup(Tag, SGMLParser):
     def _feed(self, inDocumentEncoding=None, isHTML=False):
         # Convert the document to Unicode.
         markup = self.markup
-        if isinstance(markup, unicode):
+        if isinstance(markup, str):
             if not hasattr(self, 'originalEncoding'):
                 self.originalEncoding = None
         else:
             dammit = UnicodeDammit\
                      (markup, [self.fromEncoding, inDocumentEncoding],
                       smartQuotesTo=self.smartQuotesTo, isHTML=isHTML)
-            markup = dammit.unicode
+            markup = dammit.str
             self.originalEncoding = dammit.originalEncoding
             self.declaredHTMLEncoding = dammit.declaredHTMLEncoding
         if markup:
@@ -1770,9 +1770,9 @@ class UnicodeDammit:
                      self._detectEncoding(markup, isHTML)
         self.smartQuotesTo = smartQuotesTo
         self.triedEncodings = []
-        if markup == '' or isinstance(markup, unicode):
+        if markup == '' or isinstance(markup, str):
             self.originalEncoding = None
-            self.unicode = unicode(markup)
+            self.str = str(markup)
             return
 
         u = None
@@ -1785,7 +1785,7 @@ class UnicodeDammit:
                 if u: break
 
         # If no luck and we have auto-detection library, try that:
-        if not u and chardet and not isinstance(self.markup, unicode):
+        if not u and chardet and not isinstance(self.markup, str):
             u = self._convertFrom(chardet.detect(self.markup)['encoding'])
 
         # As a last resort, try utf-8 and windows-1252:
@@ -1794,7 +1794,7 @@ class UnicodeDammit:
                 u = self._convertFrom(proposed_encoding)
                 if u: break
 
-        self.unicode = u
+        self.str = u
         if not u: self.originalEncoding = None
 
     def _subMSChar(self, orig):
@@ -1858,7 +1858,7 @@ class UnicodeDammit:
         elif data[:4] == '\xff\xfe\x00\x00':
             encoding = 'utf-32le'
             data = data[4:]
-        newdata = unicode(data, encoding)
+        newdata = str(data, encoding)
         return newdata
 
     def _detectEncoding(self, xml_data, isHTML=False):
@@ -1871,41 +1871,41 @@ class UnicodeDammit:
             elif xml_data[:4] == '\x00\x3c\x00\x3f':
                 # UTF-16BE
                 sniffed_xml_encoding = 'utf-16be'
-                xml_data = unicode(xml_data, 'utf-16be').encode('utf-8')
+                xml_data = str(xml_data, 'utf-16be').encode('utf-8')
             elif (len(xml_data) >= 4) and (xml_data[:2] == '\xfe\xff') \
                      and (xml_data[2:4] != '\x00\x00'):
                 # UTF-16BE with BOM
                 sniffed_xml_encoding = 'utf-16be'
-                xml_data = unicode(xml_data[2:], 'utf-16be').encode('utf-8')
+                xml_data = str(xml_data[2:], 'utf-16be').encode('utf-8')
             elif xml_data[:4] == '\x3c\x00\x3f\x00':
                 # UTF-16LE
                 sniffed_xml_encoding = 'utf-16le'
-                xml_data = unicode(xml_data, 'utf-16le').encode('utf-8')
+                xml_data = str(xml_data, 'utf-16le').encode('utf-8')
             elif (len(xml_data) >= 4) and (xml_data[:2] == '\xff\xfe') and \
                      (xml_data[2:4] != '\x00\x00'):
                 # UTF-16LE with BOM
                 sniffed_xml_encoding = 'utf-16le'
-                xml_data = unicode(xml_data[2:], 'utf-16le').encode('utf-8')
+                xml_data = str(xml_data[2:], 'utf-16le').encode('utf-8')
             elif xml_data[:4] == '\x00\x00\x00\x3c':
                 # UTF-32BE
                 sniffed_xml_encoding = 'utf-32be'
-                xml_data = unicode(xml_data, 'utf-32be').encode('utf-8')
+                xml_data = str(xml_data, 'utf-32be').encode('utf-8')
             elif xml_data[:4] == '\x3c\x00\x00\x00':
                 # UTF-32LE
                 sniffed_xml_encoding = 'utf-32le'
-                xml_data = unicode(xml_data, 'utf-32le').encode('utf-8')
+                xml_data = str(xml_data, 'utf-32le').encode('utf-8')
             elif xml_data[:4] == '\x00\x00\xfe\xff':
                 # UTF-32BE with BOM
                 sniffed_xml_encoding = 'utf-32be'
-                xml_data = unicode(xml_data[4:], 'utf-32be').encode('utf-8')
+                xml_data = str(xml_data[4:], 'utf-32be').encode('utf-8')
             elif xml_data[:4] == '\xff\xfe\x00\x00':
                 # UTF-32LE with BOM
                 sniffed_xml_encoding = 'utf-32le'
-                xml_data = unicode(xml_data[4:], 'utf-32le').encode('utf-8')
+                xml_data = str(xml_data[4:], 'utf-32le').encode('utf-8')
             elif xml_data[:3] == '\xef\xbb\xbf':
                 # UTF-8 with BOM
                 sniffed_xml_encoding = 'utf-8'
-                xml_data = unicode(xml_data[3:], 'utf-8').encode('utf-8')
+                xml_data = str(xml_data[3:], 'utf-8').encode('utf-8')
             else:
                 sniffed_xml_encoding = 'ascii'
                 pass

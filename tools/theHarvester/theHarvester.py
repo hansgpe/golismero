@@ -38,7 +38,7 @@ def perform_search (word, options):
 		# If we're doing a full search we also want to get all the virtual servers
 		options.virtual = True
 
-		for engine_name, engine_entry in engine_list.iteritems() :
+		for engine_name, engine_entry in engine_list.items() :
 			search = engine_entry(word, options)
 			search.process()
 			results.extend (search.get_results())
@@ -84,7 +84,7 @@ def print_banner():
 
 def start(argv):
 	engine_string = ''
-	for engine_name, engine_function in engine_list.iteritems() :
+	for engine_name, engine_function in engine_list.items() :
 		engine_string += (engine_name+ ',')
 
 	parser = ArgumentParser(epilog=
@@ -159,7 +159,7 @@ def start(argv):
 		if len(output_results.search_hosts_ips) == 0:
 			print "No hosts found"
 		else:
-			for host, ip in output_results.search_hosts_ips.iteritems() :
+			for host, ip in output_results.search_hosts_ips.items() :
 				print ip+"\t"+host
 
 	unique_ips = []
@@ -193,7 +193,7 @@ def start(argv):
 		print "---------------------------------"
 		if len(output_results.dns_reverse_results) == 0:
 			print ("None")
-		for host, ip in output_results.dns_reverse_results.iteritems() :
+		for host, ip in output_results.dns_reverse_results.items() :
 			print host
 
 	#DNS Brute force####################################################
@@ -217,7 +217,7 @@ def start(argv):
 		print "=========================================="
 		if len(output_results.dns_tld_results) == 0:
 			print ("None")
-		for host, ip in output_results.dns_tld_results.iteritems() :
+		for host, ip in output_results.dns_tld_results.items() :
 			print host
 
 	#Virtual hosts search###############################################
@@ -241,7 +241,7 @@ def start(argv):
 	output_results.shodan_results = []
 	if options.shodan_lookup == True:
 		print "[+] Shodan Database search:"
-		for host, ip in output_results.search_hosts_ips.iteritems() :
+		for host, ip in output_results.search_hosts_ips.items() :
 			try:
 				if not shodanvisited.count(ip):
 					print "\tSearching for: " + ip+": "+host

@@ -119,7 +119,7 @@ class Template(object):
             template_string = force_text(template_string)
         except UnicodeDecodeError:
             raise TemplateEncodingError("Templates can only be constructed "
-                                        "from unicode or UTF-8 strings.")
+                                        "from str or UTF-8 strings.")
         if settings.TEMPLATE_DEBUG and origin is None:
             origin = StringOrigin(template_string)
         self.nodelist = compile_string(template_string, origin)
@@ -857,7 +857,7 @@ class TextNode(Node):
 def _render_value_in_context(value, context):
     """
     Converts any value to a string to become part of a rendered template. This
-    means escaping, if required, and conversion to a unicode object. If value
+    means escaping, if required, and conversion to a str object. If value
     is a string, it is expected to have already been translated.
     """
     value = template_localtime(value, use_tz=context.use_tz)
@@ -960,7 +960,7 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
         kwarg = token_kwargs([bit], parser)
         if kwarg:
             # The kwarg was successfully extracted
-            param, value = list(six.iteritems(kwarg))[0]
+            param, value = list(six.items(kwarg))[0]
             if param not in params and varkw is None:
                 # An unexpected keyword argument was supplied
                 raise TemplateSyntaxError(

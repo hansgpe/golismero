@@ -256,7 +256,7 @@ class Connect(object):
         # support those by default
         url = asciifyUrl(url)
 
-        # fix for known issues when using url in unicode format
+        # fix for known issues when using url in str format
         # (e.g. UnicodeDecodeError: "url = url + '?' + query" in redirect case)
         url = unicodeencode(url)
 
@@ -467,7 +467,7 @@ class Connect(object):
             except:
                 pass
             finally:
-                page = page if isinstance(page, unicode) else getUnicode(page)
+                page = page if isinstance(page, str) else getUnicode(page)
 
             code = e.code
             threadData.lastHTTPError = (threadData.lastRequestUID, code)
@@ -564,7 +564,7 @@ class Connect(object):
                 raise SqlmapConnectionException(warnMsg)
 
         finally:
-            page = page if isinstance(page, unicode) else getUnicode(page)
+            page = page if isinstance(page, str) else getUnicode(page)
             socket.setdefaulttimeout(conf.timeout)
 
         processResponse(page, responseHeaders)
@@ -775,7 +775,7 @@ class Connect(object):
                 if name != "__builtins__" and originals.get(name, "") != value:
                     if isinstance(value, (basestring, int)):
                         found = False
-                        value = unicode(value)
+                        value = str(value)
 
                         regex = r"((\A|%s)%s=).+?(%s|\Z)" % (re.escape(delimiter), name, re.escape(delimiter))
                         if re.search(regex, (get or "")):

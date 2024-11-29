@@ -57,7 +57,7 @@ except ImportError: # pragma: no cover
     from urllib.request import urlopen
     from urllib.error import URLError
     from urllib.parse import scheme_chars
-    unicode = str
+    str = str
 
 LOG = logging.getLogger("tldextract")
 
@@ -245,7 +245,7 @@ def update(*args, **kwargs):
 
 def _fetch_page(url):
     try:
-        return unicode(urlopen(url).read(), 'utf-8')
+        return str(urlopen(url).read(), 'utf-8')
     except URLError as e:
         LOG.error(e)
         return u''
@@ -291,7 +291,7 @@ def main():
         description='Parse hostname from a url or fqdn')
 
     parser.add_argument('input', metavar='fqdn|url',
-                        type=unicode, nargs='*', help='fqdn or url')
+                        type=str, nargs='*', help='fqdn or url')
 
     parser.add_argument('-u', '--update', default=False, action='store_true', help='force fetch the latest TLD definitions')
     parser.add_argument('-c', '--cache_file', help='use an alternate TLD definition file')

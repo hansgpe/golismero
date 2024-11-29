@@ -301,14 +301,14 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
         """Prepares the given HTTP URL."""
         #: Accept objects that have string representations.
         try:
-            url = unicode(url)
+            url = str(url)
         except NameError:
             # We're on Python 3.
             url = str(url)
         except UnicodeDecodeError:
             pass
 
-        # Support for unicode domain names and paths.
+        # Support for str domain names and paths.
         scheme, auth, host, port, path, query, fragment = parse_url(url)
 
         if not scheme:
@@ -634,7 +634,7 @@ class Response(object):
 
     @property
     def text(self):
-        """Content of the response, in unicode.
+        """Content of the response, in str.
 
         if Response.encoding is None and chardet module is available, encoding
         will be guessed.
@@ -651,7 +651,7 @@ class Response(object):
         if self.encoding is None:
             encoding = self.apparent_encoding
 
-        # Decode unicode from given encoding.
+        # Decode str from given encoding.
         try:
             content = str(self.content, encoding, errors='replace')
         except (LookupError, TypeError):

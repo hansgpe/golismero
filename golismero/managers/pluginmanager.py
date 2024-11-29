@@ -469,7 +469,7 @@ class PluginInfo (object):
         instance.__plugin_config       = self.__plugin_config.copy()
         instance.__plugin_extra_config = {
             k: v.copy()
-            for (k, v) in self.__plugin_extra_config.iteritems()
+            for (k, v) in self.__plugin_extra_config.items()
         }
 
         # Return the new instance.
@@ -530,7 +530,7 @@ class PluginInfo (object):
             "plugin_config"       : self.plugin_config.copy(),
             "plugin_extra_config" : {
                 k: v.copy()
-                for (k, v) in self.plugin_extra_config.iteritems()
+                for (k, v) in self.plugin_extra_config.items()
             }
         }
 
@@ -697,7 +697,7 @@ class PluginManager (object):
 
         :raise KeyError: Stage value not found.
         """
-        for name, val in STAGES.iteritems():
+        for name, val in STAGES.items():
             if value == val:
                 return name
         raise KeyError("Stage value not found: %r" % value)
@@ -755,7 +755,7 @@ class PluginManager (object):
         failure = list()
 
         # The first directory level is the category.
-        for current_category, _ in CATEGORIES.iteritems():
+        for current_category, _ in CATEGORIES.items():
 
             # Get the folder for this category.
             category_folder = path.join(plugins_folder, current_category)
@@ -837,14 +837,14 @@ class PluginManager (object):
         # If it's a category, get only the plugins that match the category.
         if category in CATEGORIES:
             return { plugin_id: plugin_info
-                     for plugin_id, plugin_info in self.__plugins.iteritems()
+                     for plugin_id, plugin_info in self.__plugins.items()
                      if plugin_info.category == category }
 
         # If it's a stage, get only the plugins that match the stage.
         if category in STAGES:
             stage_num = STAGES[category]
             return { plugin_id: plugin_info
-                     for plugin_id, plugin_info in self.__plugins.iteritems()
+                     for plugin_id, plugin_info in self.__plugins.items()
                      if plugin_info.stage_number == stage_num }
 
         # If it's neither, it's an error.
@@ -933,7 +933,7 @@ class PluginManager (object):
         """
         return {
             plugin_id: plugin_info
-            for plugin_id, plugin_info in self.__plugins.iteritems()
+            for plugin_id, plugin_info in self.__plugins.items()
             if search_string == plugin_id[ plugin_id.rfind("/") + 1 : ]
         }
 
@@ -963,7 +963,7 @@ class PluginManager (object):
         if "/" not in glob_mask:
             matches.update({
                 plugin_id: plugin_info
-                for plugin_id, plugin_info in plugins.iteritems()
+                for plugin_id, plugin_info in plugins.items()
                 if any(
                     gmatch(token, glob_mask)
                     for token in plugin_id.split("/")
@@ -1064,7 +1064,7 @@ class PluginManager (object):
         :returns: tuple(str, PluginInfo) -- Plugin ID and information.
         :raises KeyError: Plugin instance not found.
         """
-        for (name, value) in self.__cache.iteritems():
+        for (name, value) in self.__cache.items():
             if value is instance:
                 return (name, self.__plugins[name])
         try:
@@ -1096,7 +1096,7 @@ class PluginManager (object):
             return 1
         target_args = plugin_info.plugin_args
         status = 0
-        for key, value in plugin_args.iteritems():
+        for key, value in plugin_args.items():
             if key in target_args:
                 target_args[key] = value
             else:
@@ -1166,7 +1166,7 @@ class AuditPluginManager (PluginManager):
 
         # Set the plugin arguments.
         if audit_config.plugin_args:
-            for plugin_id, plugin_args in audit_config.plugin_args.iteritems():
+            for plugin_id, plugin_args in audit_config.plugin_args.items():
                 status = self.set_plugin_args(plugin_id, plugin_args)
                 if status == 1:
                     try:
@@ -1322,7 +1322,7 @@ class AuditPluginManager (PluginManager):
                     if any(c in token for c in "?*["):
                         matching_plugins = self.pluginManager.\
                                                 search_plugins_by_mask(token)
-                        for name, info in matching_plugins.iteritems():
+                        for name, info in matching_plugins.items():
                             if info.category != "testing":
                                 raise ValueError(
                                     "Not a testing plugin: %s" % token)
@@ -1448,7 +1448,7 @@ class AuditPluginManager (PluginManager):
         # Raise an exception for missing dependencies.
         graph = defaultdict(set)
         stages = defaultdict(set)
-        for plugin_id, info in plugins.iteritems():
+        for plugin_id, info in plugins.items():
             stage = info.stage_number
             if not stage or stage < 0:
                 stage = 0
@@ -1480,7 +1480,7 @@ class AuditPluginManager (PluginManager):
         while graph:
             ready = {
                 plugin_id
-                for plugin_id, deps in graph.iteritems()
+                for plugin_id, deps in graph.items()
                 if not deps
             }
             if not ready:

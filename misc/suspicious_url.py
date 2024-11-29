@@ -92,7 +92,7 @@ class SuspiciousURLPlugin(TestingPlugin):
         #----------------------------------------------------------------------
         # Find suspicious URLs by calculating the Shannon entropy of the hostname.
         # Idea from: https://github.com/stricaud/urlweirdos/blob/master/src/urlw/plugins/shannon/__init__.py
-        # TODO: test with unicode enabled hostnames!
+        # TODO: test with str enabled hostnames!
 
         # Check the Shannon entropy for the hostname.
         hostname = info.parsed_url.hostname

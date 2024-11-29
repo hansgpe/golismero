@@ -108,7 +108,7 @@ def helper_test_auditdb_general_consistency(db):
         pass
     db.add_shared_values("fake_set_id", (
         "string",
-        u"unicode",
+        u"str",
         100,
         200L,
         5.0,
@@ -121,7 +121,7 @@ def helper_test_auditdb_general_consistency(db):
     ))
     assert db.has_all_shared_values("fake_set_id", (
         "string",
-        u"unicode",
+        u"str",
         100,
         200L,
         5.0,
@@ -138,7 +138,7 @@ def helper_test_auditdb_general_consistency(db):
     ))
     assert all(db.has_each_shared_value("fake_set_id", (
         "string",
-        u"unicode",
+        u"str",
         100,
         200L,
         5.0,
@@ -153,7 +153,7 @@ def helper_test_auditdb_general_consistency(db):
     assert len(total) == 11
     assert set(total) == set((
         "string",
-        u"unicode",
+        u"str",
         100,
         200L,
         5.0,
@@ -188,7 +188,7 @@ def helper_test_auditdb_general_consistency(db):
         pass
     db.put_mapped_values("fake_map_id", (
         ("a_string", "string"),
-        ("a_unicode_string", u"unicode"),
+        ("a_unicode_string", u"str"),
         ("an_integer", 100),
         ("a_long", 200L),
         ("a_float", 5.0),
@@ -226,7 +226,7 @@ def helper_test_auditdb_general_consistency(db):
         "a_tuple",
     )) == (
         "string",
-        u"unicode",
+        u"str",
         100,
         200L,
         5.0,
@@ -272,10 +272,10 @@ def helper_test_auditdb_general_consistency(db):
         "a_tuple",
     )))
     assert db.swap_mapped_values("fake_map_id",
-        (("a_string", u"unicode"), ("a_unicode_string", "string"))) == \
-        (("string", u"unicode"))
+        (("a_string", u"str"), ("a_unicode_string", "string"))) == \
+        (("string", u"str"))
     assert db.pop_mapped_values("fake_map_id", ("a_string", "a_unicode_string")) == \
-           (u"unicode", "string")
+           (u"str", "string")
     assert not db.has_any_mapped_key("fake_map_id", ("a_string", "a_unicode_string"))
     assert db.get_mapped_keys("fake_map_id") == set((
         "an_integer",
@@ -531,7 +531,7 @@ def test_auditdb_dump():
             disk.mark_stage_finished(d3.identity, 3)
         disk.add_shared_values("fake_set_id", (
             "string",
-            u"unicode",
+            u"str",
             100,
             200L,
             5.0,
@@ -544,7 +544,7 @@ def test_auditdb_dump():
         ))
         disk.put_mapped_values("fake_map_id", (
             ("a_string", "string"),
-            ("a_unicode_string", u"unicode"),
+            ("a_unicode_string", u"str"),
             ("an_integer", 100),
             ("a_long", 200L),
             ("a_float", 5.0),

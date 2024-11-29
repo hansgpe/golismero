@@ -46,7 +46,7 @@ class StringSource(object):
     ``StringSource`` consists of a document identifier, along with
     information about the begin and end offsets of each character in
     the string.  These offsets are typically either byte offsets or
-    character offsets.  (Note that for unicode strings, byte offsets
+    character offsets.  (Note that for str strings, byte offsets
     and character offsets are not the same thing.)
 
     ``StringSource`` is an abstract base class.  Two concrete
@@ -55,12 +55,12 @@ class StringSource(object):
 
       - ``ConsecutiveCharStringSource`` describes the source of strings
         whose characters have consecutive offsets (in particular, byte
-        strings w/ byte offsets; and unicode strings with character
+        strings w/ byte offsets; and str strings with character
         offsets).
 
       - ``ContiguousCharStringSource`` describes the source of strings
         whose characters are contiguous, but do not necessarily have
-        consecutive offsets (in particular, unicode strings with byte
+        consecutive offsets (in particular, str strings with byte
         offsets).
 
     :ivar docid: An identifier (such as a filename) that specifies
@@ -148,7 +148,7 @@ class StringSource(object):
         """
         Return the length of the string described by this
         ``StringSource``.  Note that this may not be equal to
-        ``self.end-self.begin`` for unicode strings described using
+        ``self.end-self.begin`` for str strings described using
         byte offsets.
         """
 
@@ -184,13 +184,13 @@ class ConsecutiveCharStringSource(StringSource):
     offset and an end offset (along with a docid).
 
     This ``StringSource`` can be used to describe byte strings that are
-    indexed using byte offsets or character offsets; or unicode
+    indexed using byte offsets or character offsets; or str
     strings that are indexed using character offsets.
     """
     def __init__(self, docid, begin, end):
-        if not isinstance(begin, (int, long)):
+        if not isinstance(begin, (int, int)):
             raise TypeError("begin attribute expected an integer")
-        if not isinstance(end, (int, long)):
+        if not isinstance(end, (int, int)):
             raise TypeError("end attribute expected an integer")
         if not  end >= begin:
             raise ValueError("begin must be less than or equal to end")
@@ -235,7 +235,7 @@ class ContiguousCharStringSource(StringSource):
     This property allow the source to be stored using a list of
     ``len(source)+1`` offsets (along with a docid).
 
-    This ``StringSource`` can be used to describe unicode strings that
+    This ``StringSource`` can be used to describe str strings that
     are indexed using byte offsets.
     """
     CONSTRUCTOR_CHECKS_OFFSETS = False
@@ -245,7 +245,7 @@ class ContiguousCharStringSource(StringSource):
             raise ValueError("at least one offset must be specified")
         if self.CONSTRUCTOR_CHECKS_OFFSETS:
             for i in range(len(offsets)):
-                if not isinstance(offsets[i], (int,long)):
+                if not isinstance(offsets[i], (int,int)):
                     raise TypeError("offsets must be integers")
                 if i>0 and offsets[i-1]>offsets[i]:
                     raise TypeError("offsets must be monotonic increasing")
@@ -292,8 +292,8 @@ class SourcedString(object):
     which correspond to a single substring of a document; and
     ``CompoundSourcedString``s, which are constructed by concatenating
     strings from multiple sources.  Each of these types has two
-    concrete subclasses: one for unicode strings (subclassed from
-    ``unicode``), and one for byte strings (subclassed from ``str``).
+    concrete subclasses: one for str strings (subclassed from
+    ``str``), and one for byte strings (subclassed from ``str``).
 
     Two sourced strings are considered equal if their contents are
     equal, even if their sources differ.  This fact is important in
@@ -335,10 +335,10 @@ class SourcedString(object):
         if cls is SourcedString:
             if isinstance(contents, str):
                 cls = SimpleSourcedByteString
-            elif isinstance(contents, unicode):
+            elif isinstance(contents, str):
                 cls = SimpleSourcedUnicodeString
             else:
-                raise TypeError("Expected 'contents' to be a unicode "
+                raise TypeError("Expected 'contents' to be a str "
                                 "string or a byte string")
 
         # Create the new object using the appropriate string class's
@@ -348,7 +348,7 @@ class SourcedString(object):
     _stringtype = None
     """A class variable, defined by subclasses of ``SourcedString``,
        determining what type of string this class contains.  Its
-       value must be either str or ``unicode``."""
+       value must be either str or ``str``."""
 
     #//////////////////////////////////////////////////////////////////////
     #{ Splitting & Stripping Methods
@@ -367,7 +367,7 @@ class SourcedString(object):
 
     _WHITESPACE_RE = re.compile(r'\s+')
     def split(self, sep=None, maxsplit=None):
-        # Check for unicode/bytestring mismatches:
+        # Check for str/bytestring mismatches:
         if self._mixed_string_types(sep, maxsplit):
             return self._decode_and_call('split', sep, maxsplit)
         # Use a regexp to split self.
@@ -377,7 +377,7 @@ class SourcedString(object):
         else: return sep_re.split(self, maxsplit)
 
     def rsplit(self, sep=None, maxsplit=None):
-        # Check for unicode/bytestring mismatches:
+        # Check for str/bytestring mismatches:
         if self._mixed_string_types(sep, maxsplit):
             return self._decode_and_call('rsplit', sep, maxsplit)
         # Split on whitespace use a regexp.
@@ -435,7 +435,7 @@ class SourcedString(object):
 
         Depending on the types and values of the supplied substrings,
         the concatenated string's value may be a Python string (str
-        or ``unicode``), a ``SimpleSourcedString``, or a
+        or ``str``), a ``SimpleSourcedString``, or a
         ``CompoundSourcedString``.
         """
         # Flatten nested compound sourced strings, and merge adjacent
@@ -563,7 +563,7 @@ class SourcedString(object):
         return self._stringtype.__mod__(self, other)
 
     def replace(self, old, new, count=0):
-        # Check for unicode/bytestring mismatches:
+        # Check for str/bytestring mismatches:
         if self._mixed_string_types(old, new, count):
             return self._decode_and_call('replace', old, new, count)
         # Use a regexp to find all occurrences of old, and replace them w/ new.
@@ -595,11 +595,11 @@ class SourcedString(object):
         return result
 
     def translate(self, table, deletechars=''):
-        # Note: str.translate() and unicode.translate() have
+        # Note: str.translate() and str.translate() have
         # different interfaces.
-        if isinstance(self, unicode):
+        if isinstance(self, str):
             if deletechars:
-                raise TypeError('The unicode version of translate() does not '
+                raise TypeError('The str version of translate() does not '
                                 'accept the deletechars parameter')
             return SourcedString.concat(
                 [SourcedString(table.get(c,c), c.source)
@@ -633,13 +633,13 @@ class SourcedString(object):
                     result.append(char_byte)
         return SourcedString.concat(result)
 
-    # Byte string -> unicode string.
+    # Byte string -> str string.
     def decode(self, encoding=None, errors='strict'):
         if encoding is None: encoding = sys.getdefaultencoding()
-        if isinstance(self, unicode):
+        if isinstance(self, str):
             return self.encode().decode(encoding, errors)
 
-        # Decode self into a plain unicode string.
+        # Decode self into a plain str string.
         unicode_chars = self._stringtype.decode(self, encoding, errors)
 
         # Special case: if the resulting string has the same length
@@ -681,9 +681,9 @@ class SourcedString(object):
     @abstract
     def _decode_one_to_one(unicode_chars):
         """
-        Helper for ``self.decode()``.  Returns a unicode-decoded
+        Helper for ``self.decode()``.  Returns a str-decoded
         version of this ``SourcedString``.  ``unicode_chars`` is the
-        unicode-decoded contents of this ``SourcedString``.
+        str-decoded contents of this ``SourcedString``.
 
         This is used in the special case where the decoded string has
         the same length that the source string does.  As a result, we
@@ -695,32 +695,32 @@ class SourcedString(object):
     def _mixed_string_types(self, *args):
         """
         Return true if the list (self,)+args contains at least one
-        unicode string and at least one byte string.  (If this is the
-        case, then all byte strings should be converted to unicode by
+        str string and at least one byte string.  (If this is the
+        case, then all byte strings should be converted to str by
         calling decode() before the operation is performed.  You can
         do this automatically using ``_decode_and_call()``.
         """
-        any_unicode = isinstance(self, unicode)
+        any_unicode = isinstance(self, str)
         any_bytestring = isinstance(self, str)
         for arg in args:
-            any_unicode = any_unicode or isinstance(arg, unicode)
+            any_unicode = any_unicode or isinstance(arg, str)
             any_bytestring = any_bytestring or isinstance(arg, str)
         return any_unicode and any_bytestring
 
     def _decode_and_call(self, op, *args):
         """
         If self or any of the values in args is a byte string, then
-        convert it to unicode by calling its decode() method.  Then
+        convert it to str by calling its decode() method.  Then
         return the result of calling self.op(*args).  ``op`` is
         specified using a string, because if ``self`` is a byte string,
         then it will change type when it is decoded.
         """
-        # Make sure all args are decoded to unicode.
+        # Make sure all args are decoded to str.
         args = list(args)
         for i in range(len(args)):
             if isinstance(args[i], str):
                 args[i] = args[i].decode()
-        # Make sure self is decoded to unicode.
+        # Make sure self is decoded to str.
         if isinstance(self, str):
             self = self.decode()
         # Retry the operation.
@@ -751,7 +751,7 @@ class SourcedString(object):
 
         max_digits = len(str(max(max(getattr(c, 'begin', 0),
                                      getattr(c, 'end', 0)) for c in self)))
-        if not isinstance(wrap, (basestring, int, long, type(None))):
+        if not isinstance(wrap, (basestring, int, int, type(None))):
             raise TypeError("Expected wrap to be a sring, int, or None.")
 
         result = []
@@ -787,7 +787,7 @@ class SourcedString(object):
             line_len = len(output_lines[0])
             if ( (isinstance(wrap, basestring) and
                   self[max(0,pos-len(wrap)+1):pos+1] == wrap) or
-                 (isinstance(wrap, (int,long)) and line_len>=wrap) or
+                 (isinstance(wrap, (int,int)) and line_len>=wrap) or
                  pos == len(self)-1):
 
                 # Put a cap on the end of sourceless strings
@@ -898,10 +898,10 @@ class SimpleSourcedString(SourcedString):
         if cls is SimpleSourcedString:
             if isinstance(contents, str):
                 cls = SimpleSourcedByteString
-            elif isinstance(contents, unicode):
+            elif isinstance(contents, str):
                 cls = SimpleSourcedUnicodeString
             else:
-                raise TypeError("Expected 'contents' to be a unicode "
+                raise TypeError("Expected 'contents' to be a str "
                                 "string or a byte string")
 
         # Create the new object using the appropriate string class's
@@ -913,7 +913,7 @@ class SimpleSourcedString(SourcedString):
         Construct a new sourced string.
 
         :param contents: The string contents of the new sourced string.
-        :type contents: str or unicode
+        :type contents: str or str
         :param source: The source for the new string.  If ``source`` is
             a string, then it is used to automatically construct a new
             ``ConsecutiveCharStringSource`` with a begin offset of
@@ -1031,16 +1031,16 @@ class CompoundSourcedString(SourcedString):
         # If the CompoundSourcedString constructor is called directly,
         # then choose one of its subclasses to delegate to.
         if cls is CompoundSourcedString:
-            # Decide whether to use a unicode string or a byte string.
+            # Decide whether to use a str string or a byte string.
             use_unicode = sum(1 for substring in substrings
-                              if isinstance(substring, unicode))
+                              if isinstance(substring, str))
             if use_unicode:
                 cls = CompoundSourcedUnicodeString
             else:
                 cls = CompoundSourcedByteString
 
         # Build the concatenated string using str.join(), which will
-        # return a str or unicode object; never a sourced string.
+        # return a str or str object; never a sourced string.
         contents = ''.join(substrings)
 
         # Create the new object using the appropriate string class's
@@ -1167,16 +1167,16 @@ class CompoundSourcedString(SourcedString):
 
 class SimpleSourcedByteString(SimpleSourcedString, str):
     _stringtype = str
-class SimpleSourcedUnicodeString(SimpleSourcedString, unicode):
-    _stringtype = unicode
+class SimpleSourcedUnicodeString(SimpleSourcedString, str):
+    _stringtype = str
 class CompoundSourcedByteString(CompoundSourcedString, str):
     _stringtype = str
-class CompoundSourcedUnicodeString(CompoundSourcedString, unicode):
-    _stringtype = unicode
+class CompoundSourcedUnicodeString(CompoundSourcedString, str):
+    _stringtype = str
     def __init__(self, substrings):
-        # If any substrings have type 'str', then decode them to unicode.
+        # If any substrings have type 'str', then decode them to str.
         for i in range(len(substrings)):
-            if not isinstance(substrings[i], unicode):
+            if not isinstance(substrings[i], str):
                 substrings[i] = substrings[i].decode()
         CompoundSourcedString.__init__(self, substrings)
 
@@ -1289,9 +1289,9 @@ class SourcedStringStream(object):
     def readlines(self, sizehint=None, keepends=True):
         """
         Read this file's contents, decode them using this reader's
-        encoding, and return it as a list of unicode lines.
+        encoding, and return it as a list of str lines.
 
-        :rtype: list(unicode)
+        :rtype: list(str)
         :param sizehint: Ignored.
         :param keepends: If false, then strip newlines.
         """

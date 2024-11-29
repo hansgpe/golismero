@@ -523,7 +523,7 @@ EVENTVALIDATION_REGEX = r'(?i)(?P<name>__EVENTVALIDATION[^"]*)[^>]+value="(?P<re
 # Number of rows to generate inside the full union test for limited output (mustn't be too large to prevent payload length problems)
 LIMITED_ROWS_TEST_NUMBER = 15
 
-# Format used for representing invalid unicode characters
+# Format used for representing invalid str characters
 INVALID_UNICODE_CHAR_FORMAT = r"\?%02x"
 
 # Regular expression for SOAP-like POST data

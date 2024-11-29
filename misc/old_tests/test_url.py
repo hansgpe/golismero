@@ -258,20 +258,20 @@ simple = (
 
 # Test of the URL parser.
 def test_url_parser():
-    print "Testing URL parsing for all properties..."
+    print ("Testing URL parsing for all properties...")
     for case in simple:
         url = case['url']
         d = ParsedURL(url)
-        for key, value in case.iteritems():
+        for key, value in case.items():
             try:
                 assert getattr(d, key) == value
             except AssertionError:
-                print "-" * 79
-                print "Failed test case: %r" % url
-                print "Attribute name: %r" % key
-                print "Expected value: %r" % value
-                print "Got instead:    %r" % getattr(d, key)
-                print "-" * 79
+                print ("-" * 79)
+                print ("Failed test case: %r" % url)
+                print ("Attribute name: %r" % key)
+                print ("Expected value: %r" % value)
+                print ("Got instead:    %r" % getattr(d, key))
+                print ("-" * 79)
                 raise
 
 

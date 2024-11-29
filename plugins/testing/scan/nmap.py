@@ -207,11 +207,11 @@ class NmapScanPlugin(TestingPlugin):
         # Get the timestamp.
         timestamp = host.get("endtime")
         if timestamp:
-            timestamp = long(timestamp)
+            timestamp = int(timestamp)
         if not timestamp:
             timestamp = host.get("starttime")
             if timestamp:
-                timestamp = long(timestamp)
+                timestamp = int(timestamp)
 
         # Get all the IP addresses. Skip the MAC addresses.
         ip_addresses = []

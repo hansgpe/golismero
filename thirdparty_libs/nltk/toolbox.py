@@ -86,16 +86,16 @@ class StandardFormat(object):
     def fields(self, strip=True, unwrap=True, encoding=None, errors='strict', unicode_fields=None):
         """
         Return an iterator that returns the next field in a ``(marker, value)``
-        tuple, where ``marker`` and ``value`` are unicode strings if an ``encoding``
-        was specified in the ``fields()`` method. Otherwise they are non-unicode strings.
+        tuple, where ``marker`` and ``value`` are str strings if an ``encoding``
+        was specified in the ``fields()`` method. Otherwise they are non-str strings.
 
         :param strip: strip trailing whitespace from the last line of each field
         :type strip: bool
         :param unwrap: Convert newlines in a field to spaces.
         :type unwrap: bool
         :param encoding: Name of an encoding to use. If it is specified then
-            the ``fields()`` method returns unicode strings rather than non
-            unicode strings.
+            the ``fields()`` method returns str strings rather than non
+            str strings.
         :type encoding: str or None
         :param errors: Error handling scheme for codec. Same as the ``decode()``
             builtin string method.

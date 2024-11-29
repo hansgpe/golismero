@@ -1991,7 +1991,7 @@ def testfile(filename, module_relative=True, name=None, package=None,
     subclass) that should be used to extract tests from the files.
 
     Optional keyword arg "encoding" specifies an encoding that should
-    be used to convert the file to unicode.
+    be used to convert the file to str.
 
     Advanced tomfoolery:  testmod runs methods of a local instance of
     class doctest.Tester, then merges the results into (or creates)
@@ -2419,7 +2419,7 @@ def DocFileTest(path, module_relative=True, package=None,
     # Find the file and read it.
     name = os.path.basename(path)
 
-    # If an encoding is specified, use it to convert the file to unicode
+    # If an encoding is specified, use it to convert the file to str
     if encoding is not None:
         doc = doc.decode(encoding)
 
@@ -2481,7 +2481,7 @@ def DocFileSuite(*paths, **kw):
       tests from the files.
 
     encoding
-      An encoding that will be used to convert the files to unicode.
+      An encoding that will be used to convert the files to str.
     """
     suite = unittest.TestSuite()
 

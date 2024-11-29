@@ -61,7 +61,7 @@ def crawl(target):
                 if not kb.threadContinue:
                     break
 
-                if isinstance(content, unicode):
+                if isinstance(content, str):
                     try:
                         match = re.search(r"(?si)<html[^>]*>(.+)</html>", content)
                         if match:

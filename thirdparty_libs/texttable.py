@@ -87,7 +87,7 @@ Roger Lew:
     - columns datatype specifications
 
 Brian Peterson:
-    - better handling of unicode errors
+    - better handling of str errors
 """
 
 import sys
@@ -116,7 +116,7 @@ def len(iterable):
         return iterable.__len__()
 
     try:
-        return len(unicode(iterable, 'utf'))
+        return len(str(iterable, 'utf'))
     except:
         return iterable.__len__()
 
@@ -595,10 +595,10 @@ class Texttable:
                         lost_color = attr
             for c in cell.split('\n'):
                 try:
-                    c = unicode(c, 'utf')
+                    c = str(c, 'utf')
                 except UnicodeDecodeError, strerror:
                     sys.stderr.write("UnicodeDecodeError exception for string '%s': %s\n" % (c, strerror))
-                    c = unicode(c, 'utf', 'replace')
+                    c = str(c, 'utf', 'replace')
                 try:
                     array.extend(
                         [get_color_string(

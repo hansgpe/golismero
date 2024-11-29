@@ -1342,7 +1342,7 @@ class ParsedURL (object):
                 return self.__query
             return ''
         return '&'.join( '%s=%s' % ( quote(k, safe=''), quote(v, safe='') )
-                         for (k, v) in sorted(self.__query_params.iteritems()) )
+                         for (k, v) in sorted(self.__query_params.items()) )
 
     @query.setter
     def query(self, query):
@@ -1595,7 +1595,7 @@ class HTMLElement (object):
         self.__content  = to_utf8(content)
         self.__attrs = {
             to_utf8(k): to_utf8(v)
-            for k,v in attrs.iteritems()
+            for k,v in attrs.items()
         }
 
 

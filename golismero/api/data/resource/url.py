@@ -210,11 +210,11 @@ class URL(_AbstractURL):
         if post_params:
             if hasattr(post_params, "iteritems"):
                 post_params = {
-                    to_utf8(k): to_utf8(v) for k,v in post_params.iteritems()
+                    to_utf8(k): to_utf8(v) for k,v in post_params.items()
                 }
                 post_data = '&'.join(
                     '%s=%s' % ( quote(k, safe=''), quote(v, safe='') )
-                    for (k, v) in sorted(post_params.iteritems())
+                    for (k, v) in sorted(post_params.items())
                 )
             else:
                 post_data   = to_utf8(post_params)

@@ -702,7 +702,7 @@ class PluginContext (object):
 
         # Validate the progress.
         if progress is not None:
-            if type(progress) in (int, long):
+            if type(progress) in (int, int):
                 progress = float(progress)
             elif type(progress) is not float:
                 raise TypeError(

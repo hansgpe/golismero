@@ -145,7 +145,7 @@ class Crawler(object):
         parsed = urllib2.urlparse.urlparse(url)
         qs = cgi.parse_qs(parsed.query)
         qs_joint = {}
-        for key, val in qs.iteritems():
+        for key, val in qs.items():
             qs_joint[key] = val[0]
         attack_qs = dict(qs_joint)
         attack_qs[arg_name] = "VECTOR"

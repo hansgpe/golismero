@@ -41,7 +41,7 @@ class MergeDict(object):
     def _iteritems(self):
         seen = set()
         for dict_ in self.dicts:
-            for item in six.iteritems(dict_):
+            for item in six.items(dict_):
                 k = item[0]
                 if k in seen:
                     continue
@@ -66,7 +66,7 @@ class MergeDict(object):
         itervalues = _itervalues
 
         def items(self):
-            return list(self.iteritems())
+            return list(self.items())
 
         def keys(self):
             return list(self.iterkeys())
@@ -203,7 +203,7 @@ class SortedDict(dict):
             return [self[k] for k in self.keyOrder]
 
     def update(self, dict_):
-        for k, v in six.iteritems(dict_):
+        for k, v in six.items(dict_):
             self[k] = v
 
     def setdefault(self, key, default):
@@ -246,7 +246,7 @@ class SortedDict(dict):
         Replaces the normal dict.__repr__ with a version that returns the keys
         in their sorted order.
         """
-        return '{%s}' % ', '.join(['%r: %r' % (k, v) for k, v in six.iteritems(self)])
+        return '{%s}' % ', '.join(['%r: %r' % (k, v) for k, v in six.items(self)])
 
     def clear(self):
         super(SortedDict, self).clear()
@@ -386,7 +386,7 @@ class MultiValueDict(dict):
 
     def _iterlists(self):
         """Yields (key, list) pairs."""
-        return six.iteritems(super(MultiValueDict, self))
+        return six.items(super(MultiValueDict, self))
 
     def _itervalues(self):
         """Yield the last value on every key list."""
@@ -433,7 +433,7 @@ class MultiValueDict(dict):
                         self.setlistdefault(key).append(value)
                 except TypeError:
                     raise ValueError("MultiValueDict.update() takes either a MultiValueDict or dictionary")
-        for key, value in six.iteritems(kwargs):
+        for key, value in six.items(kwargs):
             self.setlistdefault(key).append(value)
 
     def dict(self):

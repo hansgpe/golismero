@@ -33,7 +33,7 @@ def tamper(payload, **kwargs):
 
     Notes:
         * Useful to bypass weak web application firewalls that do not
-          unicode url-decode the request before processing it through their
+          str url-decode the request before processing it through their
           ruleset
 
     >>> tamper('SELECT FIELD%20FROM TABLE')

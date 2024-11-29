@@ -572,7 +572,7 @@ class BinaryMaxentFeatureEncoding(MaxentFeatureEncodingI):
 
     def describe(self, f_id):
         # Inherit docs.
-        if not isinstance(f_id, (int, long)):
+        if not isinstance(f_id, (int, int)):
             raise TypeError('describe() expected an int')
         try:
             self._inv_mapping
@@ -905,7 +905,7 @@ class TypedMaxentFeatureEncoding(MaxentFeatureEncodingI):
 
     def describe(self, f_id):
         # Inherit docs.
-        if not isinstance(f_id, (int, long)):
+        if not isinstance(f_id, (int, int)):
             raise TypeError('describe() expected an int')
         try:
             self._inv_mapping

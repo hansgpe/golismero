@@ -91,7 +91,7 @@ class CommonMiddleware(object):
             if six.PY3:
                 newurl += '?' + request.META['QUERY_STRING']
             else:
-                # `query_string` is a bytestring. Appending it to the unicode
+                # `query_string` is a bytestring. Appending it to the str
                 # string `newurl` will fail if it isn't ASCII-only. This isn't
                 # allowed; only broken software generates such query strings.
                 # Better drop the invalid query string than crash (#15152).

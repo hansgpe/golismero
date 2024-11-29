@@ -17,7 +17,7 @@ if not six.PY3:
 
 
 # Under Python 2, define our own abspath function that can handle joining
-# unicode paths to a current working directory that has non-ASCII characters
+# str paths to a current working directory that has non-ASCII characters
 # in it.  This isn't necessary on Windows since the Windows version of abspath
 # handles this correctly. It also handles drive letters differently than the
 # pure Python implementation, so it's best not to replace it.
@@ -26,7 +26,7 @@ if six.PY3 or os.name == 'nt':
 else:
     def abspathu(path):
         """
-        Version of os.path.abspath that uses the unicode representation
+        Version of os.path.abspath that uses the str representation
         of the current working directory, thus avoiding a UnicodeDecodeError
         in join when the cwd has non-ASCII characters.
         """
@@ -36,7 +36,7 @@ else:
 
 def upath(path):
     """
-    Always return a unicode path.
+    Always return a str path.
     """
     if not six.PY3:
         return path.decode(fs_encoding)
@@ -44,7 +44,7 @@ def upath(path):
 
 def npath(path):
     """
-    Always return a native path, that is unicode on Python 3 and bytestring on
+    Always return a native path, that is str on Python 3 and bytestring on
     Python 2.
     """
     if not six.PY3 and not isinstance(path, bytes):

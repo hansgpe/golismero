@@ -42,7 +42,7 @@ def calculate_shannon_entropy(string):
     :returns: Shannon entropy (min bits per byte-character).
     :rtype: float
     """
-    if isinstance(string, unicode):
+    if isinstance(string, str):
         string = string.encode("ascii")
     ent = 0.0
     if len(string) < 2:
@@ -68,7 +68,7 @@ def guess_hash(hash_to_guess):
     :rtype: list(str)
     """
     matched = []
-    for algo, signature in HASH_SIGNATURES.iteritems():
+    for algo, signature in HASH_SIGNATURES.items():
         (length, alnum, alpha, digit, lower, upper, match) = signature
         if not len(hash_to_guess) == length:
             continue
@@ -107,7 +107,7 @@ def validate_hash(hash_name, hash_value):
     :rtype: bool | None
     """
     hash_name = hash_name.lower()
-    for algo, signature in HASH_SIGNATURES.iteritems():
+    for algo, signature in HASH_SIGNATURES.items():
         if hash_name == algo.lower():
             (length, alnum, alpha, digit, lower, upper, match) = signature
             if not len(hash_value) == length:

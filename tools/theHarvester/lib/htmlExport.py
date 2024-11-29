@@ -141,7 +141,7 @@ class htmlExport():
 		if self.hosts_ips!=[]:
 			page.table(class_="HarvesterTable")
 			page.addcontent("<tr><td>IP</td><td>Host</td></tr>")
-			for host, ip in self.hosts_ips.iteritems() :
+			for host, ip in self.hosts_ips.items() :
 				page.addcontent("<tr><td>"+ip+"</td><td>"+host+"</td></tr>")
 			page.table.close()
 
@@ -158,7 +158,7 @@ class htmlExport():
 			page.h3("TLD domains found in TLD expansion:")
 			page.table(class_="HarvesterTable")
 			page.addcontent("<tr><td>IP</td><td>Host</td></tr>")
-			for host, ip in self.dns_tld_results.iteritems() :
+			for host, ip in self.dns_tld_results.items() :
 				page.addcontent("<tr><td>"+ip+"</td><td>"+host+"</td></tr>")
 			page.table.close()
 
@@ -166,7 +166,7 @@ class htmlExport():
 			page.h3("Hosts found in DNS brute force:")
 			page.table(class_="HarvesterTable")
 			page.addcontent("<tr><td>IP</td><td>Host</td></tr>")
-			for host, ip in self.dns_brute_results.iteritems() :
+			for host, ip in self.dns_brute_results.items() :
 				page.addcontent("<tr><td>"+ip+"</td><td>"+host+"</td></tr>")
 			page.table.close()
 
@@ -174,7 +174,7 @@ class htmlExport():
 			page.h3("Hosts found with reverse lookup :")
 			page.table(class_="HarvesterTable")
 			page.addcontent("<tr><td>IP</td><td>Host</td></tr>")
-			for host, ip in self.dns_reverse_results.iteritems() :
+			for host, ip in self.dns_reverse_results.items() :
 				page.addcontent("<tr class='dnsrevitem'><td>"+ip+"</td><td>"+host+"</td></tr>")
 			page.table.close()
 

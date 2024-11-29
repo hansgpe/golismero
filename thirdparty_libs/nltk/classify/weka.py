@@ -262,7 +262,7 @@ class ARFF_Formatter:
             for (fname, fval) in tok.items():
                 if issubclass(type(fval), bool):
                     ftype = '{True, False}'
-                elif issubclass(type(fval), (int, float, long, bool)):
+                elif issubclass(type(fval), (int, float, int, bool)):
                     ftype = 'NUMERIC'
                 elif issubclass(type(fval), basestring):
                     ftype = 'STRING'
@@ -326,7 +326,7 @@ class ARFF_Formatter:
     def _fmt_arff_val(self, fval):
         if fval is None:
             return '?'
-        elif isinstance(fval, (bool, int, long)):
+        elif isinstance(fval, (bool, int, int)):
             return '%s' % fval
         elif isinstance(fval, float):
             return '%r' % fval

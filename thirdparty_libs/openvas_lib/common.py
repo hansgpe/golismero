@@ -256,7 +256,7 @@ class ConnectionManager(object):
 	def _send(self, in_data):
 		"""Send OMP data to the manager and read the result.
 
-		`in_data` may be either an unicode string, an utf-8 encoded
+		`in_data` may be either an str string, an utf-8 encoded
 		string or an etree Element. The result is as an etree Element.
 
 		:param in_data: data to send.

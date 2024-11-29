@@ -94,9 +94,9 @@ if is_py2:
 
     builtin_str = str
     bytes = str
-    str = unicode
+    str = str
     basestring = basestring
-    numeric_types = (int, long, float)
+    numeric_types = (int, int, float)
 
 
 elif is_py3:

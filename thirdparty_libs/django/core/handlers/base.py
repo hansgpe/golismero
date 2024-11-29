@@ -236,7 +236,7 @@ class BaseHandler(object):
 
 def get_path_info(environ):
     """
-    Returns the HTTP request's PATH_INFO as a unicode string.
+    Returns the HTTP request's PATH_INFO as a str string.
     """
     path_info = environ.get('PATH_INFO', str('/'))
     # Under Python 3, strings in environ are decoded with ISO-8859-1;

@@ -149,7 +149,7 @@ class Zone(object):
         return self.nodes.values()
 
     def iteritems(self):
-        return self.nodes.iteritems()
+        return self.nodes.items()
 
     def items(self):
         return self.nodes.items()
@@ -426,7 +426,7 @@ class Zone(object):
             rdtype = dns.rdatatype.from_text(rdtype)
         if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
-        for (name, node) in self.iteritems():
+        for (name, node) in self.items():
             for rds in node:
                 if rdtype == dns.rdatatype.ANY or \
                    (rds.rdtype == rdtype and rds.covers == covers):
@@ -449,7 +449,7 @@ class Zone(object):
             rdtype = dns.rdatatype.from_text(rdtype)
         if isinstance(covers, (str, str)):
             covers = dns.rdatatype.from_text(covers)
-        for (name, node) in self.iteritems():
+        for (name, node) in self.items():
             for rds in node:
                 if rdtype == dns.rdatatype.ANY or \
                    (rds.rdtype == rdtype and rds.covers == covers):

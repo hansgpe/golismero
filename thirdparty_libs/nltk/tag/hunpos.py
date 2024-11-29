@@ -109,7 +109,7 @@ class HunposTagger(TaggerI):
         """
         for token in tokens:
             assert "\n" not in token, "Tokens should not contain newlines"
-            if isinstance(token, unicode):
+            if isinstance(token, str):
                 token = token.encode(self._encoding)
             self._hunpos.stdin.write(token + "\n")
         # We write a final empty line to tell hunpos that the sentence is finished:

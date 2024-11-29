@@ -24,7 +24,7 @@ class search_jigsaw:
 
 		returncode, returnmsg, response_headers = h.getreply()
 		encoding=response_headers['content-type'].split('charset=')[-1]
-		self.last_results = unicode(h.getfile().read(), encoding)
+		self.last_results = str(h.getfile().read(), encoding)
 
 		self.total_results+=self.last_results
 

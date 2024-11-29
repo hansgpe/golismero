@@ -243,7 +243,7 @@ def test_http_headers():
             "plain",
             "no-cache",
         ]
-        assert list(headers.iteritems()) == [
+        assert list(headers.items()) == [
             ("Host", "www.example.com"),
             ("Connection", "keep-alive"),
             ("Content-Length", "0"),
@@ -563,7 +563,7 @@ def test_http_response():
                 assert response.identity in request.links
                 assert request.identity in response.links
                 assert str(response.headers) == kwargs["raw_headers"]
-                for key, value in kwargs.iteritems():
+                for key, value in kwargs.items():
                     if key == "raw_response" and "broken" in title:
                         continue
                     try:

@@ -34,7 +34,7 @@ ASCTIME_DATE = re.compile(r'^\w{3} %s %s %s %s$' % (__M, __D2, __T, __Y))
 
 def urlquote(url, safe='/'):
     """
-    A version of Python's urllib.quote() function that can operate on unicode
+    A version of Python's urllib.quote() function that can operate on str
     strings. The url is first UTF-8 encoded before quoting. The returned string
     can safely be used as part of an argument to a subsequent iri_to_uri() call
     without double-quoting occurring.
@@ -45,7 +45,7 @@ urlquote = allow_lazy(urlquote, six.text_type)
 def urlquote_plus(url, safe=''):
     """
     A version of Python's urllib.quote_plus() function that can operate on
-    unicode strings. The url is first UTF-8 encoded before quoting. The
+    str strings. The url is first UTF-8 encoded before quoting. The
     returned string can safely be used as part of an argument to a subsequent
     iri_to_uri() call without double-quoting occurring.
     """
@@ -71,7 +71,7 @@ urlunquote_plus = allow_lazy(urlunquote_plus, six.text_type)
 def urlencode(query, doseq=0):
     """
     A version of Python's urllib.urlencode() function that can operate on
-    unicode strings. The parameters are first case to UTF-8 encoded strings and
+    str strings. The parameters are first case to UTF-8 encoded strings and
     then encoded as per normal.
     """
     if isinstance(query, MultiValueDict):

@@ -764,18 +764,18 @@ class OpenOnDemandZipFile(zipfile.ZipFile):
 class SeekableUnicodeStreamReader(object):
     """
     A stream reader that automatically encodes the source byte stream
-    into unicode (like ``codecs.StreamReader``); but still supports the
+    into str (like ``codecs.StreamReader``); but still supports the
     ``seek()`` and ``tell()`` operations correctly.  This is in contrast
     to ``codecs.StreamReader``, which provide *broken* ``seek()`` and
     ``tell()`` methods.
 
     This class was motivated by ``StreamBackedCorpusView``, which
     makes extensive use of ``seek()`` and ``tell()``, and needs to be
-    able to handle unicode-encoded files.
+    able to handle str-encoded files.
 
     Note: this class requires stateless decoders.  To my knowledge,
     this shouldn't cause a problem with any of python's builtin
-    unicode encodings.
+    str encodings.
     """
     DEBUG = True #: If true, then perform extra sanity checks.
 
@@ -797,7 +797,7 @@ class SeekableUnicodeStreamReader(object):
 
         self.decode = codecs.getdecoder(encoding)
         """The function that is used to decode byte strings into
-           unicode strings."""
+           str strings."""
 
         self.bytebuffer = ''
         """A buffer to use bytes that have been read but have not yet
@@ -807,7 +807,7 @@ class SeekableUnicodeStreamReader(object):
         self.linebuffer = None
         """A buffer used by ``readline()`` to hold characters that have
            been read, but have not yet been returned by ``read()`` or
-           ``readline()``.  This buffer consists of a list of unicode
+           ``readline()``.  This buffer consists of a list of str
            strings, where each string corresponds to a single line.
            The final element of the list may or may not be a complete
            line.  Note that the existence of a linebuffer makes the
@@ -838,12 +838,12 @@ class SeekableUnicodeStreamReader(object):
     def read(self, size=None):
         """
         Read up to ``size`` bytes, decode them using this reader's
-        encoding, and return the resulting unicode string.
+        encoding, and return the resulting str string.
 
         :param size: The maximum number of bytes to read.  If not
             specified, then read as many bytes as possible.
         :type size: int
-        :rtype: unicode
+        :rtype: str
         """
         chars = self._read(size)
 
@@ -858,7 +858,7 @@ class SeekableUnicodeStreamReader(object):
     def readline(self, size=None):
         """
         Read a line of text, decode it using this reader's encoding,
-        and return the resulting unicode string.
+        and return the resulting str string.
 
         :param size: The maximum number of bytes to read.  If no
             newline is encountered before ``size`` bytes have been read,
@@ -918,9 +918,9 @@ class SeekableUnicodeStreamReader(object):
     def readlines(self, sizehint=None, keepends=True):
         """
         Read this file's contents, decode them using this reader's
-        encoding, and return it as a list of unicode lines.
+        encoding, and return it as a list of str lines.
 
-        :rtype: list(unicode)
+        :rtype: list(str)
         :param sizehint: Ignored.
         :param keepends: If false, then strip newlines.
         """
@@ -1091,7 +1091,7 @@ class SeekableUnicodeStreamReader(object):
         """
         Read up to ``size`` bytes from the underlying stream, decode
         them using this reader's encoding, and return the resulting
-        unicode string.  ``linebuffer`` is not included in the result.
+        str string.  ``linebuffer`` is not included in the result.
         """
         if size == 0: return u''
 
@@ -1106,7 +1106,7 @@ class SeekableUnicodeStreamReader(object):
             new_bytes = self.stream.read(size)
         bytes = self.bytebuffer + new_bytes
 
-        # Decode the bytes into unicode characters
+        # Decode the bytes into str characters
         chars, bytes_decoded = self._incr_decode(bytes)
 
         # If we got bytes but couldn't decode any, then read further.
@@ -1125,14 +1125,14 @@ class SeekableUnicodeStreamReader(object):
 
     def _incr_decode(self, bytes):
         """
-        Decode the given byte string into a unicode string, using this
+        Decode the given byte string into a str string, using this
         reader's encoding.  If an exception is encountered that
         appears to be caused by a truncation error, then just decode
         the byte string without the bytes that cause the trunctaion
         error.
 
         Return a tuple ``(chars, num_consumed)``, where ``chars`` is
-        the decoded unicode string, and ``num_consumed`` is the
+        the decoded str string, and ``num_consumed`` is the
         number of bytes that were consumed.
         """
         while True:

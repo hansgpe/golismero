@@ -274,7 +274,7 @@ class SimpleLazyObject(LazyObject):
         __str__ = new_method_proxy(str)
     else:
         __str__ = new_method_proxy(str)
-        __unicode__ = new_method_proxy(unicode)
+        __unicode__ = new_method_proxy(str)
 
     def __deepcopy__(self, memo):
         if self._wrapped is empty:

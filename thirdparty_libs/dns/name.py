@@ -532,15 +532,15 @@ root = Name([''])
 empty = Name([])
 
 def from_unicode(text, origin = root):
-    """Convert unicode text into a Name object.
+    """Convert str text into a Name object.
 
     Lables are encoded in IDN ACE form.
 
     @rtype: dns.name.Name object
     """
 
-    if not isinstance(text, unicode):
-        raise ValueError("input to from_unicode() must be a unicode string")
+    if not isinstance(text, str):
+        raise ValueError("input to from_unicode() must be a str string")
     if not (origin is None or isinstance(origin, Name)):
         raise ValueError("origin must be a Name or None")
     labels = []
@@ -599,7 +599,7 @@ def from_text(text, origin = root):
     """
 
     if not isinstance(text, str):
-        if isinstance(text, unicode) and sys.hexversion >= 0x02030000:
+        if isinstance(text, str) and sys.hexversion >= 0x02030000:
             return from_unicode(text, origin)
         else:
             raise ValueError("input to from_text() must be a string")

@@ -85,7 +85,7 @@ if py3k:
     import pickle
     from io import BytesIO
     basestring = str
-    unicode = str
+    str = str
     json_loads = lambda s: json_lds(touni(s))
     callable = lambda x: hasattr(x, '__call__')
     imap = map
@@ -110,9 +110,9 @@ else: # 2.x
 
 # Some helpers for string/byte handling
 def tob(s, enc='utf8'):
-    return s.encode(enc) if isinstance(s, unicode) else bytes(s)
+    return s.encode(enc) if isinstance(s, str) else bytes(s)
 def touni(s, enc='utf8', err='strict'):
-    return s.decode(enc, err) if isinstance(s, bytes) else unicode(s)
+    return s.decode(enc, err) if isinstance(s, bytes) else str(s)
 tonat = touni if py3k else tob
 
 # 3.2 fixes cgi.FieldStorage to accept bytes (which makes a lot of sense).
@@ -777,7 +777,7 @@ class Bottle(object):
     def _cast(self, out, peek=None):
         """ Try to convert the parameter into something WSGI compatible and set
         correct HTTP headers when possible.
-        Support: False, str, unicode, dict, HTTPResponse, HTTPError, file-like,
+        Support: False, str, str, dict, HTTPResponse, HTTPError, file-like,
         iterable of strings and iterable of unicodes
         """
 
@@ -786,12 +786,12 @@ class Bottle(object):
             if 'Content-Length' not in response:
                 response['Content-Length'] = 0
             return []
-        # Join lists of byte or unicode strings. Mixed lists are NOT supported
+        # Join lists of byte or str strings. Mixed lists are NOT supported
         if isinstance(out, (tuple, list))\
-        and isinstance(out[0], (bytes, unicode)):
+        and isinstance(out[0], (bytes, str)):
             out = out[0][0:0].join(out) # b'abc'[0:0] -> b''
-        # Encode unicode strings
-        if isinstance(out, unicode):
+        # Encode str strings
+        if isinstance(out, str):
             out = out.encode(response.charset)
         # Byte Strings are just returned
         if isinstance(out, bytes):
@@ -836,7 +836,7 @@ class Bottle(object):
             return self._cast(first)
         elif isinstance(first, bytes):
             new_iter = itertools.chain([first], iout)
-        elif isinstance(first, unicode):
+        elif isinstance(first, str):
             encoder = lambda x: x.encode(response.charset)
             new_iter = imap(encoder, itertools.chain([first], iout))
         else:
@@ -1721,11 +1721,11 @@ class MultiDict(DictMixin):
         def iterkeys(self): return self.dict.iterkeys()
         def itervalues(self): return (v[-1] for v in self.dict.itervalues())
         def iteritems(self):
-            return ((k, v[-1]) for k, v in self.dict.iteritems())
+            return ((k, v[-1]) for k, v in self.dict.items())
         def iterallitems(self):
-            return ((k, v) for k, vl in self.dict.iteritems() for v in vl)
+            return ((k, v) for k, vl in self.dict.items() for v in vl)
         def allitems(self):
-            return [(k, v) for k, vl in self.dict.iteritems() for v in vl]
+            return [(k, v) for k, vl in self.dict.items() for v in vl]
 
     def get(self, key, default=None, index=-1, type=None):
         ''' Return the most recent value for a key.
@@ -1772,12 +1772,12 @@ class FormsDict(MultiDict):
 
     #: Encoding used for attribute values.
     input_encoding = 'utf8'
-    #: If true (default), unicode strings are first encoded with `latin1`
+    #: If true (default), str strings are first encoded with `latin1`
     #: and then decoded to match :attr:`input_encoding`.
     recode_unicode = True
 
     def _fix(self, s, encoding=None):
-        if isinstance(s, unicode) and self.recode_unicode: # Python 3 WSGI
+        if isinstance(s, str) and self.recode_unicode: # Python 3 WSGI
             s = s.encode('latin1')
         if isinstance(s, bytes): # Python 2 WSGI
             return s.decode(encoding or self.input_encoding)
@@ -1786,7 +1786,7 @@ class FormsDict(MultiDict):
     def decode(self, encoding=None):
         ''' Returns a copy with all keys and values de- or recoded to match
             :attr:`input_encoding`. Some libraries (e.g. WTForms) want a
-            unicode dictionary. '''
+            str dictionary. '''
         copy = FormsDict()
         enc = copy.input_encoding = encoding or self.input_encoding
         copy.recode_unicode = False
@@ -1800,7 +1800,7 @@ class FormsDict(MultiDict):
         except (UnicodeError, KeyError):
             return default
 
-    def __getattr__(self, name, default=unicode()):
+    def __getattr__(self, name, default=str()):
         # Without this guard, pickle generates a cryptic TypeError:
         if name.startswith('__') and name.endswith('__'):
             return super(FormsDict, self).__getattr__(name)
@@ -1834,7 +1834,7 @@ class HeaderDict(MultiDict):
 class WSGIHeaderDict(DictMixin):
     ''' This dict-like class wraps a WSGI environ dict and provides convenient
         access to HTTP_* fields. Keys and values are native strings
-        (2.x bytes or 3.x unicode) and keys are case-insensitive. If the WSGI
+        (2.x bytes or 3.x str) and keys are case-insensitive. If the WSGI
         environment contains non-native string values, these are de- or encoded
         using a lossless 'latin1' character set.
 
@@ -1856,7 +1856,7 @@ class WSGIHeaderDict(DictMixin):
         return 'HTTP_' + key
 
     def raw(self, key, default=None):
-        ''' Return the header value as is (may be bytes or unicode). '''
+        ''' Return the header value as is (may be bytes or str). '''
         return self.environ.get(self._ekey(key), default)
 
     def __getitem__(self, key):
@@ -2843,7 +2843,7 @@ class BaseTemplate(object):
 
     def render(self, *args, **kwargs):
         """ Render the template with the specified local variables and return
-        a single byte or unicode string. If it is a byte string, the encoding
+        a single byte or str string. If it is a byte string, the encoding
         must match self.encoding. This method must be thread-safe!
         Local variables may be provided in dictionaries (*args)
         or directly, as keywords (**kwargs).

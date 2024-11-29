@@ -57,7 +57,7 @@ class HashDB(object):
 
     @staticmethod
     def hashKey(key):
-        key = key.encode(UNICODE_ENCODING) if isinstance(key, unicode) else repr(key)
+        key = key.encode(UNICODE_ENCODING) if isinstance(key, str) else repr(key)
         retVal = int(hashlib.md5(key).hexdigest()[:8], 16)
         return retVal
 

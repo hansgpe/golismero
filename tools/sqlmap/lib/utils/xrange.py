@@ -70,7 +70,7 @@ class xrange(object):
             start, stop, step = index.indices(self._len())
             return xrange(self._index(start),
                           self._index(stop), step*self.step)
-        elif isinstance(index, (int, long)):
+        elif isinstance(index, (int, int)):
             if index < 0:
                 fixed_index = index + self._len()
             else:

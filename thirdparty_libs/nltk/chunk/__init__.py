@@ -143,7 +143,7 @@ exceeded" errors when processing very large texts, even for
 regular expressions that should not require any recursion.  We
 therefore use the ``pre`` module instead.  But note that ``pre``
 does not include Unicode support, so this module will not work
-with unicode strings.  Note also that ``pre`` regular expressions
+with str strings.  Note also that ``pre`` regular expressions
 are not quite as advanced as ``re`` ones (e.g., no leftward
 zero-length assertions).
 

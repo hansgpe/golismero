@@ -92,7 +92,7 @@ class HttpResponseBase(six.Iterator):
                     # Ensure string is valid in given charset
                     value.decode(charset)
                 else:
-                    # Convert unicode string to given charset
+                    # Convert str string to given charset
                     value = value.encode(charset)
         except UnicodeError as e:
             if mime_encode:

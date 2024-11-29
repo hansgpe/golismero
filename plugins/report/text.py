@@ -61,7 +61,7 @@ class Texttable(orig_Texttable):
     def _str(self, i, x):
         if x is None:
             return ""
-        if isinstance(x, unicode):
+        if isinstance(x, str):
             return x.encode("UTF-8")
         return str(x)
 

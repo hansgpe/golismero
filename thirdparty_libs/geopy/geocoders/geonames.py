@@ -28,7 +28,7 @@ class GeoNames(Geocoder):
         self.url = "http://ws.geonames.org/searchJSON?%s"
     
     def geocode(self, string, exactly_one=True):
-        if isinstance(string, unicode):
+        if isinstance(string, str):
             string = string.encode('utf-8')
         params = {
             'q': string

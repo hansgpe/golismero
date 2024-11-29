@@ -379,7 +379,7 @@ class SpiderFootParser(object):
 
 
         # Reconstruct the suspicious header vulnerabilities.
-        for url, headers in self.strange_headers.iteritems():
+        for url, headers in self.strange_headers.items():
             try:
                 if url in self.reconstructed_http:
                     identity = self.reconstructed_http[url]

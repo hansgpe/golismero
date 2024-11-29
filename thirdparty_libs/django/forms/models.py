@@ -211,7 +211,7 @@ class ModelFormMetaclass(type):
             fields = fields_for_model(opts.model, opts.fields,
                                       opts.exclude, opts.widgets, formfield_callback)
             # make sure opts.fields doesn't specify an invalid field
-            none_model_fields = [k for k, v in six.iteritems(fields) if not v]
+            none_model_fields = [k for k, v in six.items(fields) if not v]
             missing_fields = set(none_model_fields) - \
                              set(declared_fields.keys())
             if missing_fields:

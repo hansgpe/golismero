@@ -15,7 +15,7 @@ from xmldocs import *
 
 class VerbnetCorpusReader(XMLCorpusReader):
 
-    # No unicode encoding param, since the data files are all XML.
+    # No str encoding param, since the data files are all XML.
     def __init__(self, root, fileids, wrap_etree=False):
         XMLCorpusReader.__init__(self, root, fileids, wrap_etree)
 

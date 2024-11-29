@@ -53,7 +53,7 @@ if _sys.version_info[0] == 3:
     _long = int
 else:
     #   Python 2.x
-    _long = long
+    _long = int
 
 from netaddr.compat import _func_name, _func_doc
 

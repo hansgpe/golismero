@@ -254,11 +254,11 @@ class GPX(object):
         attr_types, child_types = type_def
         attrs = {}
         children = {}
-        for attr, handler in attr_types.iteritems():
+        for attr, handler in attr_types.items():
             value = element.get(attr)
             type_func = self.type_handlers[handler]
             attrs[attr] = type_func(_Attr(value))
-        for tag, handler in child_types.iteritems():
+        for tag, handler in child_types.items():
             values = []
             all = False
             if isinstance(handler, list):

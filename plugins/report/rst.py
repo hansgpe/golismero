@@ -225,7 +225,7 @@ class RSTReport(ReportPlugin):
         if isinstance(obj, dict):
             return "\n".join(
                 self.__escape_rst("%s: %s" % (k,v))
-                for k,v in obj.iteritems())
+                for k,v in obj.items())
         try:
             text = str(obj)
         except Exception:
@@ -352,7 +352,7 @@ class RSTReport(ReportPlugin):
                     hyperlinks = group == "Graph Links"
                     properties = {
                         key: self.__format_rst(value, hyperlinks).split("\n")
-                        for key, value in properties.iteritems()
+                        for key, value in properties.items()
                         if value
                     }
                     if "Target ID" in properties:

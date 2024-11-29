@@ -154,7 +154,7 @@ class Options(object):
         # self.duplicate_targets will map each duplicate field column to the
         # columns it duplicates.
         collections = {}
-        for column, target in six.iteritems(self.duplicate_targets):
+        for column, target in six.items(self.duplicate_targets):
             try:
                 collections[target].add(column)
             except KeyError:
@@ -308,7 +308,7 @@ class Options(object):
             self._m2m_cache
         except AttributeError:
             self._fill_m2m_cache()
-        return list(six.iteritems(self._m2m_cache))
+        return list(six.items(self._m2m_cache))
 
     def _fill_m2m_cache(self):
         cache = SortedDict()
@@ -467,7 +467,7 @@ class Options(object):
             cache = self._related_many_to_many_cache
         except AttributeError:
             cache = self._fill_related_many_to_many_cache()
-        return list(six.iteritems(cache))
+        return list(six.items(cache))
 
     def _fill_related_many_to_many_cache(self):
         cache = SortedDict()

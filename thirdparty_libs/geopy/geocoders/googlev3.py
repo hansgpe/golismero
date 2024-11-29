@@ -112,7 +112,7 @@ class GoogleV3(Geocoder):
         comes from a device with a location sensor.
         This value must be either True or False.
         '''
-        if isinstance(string, unicode):
+        if isinstance(string, str):
             string = string.encode('utf-8')
 
         params = {

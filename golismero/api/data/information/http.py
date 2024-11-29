@@ -294,7 +294,7 @@ class HTTP_Headers (object):
         :returns: Header line (for indices) or value (for names).
         :rtype: str
         """
-        if type(key) in (int, long):
+        if type(key) in (int, int):
             return "%s: %s\r\n" % self.__headers[key]
         try:
             key = key.lower()
@@ -384,7 +384,7 @@ class HTTP_Headers (object):
         :returns: Header names and values.
         :rtype: list( tuple(str, str) )
         """
-        return list(self.iteritems())
+        return list(self.items())
 
 
     #--------------------------------------------------------------------------
@@ -833,7 +833,7 @@ class HTTP_Response (Capture):
                 pass
         elif not self.__status and self.__reason:
             lower_reason = self.__reason.strip().lower()
-            for code, text in http.client.responses.iteritems():
+            for code, text in http.client.responses.items():
                 if text.lower() == lower_reason:
                     self.__status = str(code)
                     break

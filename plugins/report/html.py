@@ -114,7 +114,7 @@ class HTMLReport(json.JSONOutput):
             {
                 propname: propvalue
                 for propname, propvalue
-                in vulnerabilities[identity].iteritems()
+                in vulnerabilities[identity].items()
                 if propname in (
                     "display_name",
                     "plugin_id",
@@ -189,7 +189,7 @@ class HTMLReport(json.JSONOutput):
             vulns_by_level[level] = 0
         vulns_by_level.update(
             v["level"] for v in report_data["vulnerabilities"])
-        vulns_by_level = {k.title(): v for k, v in vulns_by_level.iteritems()}
+        vulns_by_level = {k.title(): v for k, v in vulns_by_level.items()}
         vulns_by_type = dict(Counter(
                 v["display_name"] for v in report_data["vulnerabilities"]
             ))

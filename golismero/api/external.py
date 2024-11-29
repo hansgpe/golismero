@@ -392,7 +392,7 @@ def get_interpreter(script):
                 return args
 
             # Try to guess which interpreter it is.
-            for ext, interpreter in DEFAULT_INTERPRETER.iteritems():
+            for ext, interpreter in DEFAULT_INTERPRETER.items():
                 regex = interpreter[0]
                 regex = "".join((c if c.isalnum() else "\\"+c) for c in regex)
                 regex = "\\b%s\\b" % regex
@@ -400,7 +400,7 @@ def get_interpreter(script):
                     return interpreter + [script] # must be a copy!
 
             # Broader search, matches stuff like python2, ruby1.9, etc.
-            for ext, interpreter in DEFAULT_INTERPRETER.iteritems():
+            for ext, interpreter in DEFAULT_INTERPRETER.items():
                 regex = interpreter[0]
                 if regex.isalpha():
                     regex = "\\b%s[0-9\\.]*\\b" % regex

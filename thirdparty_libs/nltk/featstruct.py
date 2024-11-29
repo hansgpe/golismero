@@ -902,7 +902,7 @@ class FeatList(FeatStruct, list):
     _INDEX_ERROR = "Expected int or feature path.  Got %r."
 
     def __getitem__(self, name_or_path):
-        if isinstance(name_or_path, (int, long)):
+        if isinstance(name_or_path, (int, int)):
             return list.__getitem__(self, name_or_path)
         elif isinstance(name_or_path, tuple):
             try:
@@ -921,7 +921,7 @@ class FeatList(FeatStruct, list):
         """If the feature with the given name or path exists, delete
         its value; otherwise, raise ``KeyError``."""
         if self._frozen: raise ValueError(_FROZEN_ERROR)
-        if isinstance(name_or_path, (int, long)):
+        if isinstance(name_or_path, (int, int)):
             return list.__delitem__(self, name_or_path)
         elif isinstance(name_or_path, tuple):
             if len(name_or_path) == 0:
@@ -939,7 +939,7 @@ class FeatList(FeatStruct, list):
         to ``value``.  If ``name_or_path`` is an invalid path, raise
         ``KeyError``."""
         if self._frozen: raise ValueError(_FROZEN_ERROR)
-        if isinstance(name_or_path, (int, long)):
+        if isinstance(name_or_path, (int, int)):
             return list.__setitem__(self, name_or_path, value)
         elif isinstance(name_or_path, tuple):
             if len(name_or_path) == 0:

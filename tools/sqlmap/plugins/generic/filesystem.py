@@ -60,7 +60,7 @@ class Filesystem:
             sameFile = None
 
             if isNumPosStrValue(remoteFileSize):
-                remoteFileSize = long(remoteFileSize)
+                remoteFileSize = int(remoteFileSize)
                 sameFile = False
 
                 if localFileSize == remoteFileSize:

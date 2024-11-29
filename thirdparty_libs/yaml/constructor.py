@@ -473,7 +473,7 @@ class Constructor(SafeConstructor):
         return self.construct_scalar(node)
 
     def construct_python_long(self, node):
-        return long(self.construct_yaml_int(node))
+        return int(self.construct_yaml_int(node))
 
     def construct_python_complex(self, node):
        return complex(self.construct_scalar(node))
@@ -622,7 +622,7 @@ Constructor.add_constructor(
     Constructor.construct_python_str)
 
 Constructor.add_constructor(
-    u'tag:yaml.org,2002:python/unicode',
+    u'tag:yaml.org,2002:python/str',
     Constructor.construct_python_unicode)
 
 Constructor.add_constructor(

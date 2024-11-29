@@ -111,7 +111,7 @@ class ExceptionReporterFilter(object):
             return request.POST
 
     def get_traceback_frame_variables(self, request, tb_frame):
-        return list(six.iteritems(tb_frame.f_locals))
+        return list(six.items(tb_frame.f_locals))
 
 class SafeExceptionReporterFilter(ExceptionReporterFilter):
     """
@@ -519,7 +519,7 @@ TECHNICAL_500_TEMPLATE = """
     #explanation { background:#eee; }
     #template, #template-not-exist { background:#f6f6f6; }
     #template-not-exist ul { margin: 0 0 0 20px; }
-    #unicode-hint { background:#eee; }
+    #str-hint { background:#eee; }
     #traceback { background:#eee; }
     #requestinfo { background:#f6f6f6; padding-left:120px; }
     #summary table { border:none; background:transparent; }
@@ -645,7 +645,7 @@ TECHNICAL_500_TEMPLATE = """
   </table>
 </div>
 {% if unicode_hint %}
-<div id="unicode-hint">
+<div id="str-hint">
     <h2>Unicode error hint</h2>
     <p>The string that could not be encoded/decoded was: <strong>{{ unicode_hint|force_escape }}</strong></p>
 </div>

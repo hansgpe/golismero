@@ -64,7 +64,7 @@ class Counter (object):
     """
 
     def __init__(self, init_val = 0):
-        if type(init_val) not in (int, long, float):
+        if type(init_val) not in (int, int, float):
             raise TypeError("Expected a number, got %r instead" % type(init_val))
         self.__value = init_val
         self.__lock  = RLock()
@@ -79,21 +79,21 @@ class Counter (object):
         return self.sub(1)
 
     def add(self, offset):
-        if type(offset) not in (int, long, float):
+        if type(offset) not in (int, int, float):
             raise TypeError("Expected a number, got %r instead" % type(offset))
         with self.__lock:
             self.__value += offset
             return self.__value
 
     def sub(self, offset):
-        if type(offset) not in (int, long, float):
+        if type(offset) not in (int, int, float):
             raise TypeError("Expected a number, got %r instead" % type(offset))
         with self.__lock:
             self.__value -= offset
             return self.__value
 
     def setvalue(self, value):
-        if type(value) not in (int, long, float):
+        if type(value) not in (int, int, float):
             raise TypeError("Expected a number, got %r instead" % type(value))
         with self.__lock:
             old_value = self.__value

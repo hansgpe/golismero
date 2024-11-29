@@ -24,7 +24,7 @@ class search_pgp:
 		# get 'invalid continuation byte'
 		returncode, returnmsg, response_headers = h.getreply()
 		response_body = h.getfile().read()
-		self.total_results+=unicode(response_body, "ISO-8859-1")
+		self.total_results+=str(response_body, "ISO-8859-1")
 		
 	def get_results(self):
 		raw_results=myparser.parser(self.total_results,self.word)

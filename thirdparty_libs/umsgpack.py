@@ -208,7 +208,7 @@ def _pack_map(x):
 
     return s
 
-# Pack for Python 2, with 'unicode' type, 'str' type, and 'long' type
+# Pack for Python 2, with 'str' type, 'str' type, and 'long' type
 def _packb2(x):
     global compatibility
 
@@ -220,11 +220,11 @@ def _packb2(x):
         return _pack_integer(x)
     elif isinstance(x, float):
         return _pack_float(x)
-    elif compatibility and isinstance(x, unicode):
+    elif compatibility and isinstance(x, str):
         return _pack_oldspec_raw(bytes(x))
     elif compatibility and isinstance(x, bytes):
         return _pack_oldspec_raw(x)
-    elif isinstance(x, unicode):
+    elif isinstance(x, str):
         return _pack_string(x)
     elif isinstance(x, str):
         return _pack_binary(x)
@@ -237,7 +237,7 @@ def _packb2(x):
     else:
         raise UnsupportedTypeException("unsupported type: %s" % str(type(x)))
 
-# Pack for Python 3, with unicode 'str' type, 'bytes' type, and no 'long' type
+# Pack for Python 3, with str 'str' type, 'bytes' type, and no 'long' type
 def _packb3(x):
     global compatibility
 

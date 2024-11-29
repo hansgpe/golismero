@@ -62,13 +62,13 @@ def test_all_registers():
                 r = DNS.resolve(l_host, l_dns_type)
                 if r:
                     print
-                    print "   Type: " + l_dns_type
-                    print "   " + ("=" * (len(l_dns_type ) + 6))
+                    print ("   Type: " + l_dns_type)
+                    print ("   " + ("=" * (len(l_dns_type ) + 6)))
 
                     for c in r:
-                        for k, v in c.to_dict().iteritems():
-                            print "     - %s: %s" % (k, v)
-                        print "   " + ("-" * 30)
+                        for k, v in c.to_dict().items():
+                            print ("     - %s: %s" % (k, v))
+                        print ("   " + ("-" * 30))
 
 
 #------------------------------------------------------------------------------

@@ -224,7 +224,7 @@ class IPint:
         
         # handling of non string values in constructor
         if type(data) == types.IntType or type(data) == types.LongType:
-            self.ip = long(data)
+            self.ip = int(data)
             if ipversion == 0:
                 if self.ip < 0x100000000L:
                     ipversion = 4
@@ -635,7 +635,7 @@ class IPint:
         if key < 0:
             key = self.len() - abs(key)
 
-        return self.ip + long(key)
+        return self.ip + int(key)
 
     
 
@@ -979,10 +979,10 @@ def parseAddress(ipstr):
 
     # TODO: refactor me!
     if ipstr.startswith('0x'):
-        ret = long(ipstr[2:], 16)
+        ret = int(ipstr[2:], 16)
         if ret > 0xffffffffffffffffffffffffffffffffL:
-            raise ValueError, "%r: IP Address can't be bigger than 2^128" % (ipstr)
-        if ret < 0x100000000L:
+            raise (ValueError, "%r: IP Address can't be bigger than 2^128" % (ipstr))
+        if ret < 0x100000000:
             return (ret, 4)
         else:
             return (ret, 6)
@@ -1023,13 +1023,13 @@ def parseAddress(ipstr):
             if len(x) < 4:
                 x = ((4 - len(x)) * '0') + x
             if int(x, 16) < 0 or int(x, 16) > 0xffff: 
-                raise ValueError, "%r: single hextet must be 0 <= hextet <= 0xffff which isn't true for %s" % (ipstr, x)
+                raise (ValueError, "%r: single hextet must be 0 <= hextet <= 0xffff which isn't true for %s" % (ipstr, x))
             num += x
-        return (long(num, 16), 6)
+        return (int(num, 16), 6)
 
     elif len(ipstr) == 32:
         # assume IPv6 in pure hexadecimal notation
-        return (long(ipstr, 16), 6)
+        return (int(ipstr, 16), 6)
     
     elif  ipstr.find('.') != -1 or (len(ipstr) < 4 and int(ipstr) < 256):
         # assume IPv4  ('127' gets interpreted as '127.0.0.0')
@@ -1037,7 +1037,7 @@ def parseAddress(ipstr):
         if len(bytes) > 4:
             raise ValueError, "IPv4 Address with more than 4 bytes"
         bytes += ['0'] * (4 - len(bytes))
-        bytes = [long(x) for x in bytes]
+        bytes = [int(x) for x in bytes]
         for x in bytes:
             if x > 255 or x < 0:
                 raise ValueError, "%r: single byte must be 0 <= byte < 256" % (ipstr)
@@ -1047,10 +1047,10 @@ def parseAddress(ipstr):
         # we try to interprete it as a decimal digit -
         # this ony works for numbers > 255 ... others
         # will be interpreted as IPv4 first byte
-        ret = long(ipstr)
-        if ret > 0xffffffffffffffffffffffffffffffffL:
+        ret = int(ipstr)
+        if ret > 0xffffffffffffffffffffffffffffffff:
             raise ValueError, "IP Address cant be bigger than 2^128"
-        if ret <= 0xffffffffL:
+        if ret <= 0xffffffff:
             return (ret, 4)
         else:
             return (ret, 6)
@@ -1060,21 +1060,21 @@ def intToIp(ip, version):
     """Transform an integer string into an IP address."""
 
     # just to be sure and hoping for Python 2.22
-    ip = long(ip)
+    ip = int(ip)
 
     if ip < 0:
         raise ValueError, "IPs can't be negative: %d" % (ip)
     
     ret = ''
     if version == 4: 
-        if ip > 0xffffffffL:
-            raise ValueError, "IPv4 Addresses can't be larger than 0xffffffff: %s" % (hex(ip))
+        if ip > 0xffffffff:
+            raise (ValueError, "IPv4 Addresses can't be larger than 0xffffffff: %s" % (hex(ip)))
         for l in range(4):
-            ret = str(ip & 0xffL) + '.' + ret
+            ret = str(ip & 0xff) + '.' + ret
             ip = ip >> 8;
         ret = ret[:-1]
     elif version == 6:
-        if ip > 0xffffffffffffffffffffffffffffffffL:
+        if ip > 0xffffffffffffffffffffffffffffffff:
             raise ValueError, "IPv6 Addresses can't be larger than 0xffffffffffffffffffffffffffffffff: %s" % (hex(ip))
         l = '0' * 32 + hex(ip)[2:-1]
         for x in range(1,33):
@@ -1156,7 +1156,7 @@ def _count0Bits(num):
     """Find the highest bit set to 0 in an integer."""
 
     # this could be so easy if _count1Bits(~long(num)) would work as excepted
-    num = long(num)
+    num = int(num)
     if num < 0:
         raise ValueError, "Only positive Numbers please: %s" % (num)
     ret = 0
@@ -1203,7 +1203,7 @@ def _checkPrefix(ip, prefixlen, version):
 def _checkNetmask(netmask, masklen):
     """Checks if a netmask is expressable as e prefixlen."""
 
-    num = long(netmask)
+    num = int(netmask)
     bits = masklen
     
     # remove zero bits at the end

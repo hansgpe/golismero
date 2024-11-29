@@ -136,7 +136,7 @@ class NiktoPlugin(TestingPlugin):
                             if cookie_dict:
                                 cookie = ";".join(
                                     '"%s=%s"' % x
-                                    for x in cookie_dict.iteritems()
+                                    for x in cookie_dict.items()
                                 )
                                 dst.write("STATIC-COOKIE=%s\n" % cookie)
 

@@ -385,7 +385,7 @@ class PunktToken(object):
 
         for p in self._properties:
             setattr(self, p, None)
-        for k, v in params.iteritems():
+        for k, v in params.items():
             setattr(self, k, v)
 
     #////////////////////////////////////////////////////////////
@@ -817,7 +817,7 @@ class PunktTrainer(PunktBaseClass):
         if ortho_thresh > 1:
             old_oc = self._params.ortho_context
             self._params.clear_ortho_context()
-            for tok, count in self._type_fdist.iteritems():
+            for tok, count in self._type_fdist.items():
                 if count >= ortho_thresh:
                     self._params.ortho_context[tok] = old_oc[tok]
 
@@ -836,7 +836,7 @@ class PunktTrainer(PunktBaseClass):
         # and so create a new FreqDist rather than working in place.
         res = FreqDist()
         num_removed = 0
-        for tok, count in fdist.iteritems():
+        for tok, count in fdist.items():
             if count < threshold:
                 num_removed += 1
             else:
@@ -1099,7 +1099,7 @@ class PunktTrainer(PunktBaseClass):
         """
         Generates likely collocations and their log-likelihood.
         """
-        for types, col_count in self._collocation_fdist.iteritems():
+        for types, col_count in self._collocation_fdist.items():
             try:
                 typ1, typ2 = types
             except TypeError:
@@ -1143,7 +1143,7 @@ class PunktTrainer(PunktBaseClass):
         Uses collocation heuristics for each candidate token to
         determine if it frequently starts sentences.
         """
-        for (typ, typ_at_break_count) in self._sent_starter_fdist.iteritems():
+        for (typ, typ_at_break_count) in self._sent_starter_fdist.items():
             if not typ:
                 continue
 

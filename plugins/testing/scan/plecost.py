@@ -249,7 +249,7 @@ class PlecostPlugin(TestingPlugin):
             partial_plugin_url = "%s/%s" % (url, "wp-content/plugins/%s" % plugin_URI)
 
             # Test each URL with possible plugin version info
-            for target, regex in urls_to_test.iteritems():
+            for target, regex in urls_to_test.items():
 
                 plugin_url = "%s/%s" % (partial_plugin_url, target)
 
@@ -426,7 +426,7 @@ class PlecostPlugin(TestingPlugin):
 
         # If Current version not found
         if current_version == "unknown":
-            for url_pre, regex in url_version.iteritems():
+            for url_pre, regex in url_version.items():
                 # URL to find wordpress version
                 url_current_version = urljoin(url, url_pre)
                 current_version_content = download(url_current_version)

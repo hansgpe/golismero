@@ -66,7 +66,7 @@ class BaseRepresenter(object):
                 elif None in self.yaml_representers:
                     node = self.yaml_representers[None](self, data)
                 else:
-                    node = ScalarNode(None, unicode(data))
+                    node = ScalarNode(None, str(data))
         #if alias_key is not None:
         #    self.represented_objects[alias_key] = node
         return node
@@ -141,7 +141,7 @@ class SafeRepresenter(BaseRepresenter):
     def ignore_aliases(self, data):
         if data in [None, ()]:
             return True
-        if isinstance(data, (str, unicode, bool, int, float)):
+        if isinstance(data, (str, str, bool, int, float)):
             return True
 
     def represent_none(self, data):
@@ -152,11 +152,11 @@ class SafeRepresenter(BaseRepresenter):
         tag = None
         style = None
         try:
-            data = unicode(data, 'ascii')
+            data = str(data, 'ascii')
             tag = u'tag:yaml.org,2002:str'
         except UnicodeDecodeError:
             try:
-                data = unicode(data, 'utf-8')
+                data = str(data, 'utf-8')
                 tag = u'tag:yaml.org,2002:str'
             except UnicodeDecodeError:
                 data = data.encode('base64')
@@ -175,10 +175,10 @@ class SafeRepresenter(BaseRepresenter):
         return self.represent_scalar(u'tag:yaml.org,2002:bool', value)
 
     def represent_int(self, data):
-        return self.represent_scalar(u'tag:yaml.org,2002:int', unicode(data))
+        return self.represent_scalar(u'tag:yaml.org,2002:int', str(data))
 
     def represent_long(self, data):
-        return self.represent_scalar(u'tag:yaml.org,2002:int', unicode(data))
+        return self.represent_scalar(u'tag:yaml.org,2002:int', str(data))
 
     inf_value = 1e300
     while repr(inf_value) != repr(inf_value*inf_value):
@@ -192,7 +192,7 @@ class SafeRepresenter(BaseRepresenter):
         elif data == -self.inf_value:
             value = u'-.inf'
         else:
-            value = unicode(repr(data)).lower()
+            value = str(repr(data)).lower()
             # Note that in some cases `repr(data)` represents a float number
             # without the decimal parts.  For instance:
             #   >>> repr(1e17)
@@ -229,11 +229,11 @@ class SafeRepresenter(BaseRepresenter):
         return self.represent_mapping(u'tag:yaml.org,2002:set', value)
 
     def represent_date(self, data):
-        value = unicode(data.isoformat())
+        value = str(data.isoformat())
         return self.represent_scalar(u'tag:yaml.org,2002:timestamp', value)
 
     def represent_datetime(self, data):
-        value = unicode(data.isoformat(' '))
+        value = str(data.isoformat(' '))
         return self.represent_scalar(u'tag:yaml.org,2002:timestamp', value)
 
     def represent_yaml_object(self, tag, data, cls, flow_style=None):
@@ -252,7 +252,7 @@ SafeRepresenter.add_representer(type(None),
 SafeRepresenter.add_representer(str,
         SafeRepresenter.represent_str)
 
-SafeRepresenter.add_representer(unicode,
+SafeRepresenter.add_representer(str,
         SafeRepresenter.represent_unicode)
 
 SafeRepresenter.add_representer(bool,
@@ -261,7 +261,7 @@ SafeRepresenter.add_representer(bool,
 SafeRepresenter.add_representer(int,
         SafeRepresenter.represent_int)
 
-SafeRepresenter.add_representer(long,
+SafeRepresenter.add_representer(int,
         SafeRepresenter.represent_long)
 
 SafeRepresenter.add_representer(float,
@@ -294,11 +294,11 @@ class Representer(SafeRepresenter):
         tag = None
         style = None
         try:
-            data = unicode(data, 'ascii')
+            data = str(data, 'ascii')
             tag = u'tag:yaml.org,2002:str'
         except UnicodeDecodeError:
             try:
-                data = unicode(data, 'utf-8')
+                data = str(data, 'utf-8')
                 tag = u'tag:yaml.org,2002:python/str'
             except UnicodeDecodeError:
                 data = data.encode('base64')
@@ -310,7 +310,7 @@ class Representer(SafeRepresenter):
         tag = None
         try:
             data.encode('ascii')
-            tag = u'tag:yaml.org,2002:python/unicode'
+            tag = u'tag:yaml.org,2002:python/str'
         except UnicodeEncodeError:
             tag = u'tag:yaml.org,2002:str'
         return self.represent_scalar(tag, data)
@@ -319,7 +319,7 @@ class Representer(SafeRepresenter):
         tag = u'tag:yaml.org,2002:int'
         if int(data) is not data:
             tag = u'tag:yaml.org,2002:python/long'
-        return self.represent_scalar(tag, unicode(data))
+        return self.represent_scalar(tag, str(data))
 
     def represent_complex(self, data):
         if data.imag == 0.0:
@@ -449,10 +449,10 @@ class Representer(SafeRepresenter):
 Representer.add_representer(str,
         Representer.represent_str)
 
-Representer.add_representer(unicode,
+Representer.add_representer(str,
         Representer.represent_unicode)
 
-Representer.add_representer(long,
+Representer.add_representer(int,
         Representer.represent_long)
 
 Representer.add_representer(complex,

@@ -265,7 +265,7 @@ class QueryDict(MultiValueDict):
     This is immutable unless you create a copy of it.
 
     Values retrieved from this class are converted from the given encoding
-    (DEFAULT_CHARSET by default) to unicode.
+    (DEFAULT_CHARSET by default) to str.
     """
     # These are both reset in __init__, but is specified here at the class
     # level so that unpickling will have valid values
@@ -446,7 +446,7 @@ def build_request_repr(request, path_override=None, GET_override=None,
 # this slightly more restricted function, used by QueryDict.
 def bytes_to_text(s, encoding):
     """
-    Converts basestring objects to unicode, using the given encoding. Illegally
+    Converts basestring objects to str, using the given encoding. Illegally
     encoded input characters are replaced with Unicode "unknown" codepoint
     (\ufffd).
 

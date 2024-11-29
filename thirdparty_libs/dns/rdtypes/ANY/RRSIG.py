@@ -51,11 +51,11 @@ class RRSIG(dns.rdata.Rdata):
     @ivar labels: number of labels
     @type labels: int
     @ivar original_ttl: the original TTL
-    @type original_ttl: long
+    @type original_ttl: int
     @ivar expiration: signature expiration time
-    @type expiration: long
+    @type expiration: int
     @ivar inception: signature inception time
-    @type inception: long
+    @type inception: int
     @ivar key_tag: the key tag
     @type key_tag: int
     @ivar signer: the signer

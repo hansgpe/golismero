@@ -728,7 +728,7 @@ def load_plugin_class_from_info(info):
         if not public_symbols:
             public_symbols = [
                 value
-                for (symbol, value) in module.__dict__.iteritems()
+                for (symbol, value) in module.__dict__.items()
                 if not symbol.startswith("_")
             ]
             if not public_symbols:

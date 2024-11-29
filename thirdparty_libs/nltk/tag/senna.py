@@ -138,7 +138,7 @@ class SennaTagger(TaggerI):
 
         # Serialize the actual sentences to a temporary string
         _input = '\n'.join((' '.join(x) for x in sentences))+'\n'
-        if isinstance(_input, unicode) and encoding:
+        if isinstance(_input, str) and encoding:
             _input = _input.encode(encoding)
 
         # Run the tagger and get the output

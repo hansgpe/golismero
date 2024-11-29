@@ -102,14 +102,14 @@ class XSSerPlugin(TestingPlugin):
                 ])
 
                 # When we want to try GET parameters, we must pass to xsser one by one.
-                for param, value in info.parsed_url.query_params.iteritems():
+                for param, value in info.parsed_url.query_params.items():
 
                     # Not evaluate web server params
                     if param in WEB_SERVERS_VARS:
                         continue
 
                     # Prepare and reorder params
-                    fixed_params = "&".join(["%s=%s" % (x, y) for x, y in info.parsed_url.query_params.iteritems() if x != param])
+                    fixed_params = "&".join(["%s=%s" % (x, y) for x, y in info.parsed_url.query_params.items() if x != param])
 
                     # Add param to text + fixed params
                     if fixed_params: # -> empty fixed params
@@ -134,7 +134,7 @@ class XSSerPlugin(TestingPlugin):
                     "-p",
                     "&".join(
                         ["%s=%s" % (k, v)
-                            for k, v in info.post_params.iteritems() if k not in WEB_SERVERS_VARS]
+                            for k, v in info.post_params.items() if k not in WEB_SERVERS_VARS]
                     ),
                 ])
                 if self.run_xsser(info.hostname, info.url, args):

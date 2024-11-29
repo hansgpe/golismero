@@ -44,7 +44,7 @@ def map_features_to_svm(features, svmfeatureindex):
     """
     instancefeatures = []
     # svmlight supports sparse feature sets and so we simply omit features that we don't include
-    for k,v in features.iteritems():
+    for k,v in features.items():
         # each feature is represented as an (int, float) tuple where the int is the SVMlight feature label and the float is the value; as we either have or have not a feature, this is 1.0
         # this does not support scalar features - rather, each value that a feature may take on is a discrete independent label
         # use 1.0 as the feature value to specify the presence of a feature:value couple
@@ -112,7 +112,7 @@ class SvmClassifier(ClassifierI):
 
         :param label: the string label to look up
         """
-        labelname = [k for k, v in self._labelmapping.iteritems() if v == label][0]
+        labelname = [k for k, v in self._labelmapping.items() if v == label][0]
         return labelname
 
     def resolve_prediction(self, prediction):
@@ -224,7 +224,7 @@ class SvmClassifier(ClassifierI):
         # iter through instances, building a set of feature:type:str(value) triples
         svmfeatures = set()
         for (features, label) in featuresets:
-            for k,v in features.iteritems():
+            for k,v in features.items():
                 svmfeatures.add(featurename(k, v))
         # svmfeatures is indexable by integer svm feature number
         # svmfeatureindex is the inverse (svm feature name -> number)

@@ -149,7 +149,7 @@ from thirdparty.termcolor.termcolor import colored
 
 class UnicodeRawConfigParser(RawConfigParser):
     """
-    RawConfigParser with unicode writing support
+    RawConfigParser with str writing support
     """
 
     def write(self, fp):
@@ -797,7 +797,7 @@ def dataToStdout(data, forceOutput=False, bold=False, content_type=None, status=
             if kb.get("multiThreadMode"):
                 logging._acquireLock()
 
-            if isinstance(data, unicode):
+            if isinstance(data, str):
                 message = stdoutencode(data)
             else:
                 message = data
@@ -885,7 +885,7 @@ def readInput(message, default=None, checkBatch=True):
             elif default:
                 options = getUnicode(default, UNICODE_ENCODING)
             else:
-                options = unicode()
+                options = str()
 
             dataToStdout("\r%s%s\n" % (message, options), forceOutput=True, bold=True)
 
@@ -1081,8 +1081,8 @@ def parseTargetDirect():
                 if conf.dbmsCred:
                     conf.dbmsUser, conf.dbmsPass = conf.dbmsCred.split(':')
                 else:
-                    conf.dbmsUser = unicode()
-                    conf.dbmsPass = unicode()
+                    conf.dbmsUser = str()
+                    conf.dbmsPass = str()
 
             if not conf.dbmsPass:
                 conf.dbmsPass = None
@@ -1501,7 +1501,7 @@ def getFilteredPageContent(page, onlyText=True):
     retVal = page
 
     # only if the page's charset has been successfully identified
-    if isinstance(page, unicode):
+    if isinstance(page, str):
         retVal = re.sub(r"(?si)<script.+?</script>|<!--.+?-->|<style.+?</style>%s" % (r"|<[^>]+>|\t|\n|\r" if onlyText else ""), " ", page)
         while retVal.find("  ") != -1:
             retVal = retVal.replace("  ", " ")
@@ -1520,7 +1520,7 @@ def getPageWordSet(page):
     retVal = set()
 
     # only if the page's charset has been successfully identified
-    if isinstance(page, unicode):
+    if isinstance(page, str):
         _ = getFilteredPageContent(page)
         retVal = set(re.findall(r"\w+", _))
 
@@ -1772,7 +1772,7 @@ def initCommonOutputs():
     key = None
 
     with codecs.open(paths.COMMON_OUTPUTS, 'r', UNICODE_ENCODING) as f:
-        for line in f.readlines():  # xreadlines doesn't return unicode strings when codec.open() is used
+        for line in f.readlines():  # xreadlines doesn't return str strings when codec.open() is used
             if line.find('#') != -1:
                 line = line[:line.find('#')]
 
@@ -1798,7 +1798,7 @@ def getFileItems(filename, commentPrefix='#', unicode_=True, lowercase=False, un
     checkFile(filename)
 
     with codecs.open(filename, 'r', UNICODE_ENCODING, errors="ignore") if unicode_ else open(filename, 'r') as f:
-        for line in (f.readlines() if unicode_ else f.xreadlines()):  # xreadlines doesn't return unicode strings when codec.open() is used
+        for line in (f.readlines() if unicode_ else f.xreadlines()):  # xreadlines doesn't return str strings when codec.open() is used
             if commentPrefix:
                 if line.find(commentPrefix) != -1:
                     line = line[:line.find(commentPrefix)]
@@ -1932,7 +1932,7 @@ def getPartRun(alias=True):
 
 def getUnicode(value, encoding=None, system=False, noneToNull=False):
     """
-    Return the unicode representation of the supplied value:
+    Return the str representation of the supplied value:
 
     >>> getUnicode(u'test')
     u'test'
@@ -1950,16 +1950,16 @@ def getUnicode(value, encoding=None, system=False, noneToNull=False):
         return value
 
     if not system:
-        if isinstance(value, unicode):
+        if isinstance(value, str):
             return value
         elif isinstance(value, basestring):
             while True:
                 try:
-                    return unicode(value, encoding or kb.get("pageEncoding") or UNICODE_ENCODING)
+                    return str(value, encoding or kb.get("pageEncoding") or UNICODE_ENCODING)
                 except UnicodeDecodeError, ex:
                     value = value[:ex.start] + "".join(INVALID_UNICODE_CHAR_FORMAT % ord(_) for _ in value[ex.start:ex.end]) + value[ex.end:]
         else:
-            return unicode(value)  # encoding ignored for non-basestring instances
+            return str(value)  # encoding ignored for non-basestring instances
     else:
         try:
             return getUnicode(value, sys.getfilesystemencoding() or sys.stdin.encoding)
@@ -2162,7 +2162,7 @@ def urldecode(value, encoding=None, unsafe="%%&=;+%s" % CUSTOM_INJECTION_MARK_CH
                 result = re.sub("%([0-9a-fA-F]{2})", _, result)
 
     if isinstance(result, str):
-        result = unicode(result, encoding or UNICODE_ENCODING, "replace")
+        result = str(result, encoding or UNICODE_ENCODING, "replace")
 
     return result
 
@@ -2220,13 +2220,13 @@ def runningAsAdmin():
     if PLATFORM in ("posix", "mac"):
         _ = os.geteuid()
 
-        isAdmin = isinstance(_, (int, float, long)) and _ == 0
+        isAdmin = isinstance(_, (int, float, int)) and _ == 0
     elif IS_WIN:
         import ctypes
 
         _ = ctypes.windll.shell32.IsUserAnAdmin()
 
-        isAdmin = isinstance(_, (int, float, long)) and _ == 1
+        isAdmin = isinstance(_, (int, float, int)) and _ == 1
     else:
         errMsg = "sqlmap is not able to check if you are running it "
         errMsg += "as an administrator account on this platform. "
@@ -2723,7 +2723,7 @@ def openFile(filename, mode='r'):
 
 def decodeIntToUnicode(value):
     """
-    Decodes inferenced integer value to an unicode character
+    Decodes inferenced integer value to an str character
 
     >>> decodeIntToUnicode(35)
     u'#'
@@ -2857,7 +2857,7 @@ def removeReflectiveValues(content, payload, suppressWarning=False):
 
     retVal = content
 
-    if all([content, payload]) and isinstance(content, unicode) and kb.reflectiveMechanism:
+    if all([content, payload]) and isinstance(content, str) and kb.reflectiveMechanism:
         def _(value):
             while 2 * REFLECTED_REPLACEMENT_REGEX in value:
                 value = value.replace(2 * REFLECTED_REPLACEMENT_REGEX, REFLECTED_REPLACEMENT_REGEX)
@@ -2915,14 +2915,14 @@ def removeReflectiveValues(content, payload, suppressWarning=False):
 
 def normalizeUnicode(value):
     """
-    Does an ASCII normalization of unicode strings
-    Reference: http://www.peterbe.com/plog/unicode-to-ascii
+    Does an ASCII normalization of str strings
+    Reference: http://www.peterbe.com/plog/str-to-ascii
 
     >>> normalizeUnicode(u'\u0161u\u0107uraj')
     'sucuraj'
     """
 
-    return unicodedata.normalize('NFKD', value).encode('ascii', 'ignore') if isinstance(value, unicode) else value
+    return unicodedata.normalize('NFKD', value).encode('ascii', 'ignore') if isinstance(value, str) else value
 
 def safeSQLIdentificatorNaming(name, isTable=False):
     """
@@ -3159,10 +3159,10 @@ def randomizeParameterValue(value):
 
 def asciifyUrl(url, forceQuote=False):
     """
-    Attempts to make a unicode URL usuable with ``urllib/urllib2``.
+    Attempts to make a str URL usuable with ``urllib/urllib2``.
 
-    More specifically, it attempts to convert the unicode object ``url``,
-    which is meant to represent a IRI, to an unicode object that,
+    More specifically, it attempts to convert the str object ``url``,
+    which is meant to represent a IRI, to an str object that,
     containing only ASCII characters, is a valid URI. This involves:
 
         * IDNA/Puny-encoding the domain name.
@@ -3253,7 +3253,7 @@ def findPageForms(content, url, raise_=False, addToTargets=False):
 
     class _(StringIO):
         def __init__(self, content, url):
-            StringIO.__init__(self, unicodeencode(content, kb.pageEncoding) if isinstance(content, unicode) else content)
+            StringIO.__init__(self, unicodeencode(content, kb.pageEncoding) if isinstance(content, str) else content)
             self._url = url
         def geturl(self):
             return self._url
@@ -3486,7 +3486,7 @@ def decodeHexValue(value):
                     retVal = retVal.decode("utf-16-be")
                 except UnicodeDecodeError:
                     pass
-            if not isinstance(retVal, unicode):
+            if not isinstance(retVal, str):
                 retVal = getUnicode(retVal, "utf8")
 
         return retVal

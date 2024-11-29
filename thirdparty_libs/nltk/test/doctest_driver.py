@@ -42,7 +42,7 @@ import __future__
 COMPILER_FLAGS = __future__.division.compiler_flag
 
 ###########################################################################
-# Fix for unicode docstrings and Python 2*
+# Fix for str docstrings and Python 2*
 ###########################################################################
 
 if __name__ == "__main__":
@@ -689,7 +689,7 @@ class MyDocTestRunner(DocTestRunner):
         if 1 <= self._verbosity <= 2:
             src = example.source.split('\n')[0]
             if len(src) > 60: src = src[:57]+'...'
-            if isinstance(src, unicode): src = src.encode('utf8')
+            if isinstance(src, str): src = src.encode('utf8')
             lineno = test.lineno + example.lineno + 1
             if self._verbosity == 1:
                 if self._stderr_term.CLEAR_LINE:
@@ -753,7 +753,7 @@ class MyDocTestRunner(DocTestRunner):
         out += ('Failed example:\n')
         source = example.source
         out += (_indent(source))
-        if isinstance(out, unicode): out = out.encode('utf8')
+        if isinstance(out, str): out = out.encode('utf8')
         return out
 
     def run(self, test, compileflags=None, out=None, clear_globs=True):

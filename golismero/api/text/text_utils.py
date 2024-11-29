@@ -205,7 +205,7 @@ def to_utf8(s):
     :returns: Converted string.
     :rtype: str
     """
-    if isinstance(s, unicode):
+    if isinstance(s, str):
         return s.encode("UTF-8")
     if type(s) is not str and isinstance(s, str):
         return str(s)

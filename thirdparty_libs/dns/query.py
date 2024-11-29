@@ -69,7 +69,7 @@ def _poll_for(fd, readable, writable, error, timeout):
     pollable.register(fd, event_mask)
 
     if timeout:
-        event_list = pollable.poll(long(timeout * 1000))
+        event_list = pollable.poll(int(timeout * 1000))
     else:
         event_list = pollable.poll()
 
@@ -378,9 +378,9 @@ def xfr(where, zone, rdtype=dns.rdatatype.AXFR, rdclass=dns.rdataclass.IN,
     @type keyalgorithm: string
     """
 
-    if isinstance(zone, (str, unicode)):
+    if isinstance(zone, (str, str)):
         zone = dns.name.from_text(zone)
-    if isinstance(rdtype, (str, unicode)):
+    if isinstance(rdtype, (str, str)):
         rdtype = dns.rdatatype.from_text(rdtype)
     q = dns.message.make_query(zone, rdtype, rdclass)
     if rdtype == dns.rdatatype.IXFR:

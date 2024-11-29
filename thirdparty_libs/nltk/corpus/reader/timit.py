@@ -159,7 +159,7 @@ class TimitCorpusReader(CorpusReader):
         Construct a new TIMIT corpus reader in the given directory.
         :param root: The root directory for this corpus.
         """
-        # Ensure that wave files don't get treated as unicode data:
+        # Ensure that wave files don't get treated as str data:
         if isinstance(encoding, basestring):
             encoding = [('.*\.wav', None), ('.*', encoding)]
 

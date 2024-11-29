@@ -37,7 +37,7 @@ class Bing(Geocoder):
         self.url = "http://dev.virtualearth.net/REST/v1/Locations?%s"
 
     def geocode(self, string, exactly_one=True):
-        if isinstance(string, unicode):
+        if isinstance(string, str):
             string = string.encode('utf-8')
         params = {'query': self.format_string % string,
                   'key': self.api_key

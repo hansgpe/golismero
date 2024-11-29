@@ -30,7 +30,7 @@ class OpenMapQuest(Geocoder):
         self.url = "http://open.mapquestapi.com/nominatim/v1/search?format=json&%s"
     
     def geocode(self, string, exactly_one=True):
-        if isinstance(string, unicode):
+        if isinstance(string, str):
             string = string.encode('utf-8')
         params = {'q': self.format_string % string}
         url = self.url % urlencode(params)

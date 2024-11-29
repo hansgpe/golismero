@@ -536,7 +536,7 @@ class _data_metaclass(type):
         super(_data_metaclass, cls).__init__(name, bases, namespace)
 
         # Validate all mergeable properties.
-        for propname, prop in cls.__dict__.iteritems():
+        for propname, prop in cls.__dict__.items():
             if merge.is_mergeable_property(prop):
                 prop.validate(cls, propname)
 
@@ -824,10 +824,10 @@ class Data(Entity):
         :rtype: set(tuple(int, str, str))
         """
         links = set()
-        for data_type, tmp in self._linked.iteritems():
+        for data_type, tmp in self._linked.items():
             if data_type is None:
                 continue
-            for data_subtype, tmp2 in tmp.iteritems():
+            for data_subtype, tmp2 in tmp.items():
                 if data_subtype is None:
                     continue
                 for identity in tmp2:
@@ -963,14 +963,14 @@ class Data(Entity):
                 value = list(value)
             elif isinstance(value, int):
                 value = int(value)
-            elif isinstance(value, long):
+            elif isinstance(value, int):
                 try:
                     value = int(value)
                 except Exception:
-                    value = long(value)
+                    value = int(value)
             elif isinstance(value, float):
                 value = float(value)
-            elif isinstance(value, unicode):
+            elif isinstance(value, str):
                 value = value.encode("utf-8", "replace")
             elif value is None:
                 value = ""
@@ -1063,16 +1063,16 @@ class Data(Entity):
                 value = list(value)
             elif isinstance(value, int):
                 value = int(value)
-            elif isinstance(value, long):
+            elif isinstance(value, int):
                 try:
                     value = int(value)
                 except Exception:
-                    value = long(value)
+                    value = int(value)
             elif isinstance(value, float):
                 value = float(value)
             elif isinstance(value, str):
                 value = str(value)
-            elif isinstance(value, unicode):
+            elif isinstance(value, str):
                 value = value.encode("utf-8", "replace")
 
             # Add the property name and value to the dictionary.
@@ -1115,7 +1115,7 @@ class Data(Entity):
         # instance = EmptyNewStyleClass()
         # instance.__class__ = cls
         # inheritance = getmro(cls)
-        # for name, value in properties.iteritems():
+        # for name, value in properties.items():
         #     if name not in (
         #         "class", "links", "data_type", "data_subtype", "display_name",
         #     ):
@@ -1204,7 +1204,7 @@ class Data(Entity):
                     value = prop.__get__(self)
                     if value is not None:
                         # ASCII or UTF-8 is assumed for all strings!
-                        if isinstance(value, unicode):
+                        if isinstance(value, str):
                             try:
                                 value = value.encode("UTF-8")
                             except UnicodeError:
@@ -1323,13 +1323,13 @@ class Data(Entity):
         if reverse:
             for data_type, new_subdict in new_data._linked.items():
                 target_subdict = old_data._linked[data_type].copy()
-                for data_subtype, identity_set in new_subdict.iteritems():
+                for data_subtype, identity_set in new_subdict.items():
                     target_subdict[data_subtype] = target_subdict[data_subtype].union(identity_set)
                 new_data._linked[data_type] = target_subdict
         else:
-            for data_type, new_subdict in new_data._linked.iteritems():
+            for data_type, new_subdict in new_data._linked.items():
                 my_subdict = old_data._linked[data_type]
-                for data_subtype, identity_set in new_subdict.iteritems():
+                for data_subtype, identity_set in new_subdict.items():
                     my_subdict[data_subtype].update(identity_set)
 
 

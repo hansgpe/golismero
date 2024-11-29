@@ -1412,7 +1412,7 @@ class DotWidget(gtk.DrawingArea):
         self.filter = filter
 
     def set_dotcode(self, dotcode, filename='<stdin>'):
-        if isinstance(dotcode, unicode):
+        if isinstance(dotcode, str):
             dotcode = dotcode.encode('utf8')
         p = subprocess.Popen(
             [self.filter, '-Txdot'],
@@ -1635,7 +1635,7 @@ class DotWidget(gtk.DrawingArea):
             x, y = int(event.x), int(event.y)
             url = self.get_url(x, y)
             if url is not None:
-                self.emit('clicked', unicode(url.url), event)
+                self.emit('clicked', str(url.url), event)
             else:
                 jump = self.get_jump(x, y)
                 if jump is not None:

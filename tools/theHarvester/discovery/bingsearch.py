@@ -26,7 +26,7 @@ class search_bing:
 		returncode, returnmsg, response_headers = h.getreply()
 
 		encoding=response_headers['content-type'].split('charset=')[-1]
-		self.total_results+=unicode(h.getfile().read(), encoding)
+		self.total_results+=str(h.getfile().read(), encoding)
 
 	def do_search_vhost(self):
 		h = httplib.HTTP(self.server)
@@ -39,7 +39,7 @@ class search_bing:
 
 		returncode, returnmsg, response_headers = h.getreply()
 		encoding=response_headers['content-type'].split('charset=')[-1]
-		self.total_results+=unicode(h.getfile().read(), encoding)
+		self.total_results+=str(h.getfile().read(), encoding)
 				
 	def get_allhostnames(self):
 		rawres=myparser.parser(self.total_results,self.word)

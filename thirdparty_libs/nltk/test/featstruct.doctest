@@ -386,7 +386,7 @@ method `dict.fromkeys()`).  Non-mutating methods:
     ['x', 'y']
     >>> sorted(fs2.itervalues())                         # itervalues()
     [[a=1, b=2, c=3], 'x']
-    >>> sorted(fs2.iteritems())                          # iteritems()
+    >>> sorted(fs2.items())                          # iteritems()
     [('x', [a=1, b=2, c=3]), ('y', 'x')]
     >>> sorted(fs2)                                      # __iter__()
     ['x', 'y']

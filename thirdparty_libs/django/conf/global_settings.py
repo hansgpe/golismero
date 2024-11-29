@@ -43,7 +43,7 @@ TIME_ZONE = 'America/Chicago'
 USE_TZ = False
 
 # Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
+# http://www.i18nguy.com/str/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
 # Languages we provide translations for, out of the box. The language name

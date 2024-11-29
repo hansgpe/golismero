@@ -316,9 +316,9 @@ def iter_slices(string, slice_length):
 
 
 def get_unicode_from_response(r):
-    """Returns the requested content back in unicode.
+    """Returns the requested content back in str.
 
-    :param r: Response object to get unicode content from.
+    :param r: Response object to get str content from.
 
     Tried:
 
@@ -326,7 +326,7 @@ def get_unicode_from_response(r):
 
     2. every encodings from ``<meta ... charset=XXX>``
 
-    3. fall back and replace all unicode characters
+    3. fall back and replace all str characters
 
     """
 

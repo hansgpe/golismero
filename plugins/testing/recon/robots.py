@@ -103,10 +103,10 @@ class Robots(TestingPlugin):
         # Text with info
         m_robots_text = p.raw_data
 
-        # Prepare for unicode
+        # Prepare for str
         try:
             if m_robots_text.startswith(codecs.BOM_UTF8):
-                m_robots_text = m_robots_text.decode('utf-8').lstrip(unicode(codecs.BOM_UTF8, 'utf-8'))
+                m_robots_text = m_robots_text.decode('utf-8').lstrip(str(codecs.BOM_UTF8, 'utf-8'))
             elif m_robots_text.startswith(codecs.BOM_UTF16):
                 m_robots_text = m_robots_text.decode('utf-16')
         except UnicodeDecodeError:

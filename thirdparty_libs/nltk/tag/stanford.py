@@ -67,7 +67,7 @@ class StanfordTagger(TaggerI):
         # Write the actual sentences to the temporary input file
         _input_fh = os.fdopen(_input_fh, 'w')
         _input = '\n'.join((' '.join(x) for x in sentences))
-        if isinstance(_input, unicode) and encoding:
+        if isinstance(_input, str) and encoding:
             _input = _input.encode(encoding)
         _input_fh.write(_input)
         _input_fh.close()

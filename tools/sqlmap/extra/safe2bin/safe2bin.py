@@ -19,7 +19,7 @@ from optparse import OptionParser
 # Regex used for recognition of hex encoded characters
 HEX_ENCODED_CHAR_REGEX = r"(?P<result>\\x[0-9A-Fa-f]{2})"
 
-# Regex used for recognition of representation for hex encoded invalid unicode characters
+# Regex used for recognition of representation for hex encoded invalid str characters
 INVALID_UNICODE_CHAR_REGEX = r"(?P<result>\\\?[0-9A-Fa-f]{2})"
 
 # Raw chars that will be safe encoded to their slash (\) representations (e.g. newline to \n)
@@ -50,7 +50,7 @@ def safecharencode(value):
             for char in SAFE_ENCODE_SLASH_REPLACEMENTS:
                 retVal = retVal.replace(char, repr(char).strip('\''))
 
-            retVal = reduce(lambda x, y: x + (y if (y in string.printable or ord(y) > 255) else '\\x%02x' % ord(y)), retVal, (unicode if isinstance(value, unicode) else str)())
+            retVal = reduce(lambda x, y: x + (y if (y in string.printable or ord(y) > 255) else '\\x%02x' % ord(y)), retVal, (str if isinstance(value, str) else str)())
 
             retVal = retVal.replace(SLASH_MARKER, "\\\\")
     elif isinstance(value, list):
@@ -71,7 +71,7 @@ def safechardecode(value, binary=False):
         while True:
             match = re.search(HEX_ENCODED_CHAR_REGEX, retVal)
             if match:
-                retVal = retVal.replace(match.group("result"), (unichr if isinstance(value, unicode) else chr)(ord(binascii.unhexlify(match.group("result").lstrip("\\x")))))
+                retVal = retVal.replace(match.group("result"), (unichr if isinstance(value, str) else chr)(ord(binascii.unhexlify(match.group("result").lstrip("\\x")))))
             else:
                 break
 
@@ -81,7 +81,7 @@ def safechardecode(value, binary=False):
         retVal = retVal.replace(SLASH_MARKER, '\\')
 
         if binary:
-            if isinstance(retVal, unicode):
+            if isinstance(retVal, str):
                 retVal = retVal.encode("utf8")
             while True:
                 match = re.search(INVALID_UNICODE_CHAR_REGEX, retVal)

@@ -68,7 +68,7 @@ _algorithm_by_text = {
 # cannot make any mistakes (e.g. omissions, cut-and-paste errors) that
 # would cause the mapping not to be true inverse.
 
-_algorithm_by_value = dict([(y, x) for x, y in _algorithm_by_text.iteritems()])
+_algorithm_by_value = dict([(y, x) for x, y in _algorithm_by_text.items()])
 
 def algorithm_from_text(text):
     """Convert text into a DNSSEC algorithm value
@@ -116,7 +116,7 @@ def make_ds(name, key, algorithm, origin=None):
     else:
         raise UnsupportedAlgorithm, 'unsupported algorithm "%s"' % algorithm
 
-    if isinstance(name, (str, unicode)):
+    if isinstance(name, (str, str)):
         name = dns.name.from_text(name, origin)
     hash.update(name.canonicalize().to_wire())
     hash.update(_to_rdata(key, origin))
@@ -215,7 +215,7 @@ def _validate_rrsig(rrset, rrsig, keys, origin=None, now=None):
     @type now: int
     """
 
-    if isinstance(origin, (str, unicode)):
+    if isinstance(origin, (str, str)):
         origin = dns.name.from_text(origin, dns.name.root)
 
     for candidate_key in _find_candidate_keys(keys, rrsig):
@@ -332,7 +332,7 @@ def _validate(rrset, rrsigset, keys, origin=None, now=None):
     @type now: int
     """
 
-    if isinstance(origin, (str, unicode)):
+    if isinstance(origin, (str, str)):
         origin = dns.name.from_text(origin, dns.name.root)
 
     if isinstance(rrset, tuple):

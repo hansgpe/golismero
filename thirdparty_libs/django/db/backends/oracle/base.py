@@ -32,8 +32,8 @@ def _setup_environment(environ):
 _setup_environment([
     # Oracle takes client-side character set encoding from the environment.
     ('NLS_LANG', '.UTF8'),
-    # This prevents unicode from getting mangled by getting encoded into the
-    # potentially non-unicode database character set.
+    # This prevents str from getting mangled by getting encoded into the
+    # potentially non-str database character set.
     ('ORA_NCHAR_LITERAL_REPLACE', 'TRUE'),
 ])
 
@@ -225,7 +225,7 @@ WHEN (new.%(col_name)s IS NULL)
             return cursor.statement
         else:
             query = cursor.statement
-            return query if isinstance(query, unicode) else query.decode("utf-8")
+            return query if isinstance(query, str) else query.decode("utf-8")
 
     def last_insert_id(self, cursor, table_name, pk_name):
         sq_name = self._get_sequence_name(table_name)
@@ -794,7 +794,7 @@ class CursorIterator(six.Iterator):
 
 def _rowfactory(row, cursor):
     # Cast numeric values as the appropriate Python type based upon the
-    # cursor description, and convert strings to unicode.
+    # cursor description, and convert strings to str.
     casted = []
     for value, desc in zip(row, cursor.description):
         if value is not None and desc[1] is Database.NUMBER:

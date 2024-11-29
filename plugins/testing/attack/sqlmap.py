@@ -102,7 +102,7 @@ class SQLMapTestingPlugin(TestingPlugin):
             if info.has_post_params:
                 args.extend([
                     "--data",
-                    "&".join(["%s=%s" % (k, v) for k, v in info.post_params.iteritems() if k not in WEB_SERVERS_VARS])
+                    "&".join(["%s=%s" % (k, v) for k, v in info.post_params.items() if k not in WEB_SERVERS_VARS])
                 ])
 
                 r = self.make_injection(info.url, args)

@@ -317,7 +317,7 @@ if six.PY3:
 else:
     def ungettext(singular, plural, number):
         """
-        Returns a unicode strings of the translation of either the singular or
+        Returns a str strings of the translation of either the singular or
         plural, based on the number.
         """
         return do_ntranslate(singular, plural, number, 'ungettext')

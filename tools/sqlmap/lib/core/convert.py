@@ -84,14 +84,14 @@ def hexencode(value):
 
 def unicodeencode(value, encoding=None):
     """
-    Returns 8-bit string representation of the supplied unicode value
+    Returns 8-bit string representation of the supplied str value
 
     >>> unicodeencode(u'foobar')
     'foobar'
     """
 
     retVal = value
-    if isinstance(value, unicode):
+    if isinstance(value, str):
         try:
             retVal = value.encode(encoding or UNICODE_ENCODING)
         except UnicodeEncodeError:

@@ -669,7 +669,7 @@ class SharedHeap (AbstractSharedContainer):
             If the container was empty, returns an empty tuple.
         :rtype: tuple( immutable, ... )
         """
-        maximum = long(maximum)
+        maximum = int(maximum)
         if maximum < 1:
             return ()
         values = Config._context.remote_call(
@@ -743,7 +743,7 @@ class SharedHeap (AbstractSharedContainer):
 _valid_objects = (None, Ellipsis)
 
 # Built-in immutable hashable scalar types.
-_valid_scalars = (bool, int, float, str, complex)  # 'long' and 'unicode' are removed in Python 3
+_valid_scalars = (bool, int, float, str, complex)  # 'int' and 'str' are removed in Python 3
 
 # Built-in immutable hashable container types.
 _valid_containers = (tuple, frozenset)

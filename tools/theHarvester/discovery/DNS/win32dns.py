@@ -120,7 +120,7 @@ if __name__=="__main__":
 # Fix win32 nameserver discovery.
 #
 # Revision 1.3  2002/05/06 06:15:31  anthonybaxter
-# apparently some versions of windows return servers as unicode
+# apparently some versions of windows return servers as str
 # string with space sep, rather than strings with comma sep.
 # *sigh*
 #

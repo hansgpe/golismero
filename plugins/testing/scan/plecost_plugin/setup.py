@@ -149,7 +149,7 @@ def generate_plugin_db(args):
             # For echa plugin
             for j, plugin_info in enumerate(bs.findAll("div", attrs={"class": "plugin-block"})):
 
-                plugin_info = unicode(plugin_info)
+                plugin_info = str(plugin_info)
 
                 #
                 # Plugin name and URL
@@ -203,7 +203,7 @@ def generate_plugin_db(args):
 
                 # Looking for CVEs for this plugin
                 cves = []
-                for k, v in CVE_info.iteritems():
+                for k, v in CVE_info.items():
                     if plugin_name.lower() in v.lower():
                         cves.append(k)
 

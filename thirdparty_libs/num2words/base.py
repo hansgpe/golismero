@@ -88,7 +88,7 @@ class Num2Word_Base(object):
 
     def to_cardinal(self, value):
         try:
-            assert long(value) == value
+            assert int(value) == value
         except (ValueError, TypeError, AssertionError):
             return self.to_cardinal_float(value)
 
@@ -170,7 +170,7 @@ class Num2Word_Base(object):
 
 
     def verify_ordinal(self, value):
-        if not value == long(value):
+        if not value == int(value):
             raise TypeError, self.errmsg_floatord %(value)
         if not abs(value) == value:
             raise TypeError, self.errmsg_negord %(value)

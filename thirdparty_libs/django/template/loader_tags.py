@@ -18,7 +18,7 @@ class BlockContext(object):
         self.blocks = {}
 
     def add_blocks(self, blocks):
-        for name, block in six.iteritems(blocks):
+        for name, block in six.items(blocks):
             if name in self.blocks:
                 self.blocks[name].insert(0, block)
             else:
@@ -131,7 +131,7 @@ class BaseIncludeNode(Node):
 
     def render_template(self, template, context):
         values = dict([(name, var.resolve(context)) for name, var
-                       in six.iteritems(self.extra_context)])
+                       in six.items(self.extra_context)])
         if self.isolated_context:
             return template.render(context.new(values))
         context.update(values)

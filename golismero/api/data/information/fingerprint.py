@@ -496,7 +496,7 @@ class WebServerFingerprint(Fingerprint):
     #--------------------------------------------------------------------------
     def to_dict(self):
         d = super(WebServerFingerprint, self).to_dict()
-        d["others"] = { k: list(v) for (k,v) in self.others.iteritems() }
+        d["others"] = { k: list(v) for (k,v) in self.others.items() }
         return d
 
 
@@ -581,7 +581,7 @@ class WebServerFingerprint(Fingerprint):
                 raise TypeError("Expected dict, got %r instead" % type(others))
             others = {
                 to_utf8(k): float(v)
-                for k,v in others.iteritems()
+                for k,v in others.items()
             }
             for k in others.iterkeys():
                 if not isinstance(k, str):

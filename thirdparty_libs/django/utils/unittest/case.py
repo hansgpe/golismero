@@ -216,7 +216,7 @@ class TestCase(unittest.TestCase):
         self.addTypeEqualityFunc(tuple, 'assertTupleEqual')
         self.addTypeEqualityFunc(set, 'assertSetEqual')
         self.addTypeEqualityFunc(frozenset, 'assertSetEqual')
-        self.addTypeEqualityFunc(unicode, 'assertMultiLineEqual')
+        self.addTypeEqualityFunc(str, 'assertMultiLineEqual')
 
     def addTypeEqualityFunc(self, typeobj, function):
         """Add a type specific assertEqual style function to compare a type.
@@ -840,7 +840,7 @@ class TestCase(unittest.TestCase):
         """Checks whether actual is a superset of expected."""
         missing = []
         mismatched = []
-        for key, value in expected.iteritems():
+        for key, value in expected.items():
             if key not in actual:
                 missing.append(key)
             elif value != actual[key]:

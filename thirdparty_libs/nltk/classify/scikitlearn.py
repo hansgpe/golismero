@@ -120,7 +120,7 @@ class SklearnClassifier(ClassifierI):
         values = []
 
         for i, fs in enumerate(featuresets):
-            for f, v in fs.iteritems():
+            for f, v in fs.items():
                 try:
                     j = self._feature_index[f]
                     i_ind.append(i)
@@ -139,7 +139,7 @@ class SklearnClassifier(ClassifierI):
                      dtype=self._dtype)
 
         for i, fs in enumerate(featuresets):
-            for f, v in fs.iteritems():
+            for f, v in fs.items():
                 try:
                     X[i, self._feature_index[f]] = self._dtype(v)
                 except KeyError:    # feature not seen in training

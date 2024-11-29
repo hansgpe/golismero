@@ -193,10 +193,10 @@ class XMLOutput(ReportPlugin):
     def __add_to_xml(self, parent, datas, data_type, tag):
         for data in self.__iterate_data(datas, data_type):
             elem = ET.SubElement(parent, tag)
-            for name, value in data.to_dict().iteritems():
+            for name, value in data.to_dict().items():
                 if value is None:
                     continue
-                if isinstance(value, unicode):
+                if isinstance(value, str):
                     if name.startswith("raw_"):
                         value = value.encode("utf-8").encode("base64")
                     else:

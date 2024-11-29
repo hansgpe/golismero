@@ -8,9 +8,9 @@ from xml.parsers.expat import ExpatError
 try:
     from decimal import Decimal
 except ImportError:
-    NUMBER_TYPES = (int, long, float)
+    NUMBER_TYPES = (int, int, float)
 else:
-    NUMBER_TYPES = (int, long, float, Decimal)
+    NUMBER_TYPES = (int, int, float, Decimal)
 
 class NullHandler(logging.Handler):
     def emit(self, record):
@@ -24,7 +24,7 @@ def pairwise(seq):
         yield (seq[i], seq[i + 1])
 
 def join_filter(sep, seq, pred=bool):
-    return sep.join([unicode(i) for i in seq if pred(i)])
+    return sep.join([str(i) for i in seq if pred(i)])
  
 def get_encoding(page, contents=None):
     # TODO: clean up Py3k support
@@ -47,7 +47,7 @@ def decode_page(page):
     encoding = get_encoding(page, contents) or 'iso-8859-1'
     # TODO: clean up Py3k support
     if version_info < (3, 0):
-        return unicode(contents, encoding=encoding).encode('utf-8')
+        return str(contents, encoding=encoding).encode('utf-8')
     else:
         return str(contents, encoding=encoding)
 
@@ -62,7 +62,7 @@ def get_first_text(node, tag_names, strip=None):
                 return child and child.nodeValue.strip(strip)
 
 def join_filter(sep, seq, pred=bool):
-    return sep.join([unicode(i) for i in seq if pred(i)])
+    return sep.join([str(i) for i in seq if pred(i)])
 
     import re, htmlentitydefs
 

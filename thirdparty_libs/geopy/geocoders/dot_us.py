@@ -29,7 +29,7 @@ class GeocoderDotUS(Geocoder):
         return 'http://%sgeocoder.us/%s' % (auth, resource)
     
     def geocode(self, query, exactly_one=True):
-        if isinstance(query, unicode):
+        if isinstance(query, str):
             query = query.encode('utf-8')
         query_str = self.format_string % query
         

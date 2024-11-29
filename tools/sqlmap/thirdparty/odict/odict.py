@@ -524,7 +524,7 @@ class _OrderedDict(dict):
 
     def iteritems(self):
         """
-        >>> ii = OrderedDict(((1, 3), (3, 2), (2, 1))).iteritems()
+        >>> ii = OrderedDict(((1, 3), (3, 2), (2, 1))).items()
         >>> ii.next()
         (1, 3)
         >>> ii.next()
@@ -1030,7 +1030,7 @@ class Items(object):
 
     def __contains__(self, item): return item in self._main.items()
     def __len__(self): return len(self._main._sequence) # easier :-)
-    def __iter__(self): return self._main.iteritems()
+    def __iter__(self): return self._main.items()
     def count(self, item): return self._main.items().count(item)
     def index(self, item, *args): return self._main.items().index(item, *args)
     def reverse(self): self._main.reverse()

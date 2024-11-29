@@ -24,7 +24,7 @@ class search_google:
 
 		returncode, returnmsg, response_headers = h.getreply()
 		encoding=response_headers['content-type'].split('charset=')[-1]
-		self.total_results+=unicode(h.getfile().read(), encoding)
+		self.total_results+=str(h.getfile().read(), encoding)
 
 	def process(self):
 		print "[-] Searching Google:"

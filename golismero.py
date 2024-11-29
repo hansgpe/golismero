@@ -479,7 +479,7 @@ def build_config_from_cmdline():
     # Parse the command line options.
     try:
         args = sys.argv[1:]
-        envcfg = getenv("GOLISMERO_SETTINGS")
+        envcfg = os.getenv("GOLISMERO_SETTINGS")
         if envcfg:
             args = parser.convert_arg_line_to_args(envcfg) + args
         P, V = parser.parse_known_args(args)
@@ -653,7 +653,7 @@ def command_plugins(parser, P, cmdParams, auditParams):
     if testing_plugins:
         names = sorted(testing_plugins.keys())
         names = [x[8:] for x in names]
-        stages = [ (v,k) for (k,v) in STAGES.iteritems() ]
+        stages = [ (v,k) for (k,v) in STAGES.items() ]
         stages.sort()
         for _, stage in stages:
             s = stage + "/"
@@ -773,7 +773,7 @@ def command_info(parser, P, cmdParams, auditParams):
             if info.plugin_args:
                 to_print.append("")
                 to_print.append(colorize("Arguments:", "green"))
-                for name, default in sorted(info.plugin_args.iteritems()):
+                for name, default in sorted(info.plugin_args.items()):
                     if name in info.plugin_passwd_args:
                         default = "****************"
                     to_print.append("\t%s -> %s" %
@@ -932,7 +932,7 @@ def command_update(parser, P, cmdParams, auditParams):
     if not x.endswith(os.path.sep):
         x += os.path.sep
     our_modules = {
-        n: m for n, m in sys.modules.iteritems()
+        n: m for n, m in sys.modules.items()
         if n.startswith("golismero.") or (
             hasattr(m, "__file__") and m.__file__.startswith(x)
         )
@@ -955,7 +955,7 @@ def command_update(parser, P, cmdParams, auditParams):
 
         # Call the plugin hooks.
         all_plugins = sorted(
-            t.orchestrator.pluginManager.load_plugins().iteritems())
+            t.orchestrator.pluginManager.load_plugins().items())
         for plugin_id, plugin in all_plugins:
             if hasattr(plugin, "update"):
                 if cmdParams.verbose:
@@ -1059,7 +1059,7 @@ def command_run(parser, P, cmdParams, auditParams):
         auditParams.check_params()
 
         # Set the plugin arguments before loading the UI plugin.
-        for plugin_id, plugin_args in cmdParams.plugin_args.iteritems():
+        for plugin_id, plugin_args in cmdParams.plugin_args.items():
             status = manager.set_plugin_args(plugin_id, plugin_args)
             if status != 0:     # should never happen, but just in case...
                 if status == 1:

@@ -169,7 +169,7 @@ def str_to_int(addr):
         if not found_match:
             raise AddrFormatError('%r is not a supported MAC format!' % addr)
     else:
-        raise TypeError('%r is not str() or unicode()!' % addr)
+        raise TypeError('%r is not str() or str()!' % addr)
 
     int_val = None
 

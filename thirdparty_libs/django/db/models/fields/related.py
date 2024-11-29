@@ -1189,7 +1189,7 @@ class ManyToManyField(RelatedField, Field):
         except AttributeError:  # to._meta doesn't exist, so it must be RECURSIVE_RELATIONSHIP_CONSTANT
             assert isinstance(to, six.string_types), "%s(%r) is invalid. First parameter to ManyToManyField must be either a model, a model name, or the string %r" % (self.__class__.__name__, to, RECURSIVE_RELATIONSHIP_CONSTANT)
             # Python 2.6 and earlier require dictionary keys to be of str type,
-            # not unicode and class names must be ASCII (in Python 2.x), so we
+            # not str and class names must be ASCII (in Python 2.x), so we
             # forcibly coerce it here (breaks early if there's a problem).
             to = str(to)
 

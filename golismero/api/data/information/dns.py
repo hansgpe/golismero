@@ -360,7 +360,7 @@ class DnsRegister(Capture):
         :return: the id number of DNS register type.
         :rtype: int
         """
-        m_by_value = dict([(y, x) for x, y in DnsRegister._by_text.iteritems()])
+        m_by_value = dict([(y, x) for x, y in DnsRegister._by_text.items()])
 
         return m_by_value[name]
 
@@ -1745,10 +1745,10 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
         :type algorithm: str | int
 
         :param expiration: signature expiration time
-        :type expiration: long
+        :type expiration: int
 
         :param interception: signature interception time
-        :type interception: long
+        :type interception: int
 
         :param key_tag: the key tag.
         :type key_tag: int
@@ -1757,7 +1757,7 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
         :type labels: int
 
         :param original_ttl: the original TTL
-        :type original_ttl: long
+        :type original_ttl: int
 
         :param signer: the signer
         :type signer: str
@@ -1766,14 +1766,14 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
         :type type_covered: int
         """
 
-        if not isinstance(expiration, long):
-            raise TypeError("Expected long, got '%s'" % type(expiration))
+        if not isinstance(expiration, int):
+            raise TypeError("Expected int, got '%s'" % type(expiration))
         if not isinstance(key_tag, int):
             raise TypeError("Expected int, got '%s'" % type(key_tag))
         if not isinstance(labels, int):
             raise TypeError("Expected int, got '%s'" % type(labels))
-        if not isinstance(original_ttl, long):
-            raise TypeError("Expected long, got '%s'" % type(original_ttl))
+        if not isinstance(original_ttl, int):
+            raise TypeError("Expected int, got '%s'" % type(original_ttl))
         if not isinstance(signer, str):
             raise TypeError("Expected str, got '%s'" % type(signer))
         if not isinstance(type_covered, int):
@@ -1815,7 +1815,7 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
     def original_ttl(self):
         """
         :return: the original TTL
-        :rtype: long
+        :rtype: int
         """
         return self.__original_ttl
 
@@ -1825,7 +1825,7 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
     def expiration(self):
         """
         :return: signature expiration time
-        :rtype: long
+        :rtype: int
         """
         return self.__expiration
 
@@ -1835,7 +1835,7 @@ class DnsRegisterRRSIG(DNSRegisterAlgorithm):
     def interception(self):
         """
         :return: signature interception time
-        :rtype: long
+        :rtype: int
         """
         return self.__interception
 

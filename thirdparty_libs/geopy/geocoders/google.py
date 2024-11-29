@@ -68,7 +68,7 @@ class Google(Geocoder):
         return "http://%s/maps/geo?%%s" % domain
 
     def geocode(self, string, exactly_one=True):
-        if isinstance(string, unicode):
+        if isinstance(string, str):
             string = string.encode('utf-8')
         params = {'q': self.format_string % string,
                   'output': self.output_format.lower(),

@@ -281,9 +281,9 @@ def http_simple_analyzer(main_url, update_status_func, number_of_entries=4):
     m_data_len            = len(m_actions) # Var used to update the status
     m_banners_counter     = Counter()
 
-    for l_action, v in m_actions.iteritems():
+    for l_action, v in m_actions.items():
         if m_debug:
-            print "###########"
+            print ("###########")
         l_method      = v["method"]
         l_payload     = v["payload"]
         l_proto       = v["protocol"]
@@ -420,9 +420,9 @@ def http_analyzers(main_url, update_status_func, number_of_entries=4):
     i          = 1 # element in process
 
 
-    for l_action, v in m_actions.iteritems():
+    for l_action, v in m_actions.items():
         if m_debug:
-            print "###########"
+            print ("###########")
         l_method      = v["method"]
         l_payload     = v["payload"]
         l_proto       = v["protocol"]
@@ -496,7 +496,7 @@ def http_analyzers(main_url, update_status_func, number_of_entries=4):
         # =====================
         #
         #
-        for l_http_header_name, l_header_wordlist in m_wordlists_HTTP_fields.iteritems():
+        for l_http_header_name, l_header_wordlist in m_wordlists_HTTP_fields.items():
 
             # Check if HTTP header field is in response
             if l_http_header_name not in l_response.headers:
@@ -802,12 +802,12 @@ def http_analyzers(main_url, update_status_func, number_of_entries=4):
         print "Determinators"
         print "============="
         for a in m_counters.results_score_complete.most_common(10):
-        #for k,v in m_counters.results_determinator_complete.iteritems():
+        #for k,v in m_counters.results_determinator_complete.items():
             k = a[0]
             print ""
             print k
             print "-" * len(k)
-            for l,v in m_counters.results_determinator_complete[k].iteritems():
+            for l,v in m_counters.results_determinator_complete[k].items():
                 print "   %s (%s  [ %s ] )" % (l, ','.join(v), str(len(v)))
 
 
@@ -1205,7 +1205,7 @@ def calculate_server_track(server_name):
 
     # Looking for web server in the keys
     m_resultsc = Counter()
-    for l_family, l_keys in m_servers_keys.iteritems():
+    for l_family, l_keys in m_servers_keys.items():
         for k in l_keys:
             if k in server_name:
                 m_resultsc[l_family] +=1
@@ -1340,7 +1340,7 @@ def extend_items(all_items, already_parsed, related, ref = None):
         except KeyError:
             pass
     else:
-        for k, v in all_items.iteritems():
+        for k, v in all_items.items():
             if k not in already_parsed:
                 already_parsed.add(k)
                 for l_v in v:

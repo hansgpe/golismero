@@ -29,7 +29,7 @@ COPYING.txt included with the distribution).
 # XXX
 # Remove parser testing hack
 # safeUrl()-ize action
-# Switch to unicode throughout (would be 0.3.x)
+# Switch to str throughout (would be 0.3.x)
 #  See Wichert Akkerman's 2004-01-22 message to c.l.py.
 # Add charset parameter to Content-type headers?  How to find value??
 # Add some more functional tests

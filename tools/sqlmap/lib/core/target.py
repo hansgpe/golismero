@@ -561,7 +561,7 @@ def initTargetEnv():
         _setDBMS()
 
     if conf.data:
-        class _(unicode):
+        class _(str):
             pass
 
         original = conf.data

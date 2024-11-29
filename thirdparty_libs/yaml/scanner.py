@@ -1423,7 +1423,7 @@ class Scanner(object):
             bytes.append(chr(int(self.prefix(2), 16)))
             self.forward(2)
         try:
-            value = unicode(''.join(bytes), 'utf-8')
+            value = str(''.join(bytes), 'utf-8')
         except UnicodeDecodeError, exc:
             raise ScannerError("while scanning a %s" % name, start_mark, str(exc), mark)
         return value

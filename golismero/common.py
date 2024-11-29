@@ -425,13 +425,13 @@ class Configuration (object):
     def string(x):
         if x is None:
             return None
-        if isinstance(x, unicode):
+        if isinstance(x, str):
             return x.encode("UTF-8")
         return str(x)
 
     @staticmethod
     def integer(x):
-        if type(x) in (int, long):
+        if type(x) in (int, int):
             return x
         return int(x, 0) if x else 0
 
@@ -452,7 +452,7 @@ class Configuration (object):
             return []
         if isinstance(x, str):
             return [t.strip() for t in x.split(",")]
-        if isinstance(x, unicode):
+        if isinstance(x, str):
             return [t.strip().encode("UTF-8") for t in x.split(u",")]
         return list(x)
 
@@ -514,7 +514,7 @@ class Configuration (object):
     #--------------------------------------------------------------------------
     def __init__(self):
         history = set()
-        for name, definition in self._settings_.iteritems():
+        for name, definition in self._settings_.items():
             if name in history:
                 raise SyntaxError("Duplicated option name: %r" % name)
             history.add(name)
@@ -576,7 +576,7 @@ class Configuration (object):
         :param args: Settings.
         :type args: dict(str -> \\*)
         """
-        for name, value in args.iteritems():
+        for name, value in args.items():
             if name in self._settings_:
                 setattr(self, name, value)
 
@@ -599,7 +599,7 @@ class Configuration (object):
         }
 
         # Remove all attributes whose values are None.
-        args = { k:v for k,v in args.iteritems() if v is not None }
+        args = { k:v for k,v in args.items() if v is not None }
 
         # Extract the settings from the dictionary.
         if args:
@@ -664,7 +664,7 @@ class Configuration (object):
         :rtype: dict(str -> \\*)
         """
         result = {}
-        for name, definition in self._settings_.iteritems():
+        for name, definition in self._settings_.items():
             default = None
             if type(definition) in (tuple, list) and len(definition) > 1:
                 default = definition[1]
@@ -769,7 +769,7 @@ class OrchestratorConfig (Configuration):
     def _load_profile(self, args):
         if "profile" in args:
             self.profile = args["profile"]
-            if isinstance(self.profile, unicode):
+            if isinstance(self.profile, str):
                 self.profile = self.profile.encode("UTF-8")
             self.profile_file = get_profile(self.profile)
 
@@ -777,15 +777,15 @@ class OrchestratorConfig (Configuration):
     def _load_plugin_args(self, args):
         if "plugin_args" in args:
             plugin_args = {}
-            for (plugin_id, target_args) in args["plugin_args"].iteritems():
-                if isinstance(plugin_id, unicode):
+            for (plugin_id, target_args) in args["plugin_args"].items():
+                if isinstance(plugin_id, str):
                     plugin_id = plugin_id.encode("UTF-8")
                 if not plugin_id in plugin_args:
                     plugin_args[plugin_id] = {}
-                for (key, value) in target_args.iteritems():
-                    if isinstance(key, unicode):
+                for (key, value) in target_args.items():
+                    if isinstance(key, str):
                         key = key.encode("UTF-8")
-                    if isinstance(value, unicode):
+                    if isinstance(value, str):
                         value = value.encode("UTF-8")
                     plugin_args[plugin_id][key] = value
             self.plugin_args = plugin_args
@@ -962,7 +962,7 @@ class AuditConfig (Configuration):
         # Load the "command" property.
         if "command" in args:
             self.command = args["command"]
-            if isinstance(self.command, unicode):
+            if isinstance(self.command, str):
                 self.command = self.command.encode("UTF-8")
 
         # Load the "plugin_load_overrides" property.
@@ -1020,7 +1020,7 @@ class AuditConfig (Configuration):
 
         # Encode all Unicode strings as UTF-8.
         targets = [
-            x.encode("UTF-8") if isinstance(x, unicode) else str(x)
+            x.encode("UTF-8") if isinstance(x, str) else str(x)
             for x in targets
             if x not in self._targets
         ]
@@ -1108,7 +1108,7 @@ class AuditConfig (Configuration):
     @user_agent.setter
     def user_agent(self, user_agent):
         if user_agent:
-            if isinstance(user_agent, unicode):
+            if isinstance(user_agent, str):
                 user_agent = user_agent.encode("UTF-8")
             self._user_agent = user_agent
         else:
@@ -1126,7 +1126,7 @@ class AuditConfig (Configuration):
         if cookie:
             # Parse the cookies argument.
             try:
-                if isinstance(cookie, unicode):
+                if isinstance(cookie, str):
                     cookie = cookie.encode("UTF-8")
                 # Prepare cookie.
                 cookie = cookie.replace(" ", "").replace("=", ":")
@@ -1156,7 +1156,7 @@ class AuditConfig (Configuration):
     def proxy_addr(self, proxy_addr):
         if proxy_addr:
             proxy_addr = proxy_addr.strip()
-            if isinstance(proxy_addr, unicode):
+            if isinstance(proxy_addr, str):
                 proxy_addr = proxy_addr.encode("UTF-8")
             if ":" in proxy_addr:
                 proxy_addr, proxy_port = proxy_addr.split(":", 1)

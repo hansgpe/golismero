@@ -20,9 +20,9 @@ from sys import version_info
 
 
 def detect(aBuf):
-    if ((version_info < (3, 0) and isinstance(aBuf, unicode)) or
+    if ((version_info < (3, 0) and isinstance(aBuf, str)) or
             (version_info >= (3, 0) and not isinstance(aBuf, bytes))):
-        raise ValueError('Expected a bytes object, not a unicode object')
+        raise ValueError('Expected a bytes object, not a str object')
 
     from . import universaldetector
     u = universaldetector.UniversalDetector()

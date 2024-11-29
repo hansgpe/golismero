@@ -455,7 +455,7 @@ class Message(object):
         if keyname is None:
             self.keyname = self.keyring.keys()[0]
         else:
-            if isinstance(keyname, (str, unicode)):
+            if isinstance(keyname, (str, str)):
                 keyname = dns.name.from_text(keyname)
             self.keyname = keyname
         self.keyalgorithm = algorithm
@@ -1057,11 +1057,11 @@ def make_query(qname, rdtype, rdclass = dns.rdataclass.IN, use_edns=None,
     @see: RFC 2671
     @rtype: dns.message.Message object"""
 
-    if isinstance(qname, (str, unicode)):
+    if isinstance(qname, (str, str)):
         qname = dns.name.from_text(qname)
-    if isinstance(rdtype, (str, unicode)):
+    if isinstance(rdtype, (str, str)):
         rdtype = dns.rdatatype.from_text(rdtype)
-    if isinstance(rdclass, (str, unicode)):
+    if isinstance(rdclass, (str, str)):
         rdclass = dns.rdataclass.from_text(rdclass)
     m = Message()
     m.flags |= dns.flags.RD

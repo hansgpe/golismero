@@ -104,7 +104,7 @@ def list2sym(lst):
     Convert a list of strings into a canonical symbol.
     :type lst: list
     :return: a Unicode string without whitespace
-    :rtype: unicode
+    :rtype: str
     """
     sym = _join(lst, '_', untag=True)
     sym = sym.lower()

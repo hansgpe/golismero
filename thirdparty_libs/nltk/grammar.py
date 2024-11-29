@@ -266,7 +266,7 @@ class Production(object):
         :param rhs: The right-hand side of the new ``Production``.
         :type rhs: sequence(Nonterminal and terminal)
         """
-        if isinstance(rhs, (str, unicode)):
+        if isinstance(rhs, (str, str)):
             raise TypeError('production right hand side should be a list, '
                             'not a string')
         self._lhs = lhs
@@ -498,7 +498,7 @@ class ContextFreeGrammar(object):
             return
 
         self._leftcorner_words = {}
-        for cat, lefts in self._leftcorners.iteritems():
+        for cat, lefts in self._leftcorners.items():
             lc = self._leftcorner_words[cat] = set()
             for left in lefts:
                 lc.update(self._immediate_leftcorner_words.get(left, set()))

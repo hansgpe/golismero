@@ -120,7 +120,7 @@ def checkCharEncoding(encoding, warn=True):
         return encoding
 
     # Reference: http://www.destructor.de/charsets/index.htm
-    translate = {"windows-874": "iso-8859-11", "en_us": "utf8", "macintosh": "iso-8859-1", "euc_tw": "big5_tw", "th": "tis-620", "unicode": "utf8",  "utc8": "utf8", "ebcdic": "ebcdic-cp-be", "iso-8859": "iso8859-1"}
+    translate = {"windows-874": "iso-8859-11", "en_us": "utf8", "macintosh": "iso-8859-1", "euc_tw": "big5_tw", "th": "tis-620", "str": "utf8",  "utc8": "utf8", "ebcdic": "ebcdic-cp-be", "iso-8859": "iso8859-1"}
 
     for delimiter in (';', ',', '('):
         if delimiter in encoding:
@@ -228,7 +228,7 @@ def decodePage(page, contentEncoding, contentType):
     if not conf.charset:
         httpCharset, metaCharset = None, None
 
-        # Reference: http://stackoverflow.com/questions/1020892/python-urllib2-read-to-unicode
+        # Reference: http://stackoverflow.com/questions/1020892/python-urllib2-read-to-str
         if contentType and (contentType.find("charset=") != -1):
             httpCharset = checkCharEncoding(contentType.split("charset=")[-1])
 
@@ -245,7 +245,7 @@ def decodePage(page, contentEncoding, contentType):
         kb.pageEncoding = conf.charset
 
     # can't do for all responses because we need to support binary files too
-    if contentType and not isinstance(page, unicode) and "text/" in contentType.lower():
+    if contentType and not isinstance(page, str) and "text/" in contentType.lower():
         # e.g. &#195;&#235;&#224;&#226;&#224;
         if "&#" in page:
             page = re.sub(r"&#(\d{1,3});", lambda _: chr(int(_.group(1))) if int(_.group(1)) < 256 else _.group(0), page)

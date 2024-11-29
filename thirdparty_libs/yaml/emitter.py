@@ -696,7 +696,7 @@ class Emitter(object):
                     flow_indicators = True
                     block_indicators = True
 
-            # Check for line breaks, special, and unicode characters.
+            # Check for line breaks, special, and str characters.
             if ch in u'\n\x85\u2028\u2029':
                 line_breaks = True
             if not (ch == u'\n' or u'\x20' <= ch <= u'\x7E'):
@@ -983,7 +983,7 @@ class Emitter(object):
         hints = u''
         if text:
             if text[0] in u' \n\x85\u2028\u2029':
-                hints += unicode(self.best_indent)
+                hints += str(self.best_indent)
             if text[-1] not in u'\n\x85\u2028\u2029':
                 hints += u'-'
             elif len(text) == 1 or text[-2] in u'\n\x85\u2028\u2029':

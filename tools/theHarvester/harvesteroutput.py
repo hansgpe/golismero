@@ -44,7 +44,7 @@ class HarvesterOutput:
 			email_elem.text = x
 
 		hosts_elem = etree.SubElement(root, u"hosts")
-		for host, ip in self.output_results.search_hosts_ips.iteritems() :
+		for host, ip in self.output_results.search_hosts_ips.items() :
 			self.__add_host (hosts_elem, host, ip)
 
 		people_elem = etree.SubElement(root, u"people")
@@ -53,19 +53,19 @@ class HarvesterOutput:
 			person_elem.text = x
 
 		vhosts_elem = etree.SubElement(root, u"vhosts")
-		for host, ip in self.output_results.virtual_host_results.iteritems() :
+		for host, ip in self.output_results.virtual_host_results.items() :
 			self.__add_host (vhosts_elem, host, ip)
 
 		dns_brute_elem = etree.SubElement(root, u"dns_brute_hosts")
-		for host, ip in self.output_results.dns_brute_results.iteritems() :
+		for host, ip in self.output_results.dns_brute_results.items() :
 			self.__add_host (dns_brute_elem, host, ip)
 
 		dns_tld_elem = etree.SubElement(root, u"dns_tld_hosts")
-		for host, ip in self.output_results.dns_tld_results.iteritems() :
+		for host, ip in self.output_results.dns_tld_results.items() :
 			self.__add_host (dns_tld_elem, host, ip)
 
 		dns_reverse_elem = etree.SubElement(root, u"dns_reverse_hosts")
-		for host, ip in self.output_results.dns_reverse_results.iteritems() :
+		for host, ip in self.output_results.dns_reverse_results.items() :
 			self.__add_host (dns_reverse_elem, host, ip)
 
 		dns_shodan_elem = etree.SubElement(root, u"shodan")

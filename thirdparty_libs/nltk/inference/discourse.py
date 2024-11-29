@@ -260,7 +260,7 @@ class DiscourseTester(object):
         """
         # re-initialize self._readings in case we have retracted a sentence
         self._readings = {}
-        for sid, sentence in self._sentences.iteritems():
+        for sid, sentence in self._sentences.items():
             readings = self._get_readings(sentence)
             self._readings[sid] = dict([("%s-r%s" % (sid, rid), reading.simplify())
                                                         for rid, reading in enumerate(readings)])

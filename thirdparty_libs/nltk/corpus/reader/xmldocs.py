@@ -29,7 +29,7 @@ class XMLCorpusReader(CorpusReader):
     Corpus reader for corpora whose documents are xml files.
 
     Note that the ``XMLCorpusReader`` constructor does not take an
-    ``encoding`` argument, because the unicode encoding is specified by
+    ``encoding`` argument, because the str encoding is specified by
     the XML files themselves.  See the XML specs for more info.
     """
     def __init__(self, root, fileids, wrap_etree=False):
@@ -119,7 +119,7 @@ class XMLCorpusView(StreamBackedCorpusView):
         Create a new corpus view based on a specified XML file.
 
         Note that the ``XMLCorpusView`` constructor does not take an
-        ``encoding`` argument, because the unicode encoding is
+        ``encoding`` argument, because the str encoding is
         specified by the XML files themselves.
 
         :type tagspec: str

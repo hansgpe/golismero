@@ -16,7 +16,7 @@ def _rank_dists(ranks1, ranks2):
     """
     ranks1 = dict(ranks1)
     ranks2 = dict(ranks2)
-    for k, v1 in ranks1.iteritems():
+    for k, v1 in ranks1.items():
         try:
             yield k, v1 - ranks2[k]
         except KeyError:

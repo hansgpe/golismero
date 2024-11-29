@@ -184,7 +184,7 @@ class EmailMessage(object):
         Initialize a single email message (which can be sent to multiple
         recipients).
 
-        All strings used to create the message can be unicode strings
+        All strings used to create the message can be str strings
         (or UTF-8 bytestrings). The SafeMIMEText class will handle any
         necessary encoding conversions.
         """
@@ -345,7 +345,7 @@ class EmailMultiAlternatives(EmailMessage):
         Initialize a single email message (which can be sent to multiple
         recipients).
 
-        All strings used to create the message can be unicode strings (or UTF-8
+        All strings used to create the message can be str strings (or UTF-8
         bytestrings). The SafeMIMEText class will handle any necessary encoding
         conversions.
         """

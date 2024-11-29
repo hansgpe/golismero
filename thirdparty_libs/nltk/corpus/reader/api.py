@@ -48,22 +48,22 @@ class CorpusReader(object):
             strings; or implicitly, as a regular expression over file
             paths.  The absolute path for each file will be constructed
             by joining the reader's root to each file name.
-        :param encoding: The default unicode encoding for the files
+        :param encoding: The default str encoding for the files
             that make up the corpus.  The value of ``encoding`` can be any
             of the following:
             - A string: ``encoding`` is the encoding name for all files.
             - A dictionary: ``encoding[file_id]`` is the encoding
               name for the file whose identifier is ``file_id``.  If
               ``file_id`` is not in ``encoding``, then the file
-              contents will be processed using non-unicode byte strings.
+              contents will be processed using non-str byte strings.
             - A list: ``encoding`` should be a list of ``(regexp, encoding)``
               tuples.  The encoding for a file whose identifier is ``file_id``
               will be the ``encoding`` value for the first tuple whose
               ``regexp`` matches the ``file_id``.  If no tuple's ``regexp``
               matches the ``file_id``, the file contents will be processed
-              using non-unicode byte strings.
+              using non-str byte strings.
             - None: the file contents of all files will be
-              processed using non-unicode byte strings.
+              processed using non-str byte strings.
         :param tag_mapping_function: A function for normalizing or
                 simplifying the POS tags returned by the tagged_words()
                 or tagged_sents() methods.
@@ -103,7 +103,7 @@ class CorpusReader(object):
             encoding = encoding_dict
 
         self._encoding = encoding
-        """The default unicode encoding for the fileids that make up
+        """The default str encoding for the fileids that make up
            this corpus.  If ``encoding`` is None, then the file
            contents are processed using byte strings (str)."""
         self._tag_mapping_function = tag_mapping_function
@@ -179,7 +179,7 @@ class CorpusReader(object):
         """
         Return an open stream that can be used to read the given file.
         If the file's encoding is not None, then the stream will
-        automatically decode the file's contents into unicode.
+        automatically decode the file's contents into str.
 
         :param file: The file identifier of the file to read.
         """
@@ -191,7 +191,7 @@ class CorpusReader(object):
 
     def encoding(self, file):
         """
-        Return the unicode encoding for the given corpus file, if known.
+        Return the str encoding for the given corpus file, if known.
         If the encoding is unknown, or if the given file should be
         processed using byte strings (str), then return None.
         """

@@ -228,7 +228,7 @@ def bisection(payload, expression, length=None, charsetType=None, firstChar=None
             originalTbl = type(asciiTbl)(charTbl)
 
             if continuousOrder and shiftTable is None:
-                # Used for gradual expanding into unicode charspace
+                # Used for gradual expanding into str charspace
                 shiftTable = [2, 2, 3, 3, 5, 4]
 
             if CHAR_INFERENCE_MARK in payload and ord('\n') in charTbl:
